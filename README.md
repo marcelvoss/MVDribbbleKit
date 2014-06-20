@@ -4,7 +4,7 @@ MVDribbbleKit is a modern and simple Objective-C wrapper for the official [Dribb
 No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required. This wrapper is built on top of NSURLSession.
 
 ## Installation
-Drag and drop the MVDribbbleKit folder to your projec and the `#import` it.
+Drag and drop the MVDribbbleKit folder to your project and `#import` it.
 
 There are also three model classes included (MVComment, MVShot and MVPlayer) to wrap the retrived data into objects.
 
