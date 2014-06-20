@@ -48,6 +48,9 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 @interface MVDribbbleKit : NSObject
 
+/**
+ *  The number of items per page. The default value is 15 and the maximum value is 30.
+ */
 @property (nonatomic) NSNumber *itemsPerPage;
 
 #pragma mark - Miscellaneous
