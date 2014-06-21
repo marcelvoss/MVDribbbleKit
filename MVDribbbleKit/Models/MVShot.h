@@ -33,6 +33,6 @@
 
 @property (nonatomic) MVPlayer *player;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

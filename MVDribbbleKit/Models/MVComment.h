@@ -18,6 +18,6 @@
 @property (nonatomic) NSDate *createdDate;
 @property (strong, nonatomic) MVPlayer *player;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end
