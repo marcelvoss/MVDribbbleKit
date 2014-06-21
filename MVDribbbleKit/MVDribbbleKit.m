@@ -281,6 +281,8 @@ static const NSString *baseURL = @"http://api.dribbble.com";
 
 @implementation MVDribbbleKit (Private)
 
+#pragma mark - Private Methods
+
 - (void)networkOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
                         success:(void (^) (NSDictionary *))success
                         failure:(void (^) (NSError *, NSHTTPURLResponse *))failure
@@ -290,6 +292,13 @@ static const NSString *baseURL = @"http://api.dribbble.com";
     NSString *urlWithParameters = [NSString stringWithFormat:@"%@/?page=%@&per_page=%@", url, pageNumber, _itemsPerPage];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    if (_allowsCellularAccess) {
+        configuration.allowsCellularAccess = YES;
+    } else {
+        configuration.allowsCellularAccess = NO;
+    }
+    
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     
     [[session dataTaskWithURL:[NSURL URLWithString:urlWithParameters] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

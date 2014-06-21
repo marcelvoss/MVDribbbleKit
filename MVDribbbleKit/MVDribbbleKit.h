@@ -52,6 +52,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  *  The number of items per page. The default value is 15 and the maximum value is 30.
  */
 @property (nonatomic) NSNumber *itemsPerPage;
+@property (nonatomic) BOOL allowsCellularAccess;
 
 #pragma mark - Miscellaneous
 
