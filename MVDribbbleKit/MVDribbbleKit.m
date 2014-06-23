@@ -36,13 +36,23 @@ static const NSString *baseURL = @"http://api.dribbble.com";
 
 #pragma mark - Miscellaneous
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
         _itemsPerPage = @15;
     }
     return self;
+}
+
++ (instancetype)sharedInstance
+{
+    static MVDribbbleKit *instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[MVDribbbleKit alloc] init];
+    });
+    return instance;
 }
 
 #pragma mark - Players

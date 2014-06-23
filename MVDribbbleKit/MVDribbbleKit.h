@@ -56,7 +56,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 #pragma mark - Miscellaneous
 
-- (id)init;
+- (instancetype)init;
++ (instancetype)sharedInstance;
 
 #pragma mark - Players
 
