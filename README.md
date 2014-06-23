@@ -1,16 +1,19 @@
 # MVDribbbleKit
 MVDribbbleKit is a modern and simple Objective-C wrapper for the official [Dribbble API](https://dribbble.com/api).
 
-No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required. This wrapper is built on top of NSURLSession.
+No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required. This wrapper is build on top of NSURLSession.
 
 ## Installation
-Drag and drop the MVDribbbleKit folder to your project and `#import` it.
+MVDribbbleKit is available via CocoaPods. Simply add the following to your Podfile:
+`pod 'MVDribbbleKit', '~> 0.0.5'`. Boom!
+
+If you don't use CocoaPods, add the MVDribbbleKit folder to your project and ``` objc #import``` it.
 
 There are also three model classes included (MVComment, MVShot and MVPlayer) to wrap the retrived data into objects.
 
 
 ## API Infomation
-You won't need authentication keys at the moment. API calls are limited to **60 per minute** and **10,000 per day**.
+You don't need authentication keys at the moment. API calls are limited to **60 per minute** and **10,000 per day**.
 
 For more information visit the [API website](https://dribbble.com/api).
 
