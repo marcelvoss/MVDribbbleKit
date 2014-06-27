@@ -312,12 +312,23 @@ static const NSString *baseURL = @"http://api.dribbble.com";
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     
     [[session dataTaskWithURL:[NSURL URLWithString:urlWithParameters] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
+        if (error == nil) {
+            
+            NSError *jsonError = nil;
+            NSDictionary *serializedResults = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+            
+            if (jsonError == nil) {
+                success(serializedResults);
+            } else {
+                NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
+                failure(error, convertedResponse);
+            }
+            
+        } else {
+            
             NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
             failure(error, convertedResponse);
-        } else {
-            NSDictionary *serializedResults = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            success(serializedResults);
+            
         }
     }] resume];
 }
