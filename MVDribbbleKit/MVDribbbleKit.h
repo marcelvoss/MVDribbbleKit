@@ -54,7 +54,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 @property (nonatomic) NSNumber *itemsPerPage;
 
 /**
- *  A Boolean value that determines whether connections should be made over a cellular network.
+ *   A Boolean value that determines whether connections should be made over a cellular network.
  */
 @property (nonatomic) BOOL allowsCellularAccess;
 

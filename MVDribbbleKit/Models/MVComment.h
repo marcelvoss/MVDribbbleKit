@@ -30,7 +30,7 @@
 @property (nonatomic) NSString *body;
 @property (nonatomic) NSNumber *likesCount;
 @property (nonatomic) NSDate *createdDate;
-@property (strong, nonatomic) MVPlayer *player;
+@property (nonatomic) MVPlayer *player;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
