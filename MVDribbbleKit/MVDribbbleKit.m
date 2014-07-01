@@ -321,7 +321,7 @@ static const NSString *baseURL = @"http://api.dribbble.com";
                 success(serializedResults);
             } else {
                 NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
-                failure(error, convertedResponse);
+                failure(jsonError, convertedResponse);
             }
             
         } else {
