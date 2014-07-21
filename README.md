@@ -33,7 +33,8 @@ manager.scopes = @[@"write", @"public", @"comment", @"upload"];
 
 ### Requests
 It is easy to make requests. For example, you can follow a user with the following code:
-```objc
+
+``` objc
 [manager followUserWithID:@"simplebits" success:^(NSHTTPURLResponse *response) {
 	NSLog(@"%@", response);
 } failure:^(NSError *error, NSHTTPURLResponse *response) {
@@ -43,7 +44,7 @@ It is easy to make requests. For example, you can follow a user with the followi
 
 Yup, that's it. Everything else is similar to this. Let's take another example. Here's how to get the details for a user:
 
-```objc
+``` objc
 [manager getDetailsForUser:@"simplebits" success:^(MVUser *user, NSHTTPURLResponse *response) {
 	NSLog(@"Username: %@ \n Name: %@", user.username, user.name);
 } failure:^(NSError *error, NSHTTPURLResponse *response) {
