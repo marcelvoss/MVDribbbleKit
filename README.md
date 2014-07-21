@@ -31,5 +31,27 @@ manager.scopes = @[@"write", @"public", @"comment", @"upload"];
 
 **Reminder:** MVDribbbleKit doesn't take care of storing the access token to the keychain. So, you have to do that on your own.
 
+### Requests
+It is easy to make requests. For example, you can follow a user with the following code:
+```objc
+[manager followUserWithID:@"simplebits" success:^(NSHTTPURLResponse *response) {
+	NSLog(@"%@", response);
+} failure:^(NSError *error, NSHTTPURLResponse *response) {
+	NSLog(@"Error: %@, Response: %@", error, response);
+}];
+```
+
+Yup, that's it. Everything else is similar to this. Let's take another example. Here's how to get the details for a user:
+
+```objc
+[manager getDetailsForUser:@"simplebits" success:^(MVUser *user, NSHTTPURLResponse *response) {
+	NSLog(@"Username: %@ \n Name: %@", user.username, user.name);
+} failure:^(NSError *error, NSHTTPURLResponse *response) {
+	NSLog(@"Error: %@, Response: %@", error, response);
+}];
+```
+
+Easy, huh?
+
 ## License
 MVDribbbleKit is available under the MIT license. See the [LICENSE](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md) file for more information.
