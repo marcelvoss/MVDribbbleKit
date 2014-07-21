@@ -1,4 +1,4 @@
-// MVShot.m
+// MVPlayer.m
 //
 // Copyright (c) 2014 Marcel Voss
 //
@@ -20,44 +20,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MVShot.h"
+#import "MVUser.h"
 
-@implementation MVShot
+@implementation MVUser
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
     if (self) {
-        _attachmentsCount = [dictionary objectForKey:@"attachments_count"];
-        _attachmentsURL = [NSURL URLWithString:[dictionary objectForKey:@"attachments_url"]];
-        _bucketsCount = [dictionary objectForKey:@"buckets_count"];
-        _commentsCount = [dictionary objectForKey:@"comments_count"];
-        _commentsURL = [NSURL URLWithString:[dictionary objectForKey:@"comments_url"]];
+        _avatarURL = [NSURL URLWithString:[dictionary objectForKey:@"avatar_url"]];
+        _bio = [dictionary objectForKey:@"bio"];
         _createdDate = [dictionary objectForKey:@"created_at"];
+        _followersCount = [dictionary objectForKey:@"followers_count"];
+        _followingsCount = [dictionary objectForKey:@"following_count"];
+        
         _htmlURL = [NSURL URLWithString:[dictionary objectForKey:@"html_url"]];
-        _shotID = [dictionary objectForKey:@"id"];
-        _viewsCount = [dictionary objectForKey:@"views_count"];
-        _likesCount = [dictionary objectForKey:@"likes_count"];
+        _followersURL = [NSURL URLWithString:[dictionary objectForKey:@"followers_url"]];
         _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
-        _reboundsCount = [dictionary objectForKey:@"rebounds_count"];
-        _reboundsURL = [NSURL URLWithString:[dictionary objectForKey:@"rebounds_url"]];
-        _title = [dictionary objectForKey:@"title"];
+        
+        _userID = [dictionary objectForKey:@"id"];
+        _likesCount = [dictionary objectForKey:@"likes_count"];
+        
+        _location = [dictionary objectForKey:@"location"];
+        _name  = [dictionary objectForKey:@"name"];
+        _shotsCount  = [dictionary objectForKey:@"shots_count"];
+        _shotsURL = [NSURL URLWithString:[dictionary objectForKey:@"shots_url"]];
+        _teamsURL = [NSURL URLWithString:[dictionary objectForKey:@"teams_url"]];
         _updatedDate = [dictionary objectForKey:@"updated_at"];
-        _user = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
-        _description = [dictionary objectForKey:@"description"];
-        _images = [dictionary objectForKey:@"images"];
+        _username = [dictionary objectForKey:@"username"];
         
-        if ([dictionary objectForKey:@"team"] == [NSNull null]) {
-            _team = nil;
+        _links = [dictionary objectForKey:@"links"];
+        
+        if ([[dictionary objectForKey:@"type"] isEqualToString:@"Player"]) {
+            _accountType = AccountTypePlayer;
+        } else if ([[dictionary objectForKey:@"type"] isEqualToString:@"Team"]) {
+            _accountType = AccountTypeTeam;
+        }
+        
+        if ([[dictionary objectForKey:@"pro"] isEqualToNumber:[NSNumber numberWithBool:0]]) {
+            _pro = NO;
         } else {
-            _team = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"team"]];
+            _pro = YES;
         }
-        
-        NSMutableArray *tagsArray = [NSMutableArray array];
-        for (NSString *tag in [dictionary objectForKey:@"tags"]) {
-            [tagsArray addObject:tag];
-        }
-        _tags = tagsArray;
     }
     return self;
 }

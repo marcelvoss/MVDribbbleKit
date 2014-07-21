@@ -23,13 +23,19 @@
 #import <Foundation/Foundation.h>
 
 #import "MVShot.h"
-#import "MVPlayer.h"
+#import "MVLike.h"
+#import "MVUser.h"
 #import "MVComment.h"
+#import "MVAttachment.h"
+
+#import "MVAuthBrowser.h"
 
 typedef NS_ENUM(NSInteger, List) {
+    ListAnimated,
     ListDebuts,
-    ListEveryone,
-    ListPopular,
+    ListPlayoffs,
+    ListRebounds,
+    ListTeams
 };
 
 typedef NS_ENUM(NSInteger, UserType) {
@@ -38,64 +44,148 @@ typedef NS_ENUM(NSInteger, UserType) {
     UserTypeDraftees
 };
 
-typedef NS_ENUM(NSInteger, RespondType) {
-    RespondTypeComments,
-    RespondTypeRebounds
-};
-
-typedef void (^SuccessHandler) (NSArray *resultsArray);
+typedef void (^SuccessHandler) (NSArray *resultsArray, NSHTTPURLResponse *response);
 typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 @interface MVDribbbleKit : NSObject
 
-/**
- *  The number of items per page. The default value is 15 and the maximum value is 30.
- */
 @property (nonatomic) NSNumber *itemsPerPage;
-
-/**
- *  A Boolean value that determines whether connections should be made over a cellular network.
- */
 @property (nonatomic) BOOL allowsCellularAccess;
+
+@property (nonatomic) NSArray *scopes;
+
+@property (nonatomic, copy) NSString *clientID;
+@property (nonatomic, copy) NSString *clientSecret;
+@property (nonatomic, copy) NSString *callbackURL;
+
+@property (nonatomic, copy) NSString *accessToken;
 
 #pragma mark - Miscellaneous
 
-- (instancetype)init;
-+ (instancetype)sharedInstance;
++ (MVDribbbleKit *)sharedInstance;
+- (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID callbackURL:(NSString *)callbackURL;
 
-#pragma mark - Players
+#pragma mark - Authorization
 
-- (void)getDetailsForPlayer:(NSString *)playerID
-                    success:(void (^) (MVPlayer *player))success
+- (void)authorizeWithCompletion:(void (^) (NSError *error, NSString *accessToken))completion;
+- (void)setClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret callbackURL:(NSString *)callbackURL;
+
+#pragma mark - Users
+
+// If playerID is nil, return the authenticated player
+- (void)getDetailsForUser:(NSString *)userID
+                    success:(void (^) (MVUser *user, NSHTTPURLResponse *response))success
                     failure:(FailureHandler)failure;
 
-- (void)getUsersOfType:(UserType)userType forPlayer:(NSString *)playerID page:(NSNumber *)page
-               success:(SuccessHandler)success
-               failure:(FailureHandler)failure;
+- (void)getFollowersForUser:(NSString *)userID page:(NSNumber *)page
+                      success:(SuccessHandler)success
+                      failure:(FailureHandler)failure;
+
+- (void)getFollowingsForUser:(NSString *)userID page:(NSNumber *)page
+                      success:(SuccessHandler)success
+                      failure:(FailureHandler)failure;
+
+- (void)followUserWithID:(NSString *)userID
+                   success:(void (^) (NSHTTPURLResponse *response))success
+                   failure:(FailureHandler)failure;
+
+- (void)unfollowUserWithID:(NSString *)userID
+                     success:(void (^) (NSHTTPURLResponse *response))success
+                     failure:(FailureHandler)failure;
+
+#pragma mark - Teams
+
+// If playerID is nil, use the authenticated player
+- (void)getTeamsForUserWithID:(NSString *)userID page:(NSNumber *)page
+                        success:(SuccessHandler)success
+                        failure:(FailureHandler)failure;
 
 #pragma mark - Shots
 
 - (void)getShotWithID:(NSNumber *)shotID
-              success:(void (^) (MVShot *shot))success
+              success:(void (^) (MVShot *shot, NSHTTPURLResponse *response))success
               failure:(FailureHandler)failure;
 
 - (void)getShotsOnList:(List)list page:(NSNumber *)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure;
 
-- (void)getShotsByPlayer:(NSString *)playerID page:(NSNumber *)page
+- (void)getShotsByUser:(NSString *)userID page:(NSNumber *)page
                  success:(SuccessHandler)success
                  failure:(FailureHandler)failure;
 
-- (void)getLikedShotsByPlayer:(NSString *)playerID page:(NSNumber *)page
+- (void)getLikedShotsByUser:(NSString *)userID page:(NSNumber *)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure;
 
-- (void)getTimelineOfPlayer:(NSString *)playerID page:(NSNumber *)page
+// TODO: Needs a new name
+- (void)getTimelineOfUser:(NSString *)userID page:(NSNumber *)page
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure;
 
-- (void)getResponsesOfType:(RespondType)respondType forShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getLikesForShot:(NSNumber *)shotID page:(NSNumber *)page
+                success:(SuccessHandler)success
+                failure:(FailureHandler)failure;
+
+- (void)likeShotWithID:(NSNumber *)shotID
+               success:(void (^) (MVLike *like, NSHTTPURLResponse *response))success
+               failure:(FailureHandler)failure;
+
+- (void)unlikeShotWithID:(NSNumber *)shotID
+                 success:(void (^) (NSHTTPURLResponse *response))success
+                 failure:(FailureHandler)failure;
+
+- (void)deleteShotWithID:(NSNumber *)shotID
+                 success:(void (^) (NSHTTPURLResponse *response))success
+                 failure:(FailureHandler)failure;
+
+#pragma mark - Attachments
+
+- (void)getAttachmentsForShot:(NSNumber *)shotID page:(NSNumber *)page
+                      success:(SuccessHandler)success
+                      failure:(FailureHandler)failure;
+
+- (void)getAttachmentWithID:(NSNumber *)attachmentID onShot:(NSNumber *)shotID
+                    success:(void (^) (MVAttachment *attachment, NSHTTPURLResponse *response))success
+                    failure:(FailureHandler)failure;
+
+- (void)createAttachmentForShot:(NSNumber *)shotID fromData:(NSData *)attachmentData
+                        success:(void (^) (MVAttachment *attachment, NSHTTPURLResponse *response))success
+                        failure:(FailureHandler)failure;
+
+- (void)deleteAttachmetWithID:(NSNumber *)attachmentID onShot:(NSNumber *)shotID
+                      success:(void (^) (NSHTTPURLResponse *response))success
+                      failure:(FailureHandler)failure;
+
+#pragma mark - Comments
+
+- (void)getCommentsForShot:(NSNumber *)shotID page:(NSNumber *)page
+                   success:(SuccessHandler)success
+                   failure:(FailureHandler)failure;
+
+- (void)getLikesForCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID page:(NSNumber *)page
+                         success:(SuccessHandler)success
+                         failure:(FailureHandler)failure;
+
+- (void)createCommentForShot:(NSNumber *)shotID body:(NSString *)body
+                     success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
+                     failure:(FailureHandler)failure;
+
+- (void)updateCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID body:(NSString *)body
+                    success:(void (^) (NSHTTPURLResponse *response))success
+                    failure:(FailureHandler)failure;
+
+- (void)likeCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID
+                  success:(void (^) (MVLike *like, NSHTTPURLResponse *response))success
+                  failure:(FailureHandler)failure;
+
+- (void)unlikeCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID
+                  success:(void (^) (NSHTTPURLResponse *response))success
+                  failure:(FailureHandler)failure;
+
+#pragma mark - Rebounds
+
+- (void)getReboundsForShot:(NSNumber *)shotID page:(NSNumber *)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure;
 
