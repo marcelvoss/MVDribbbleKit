@@ -32,9 +32,10 @@
         _body = [dictionary objectForKey:@"body"];
         _likesCount = [dictionary objectForKey:@"likes_count"];
         _createdDate = [dictionary objectForKey:@"created_at"];
+        _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
         
-        NSDictionary *playerDictionary = [dictionary objectForKey:@"player"];
-        _player = [[MVPlayer alloc] initWithDictionary:playerDictionary];
+        NSDictionary *userDictionary = [dictionary objectForKey:@"user"];
+        _user = [[MVUser alloc] initWithDictionary:userDictionary];
     }
     return self;
 }
