@@ -57,7 +57,7 @@
 @property (nonatomic) MVUser *user;
 
 /**
- *  Creates and returns a new MVUser object.
+ *  Creates and returns a new MVComment object.
  *
  *  @param dictionary A dictionary that should be used to initialize the new object.
  *
