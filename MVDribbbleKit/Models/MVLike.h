@@ -26,28 +26,10 @@
 
 @interface MVLike : NSObject
 
-/**
- *  An NSDate object that contains the creation date of the like.
- */
 @property (nonatomic) NSDate *createdDate;
-
-/**
- *  An NSNumber object that contains the like ID.
- */
 @property (nonatomic) NSNumber *likeID;
-
-/**
- *  An MVUser object that contains the user who created the like.
- */
 @property (nonatomic) MVUser *user;
 
-/**
- *  Creates and returns a new MVLike object.
- *
- *  @param dictionary A dictionary that should be used to initialize the new object.
- *
- *  @return An MVLike object.
- */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

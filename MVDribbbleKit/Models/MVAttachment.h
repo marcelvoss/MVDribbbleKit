@@ -24,38 +24,12 @@
 
 @interface MVAttachment : NSObject
 
-/**
- *  An NSDate object that contains the creation date of the attachment.
- */
 @property (nonatomic) NSDate *createdDate;
-
-/**
- *  An NSNumber object that contains the attachment ID.
- */
 @property (nonatomic) NSNumber *attachmentID;
-
-/**
- *  An NSURL object that contains the attachment URL.
- */
 @property (nonatomic) NSURL *attachmentURL;
-
-/**
- *  An NSNumber object that contains the number of views for the attachment.
- */
 @property (nonatomic) NSNumber *viewsCount;
-
-/**
- *  An NSNumber object that contains the size of the attachment (in bytes).
- */
 @property (nonatomic) NSNumber *size;
 
-/**
- *  Creates and returns a new MVUser object.
- *
- *  @param dictionary A dictionary that should be used to initialize the new object.
- *
- *  @return An MVAttachment object.
- */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

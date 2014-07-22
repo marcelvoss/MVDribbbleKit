@@ -26,43 +26,13 @@
 
 @interface MVComment : NSObject
 
-/**
- *  An NSNumber object that contains the comment ID.
- */
 @property (nonatomic) NSNumber *commentID;
-
-/**
- *  An NSString object that contains the comment.
- */
 @property (nonatomic, copy) NSString *body;
-
-/**
- *  An NSNumber object that contains the amount of likes for the comment.
- */
 @property (nonatomic) NSNumber *likesCount;
-
-/**
- *  An NSURL object that contains the likes URL.
- */
 @property (nonatomic) NSURL *likesURL;
-
-/**
- *  An NSDate object that contains the creation date of the comment.
- */
 @property (nonatomic) NSDate *createdDate;
-
-/**
- *  An MVUser object that contains all information for the author of the comment.
- */
 @property (nonatomic) MVUser *user;
 
-/**
- *  Creates and returns a new MVComment object.
- *
- *  @param dictionary A dictionary that should be used to initialize the new object.
- *
- *  @return An MVComment object.
- */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

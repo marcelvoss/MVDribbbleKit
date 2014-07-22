@@ -34,7 +34,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 
 // Used for updating resources, or performing custom actions.
 - (void)PUTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
-                     success:(void (^) (NSHTTPURLResponse *response))success
+                     success:(void (^) (NSDictionary *results, NSHTTPURLResponse *response))success
                      failure:(void (^) (NSError *error, NSHTTPURLResponse *response))failure;
 
 // Used for creating resources.
@@ -296,7 +296,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     
     NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/follow", kAPIBaseURL, userID];
     
-    [self PUTOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
+    [self PUTOperationWithURL:urlString parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         success(response);
         
@@ -393,6 +393,24 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
+    }];
+}
+
+- (void)updateShotWithID:(NSNumber *)shotID title:(NSString *)title description:(NSString *)description tags:(NSArray *)tags teamID:(NSNumber *)teamID
+                 success:(void (^)(MVShot *, NSHTTPURLResponse *))success
+                 failure:(FailureHandler)failure
+{
+    // Update a shot
+    // PUT /shots/:id
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@", kAPIBaseURL, shotID];
+    
+    [self PUTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"team_id": teamID} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        
     }];
 }
 
@@ -552,6 +570,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
+// TODO: Needs a file size update live
 - (void)createAttachmentForShot:(NSNumber *)shotID fromData:(NSData *)attachmentData
                         success:(void (^)(MVAttachment *, NSHTTPURLResponse *))success
                         failure:(FailureHandler)failure
@@ -640,7 +659,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 }
 
 - (void)createCommentForShot:(NSNumber *)shotID body:(NSString *)body
-                     success:(void (^)(MVComment *, NSHTTPURLResponse *))success
+                     success:(void (^) (MVComment *, NSHTTPURLResponse *))success
                      failure:(FailureHandler)failure
 {
     // Create a comment
@@ -659,7 +678,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 }
 
 - (void)updateCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID body:(NSString *)body
-                    success:(void (^)(NSHTTPURLResponse *))success
+                    success:(void (^)(MVComment *, NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
 {
     // Update a comment
@@ -667,9 +686,10 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     
     NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@", kAPIBaseURL, shotID, commentID];
     
-    [self PUTOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
+    [self PUTOperationWithURL:urlString parameters:@{@"body": body} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
-        NSLog(@"%@", response);
+        MVComment *comment= [[MVComment alloc] initWithDictionary:results];
+        success(comment, response);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
@@ -792,30 +812,51 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 }
 
 - (void)PUTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
-                    success:(void (^)(NSHTTPURLResponse *))success
+                    success:(void (^)(NSDictionary *, NSHTTPURLResponse *))success
                     failure:(void (^)(NSError *, NSHTTPURLResponse *))failure
 {
     NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", _accessToken];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    configuration.HTTPAdditionalHeaders = @{@"Authorization": tempTokenString};
+    configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8", @"Authorization": tempTokenString};
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    request.HTTPMethod = @"PUT";
+    if (_allowsCellularAccess) {
+        configuration.allowsCellularAccess = YES;
+    } else {
+        configuration.allowsCellularAccess = NO;
+    }
     
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+    NSError *error = nil;
+    NSData *parameterData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:&error];
     
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    if (error == nil) {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        request.HTTPMethod = @"PUT";
+    
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+    
+        [[session uploadTaskWithRequest:request fromData:parameterData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
-        
-        if (error == nil) {
-            success(convertedResponse);
-        } else {
-            failure(error, convertedResponse);
-        }
-
-    }] resume];
+            NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
+            
+            if (error == nil) {
+                NSError *jsonError = nil;
+                NSDictionary *serializedResults = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                
+                if (jsonError == nil) {
+                    success(serializedResults, convertedResponse);
+                } else {
+                    failure(error, nil);
+                }
+                
+            } else {
+                failure(error, convertedResponse);
+            }
+            
+        }] resume];
+    } else {
+        failure(error, nil);
+    }
 }
 
 - (void)POSTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters

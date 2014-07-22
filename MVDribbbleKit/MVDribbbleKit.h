@@ -106,6 +106,10 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
               success:(void (^) (MVShot *shot, NSHTTPURLResponse *response))success
               failure:(FailureHandler)failure;
 
+- (void)updateShotWithID:(NSNumber *)shotID title:(NSString *)title description:(NSString *)description tags:(NSArray *)tags teamID:(NSNumber *)teamID
+                 success:(void (^) (MVShot *shot, NSHTTPURLResponse *respose))success
+                 failure:(FailureHandler)failure;
+
 - (void)getShotsOnList:(List)list page:(NSNumber *)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure;
@@ -171,8 +175,9 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                      success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
                      failure:(FailureHandler)failure;
 
+// FIXME: Doesn't work
 - (void)updateCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID body:(NSString *)body
-                    success:(void (^) (NSHTTPURLResponse *response))success
+                    success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
                     failure:(FailureHandler)failure;
 
 - (void)likeCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID

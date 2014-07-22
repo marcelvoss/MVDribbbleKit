@@ -31,113 +31,30 @@ typedef NS_ENUM(NSInteger, AccountType) {
 
 @interface MVUser : NSObject
 
-/**
- *  An NSURL object that contains the URL to the user's avatar.
- */
 @property (nonatomic) NSURL *avatarURL;
-
-/**
- *  An NSString object that contains the user's bio.
- */
 @property (nonatomic, copy) NSString *bio;
-
-/**
- *  An NSDate object that contains the creation date of the account.
- */
 @property (nonatomic) NSDate *createdDate;
-
-/**
- *  An NSNumber object that contains the followings count.
- */
 @property (nonatomic) NSNumber *followersCount;
-
-/**
- *  An NSNumber object that contains the followings count.
- */
 @property (nonatomic) NSNumber *followingsCount;
 
-/**
- *  An NSURL object that contains the HTML URL.
- */
 @property (nonatomic) NSURL *htmlURL;
-
-/**
- *  An NSURL object that contains the followers URL.
- */
 @property (nonatomic) NSURL *followersURL;
-
-/**
- *  An NSURL object that contains the likes URL.
- */
 @property (nonatomic) NSURL *likesURL;
-
-/**
- *  An NSNumber object that contains the user ID.
- */
 @property (nonatomic) NSNumber *userID;
-
-/**
- *  An NSNumber object that contains the number of likes the user has given.
- */
 @property (nonatomic) NSNumber *likesCount;
 
-/**
- *  A dictionary of user links. Possible keys are 'twitter' and 'web'.
- */
 @property (nonatomic) NSDictionary *links;
-
-/**
- *  An NSString object that contains the user's location.
- */
 @property (nonatomic, copy) NSString *location;
-
-/**
- *  An NSString object that contains the user's name.
- */
 @property (nonatomic, copy) NSString *name;
-
-/**
- *  A boolean value that defines weather the user is a pro or not.
- */
 @property (nonatomic, getter = isPro) BOOL pro;
-
-/**
- *  An NSNumber object that contains the number of uploaded shots by the user.
- */
 @property (nonatomic) NSNumber *shotsCount;
 
-/**
- *  An NSURL object that contains the shots URL.
- */
 @property (nonatomic) NSURL *shotsURL;
-
-/**
- *  An NSURL object that contains the teams URL.
- */
 @property (nonatomic) NSURL *teamsURL;
-
-/**
- *  <#Description#>
- */
 @property (nonatomic) AccountType accountType;
-
-/**
- *  An NSDate object that contains the last date when the user updated his profile.
- */
 @property (nonatomic) NSDate *updatedDate;
-
-/**
- *  An NSString object that contains the username of the user.
- */
 @property (nonatomic, copy) NSString *username;
 
-/**
- *  Creates and returns a new MVUser object.
- *
- *  @param dictionary A dictionary that should be used to initialize the new object.
- *
- *  @return An MVUser object.
- */
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

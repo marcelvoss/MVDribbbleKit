@@ -44,7 +44,7 @@
         _title = [dictionary objectForKey:@"title"];
         _updatedDate = [dictionary objectForKey:@"updated_at"];
         _user = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
-        _description = [dictionary objectForKey:@"description"];
+        _shotDescription = [dictionary objectForKey:@"description"];
         _images = [dictionary objectForKey:@"images"];
         
         if ([dictionary objectForKey:@"team"] == [NSNull null]) {

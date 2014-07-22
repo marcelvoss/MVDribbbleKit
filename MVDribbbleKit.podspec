@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MVDribbbleKit"
-  s.version      = "0.1.1"
+  s.version      = "1.0"
   s.summary      = "A modern Objective-C wrapper for the Dribbble API."
 
   s.description  = <<-DESC
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE.md" }
   s.author             = { "Marcel Voss" => "hello@marcelvoss.com" }
   s.social_media_url   = "http://twitter.com/CocoaMarcel"
-  s.source       = { :git => "https://github.com/marcelvoss/MVDribbbleKit.git", :tag => "0.1.1" }
+  s.source       = { :git => "https://github.com/marcelvoss/MVDribbbleKit.git", :tag => s.version }
   
   s.source_files  = "MVDribbbleKit", "MVDribbbleKit/**/*.{h,m}"
   s.platform     = :ios, '7.0'
