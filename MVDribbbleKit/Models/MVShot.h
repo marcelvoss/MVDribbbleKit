@@ -46,7 +46,10 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic) NSDate *updatedDate;
 @property (nonatomic) NSNumber *viewsCount;
-@property (nonatomic) NSDictionary *images;
+
+@property (nonatomic) NSURL *highImage;
+@property (nonatomic) NSURL *normalImage;
+@property (nonatomic) NSURL *teaserImage;
 
 @property (nonatomic) MVUser *team;
 @property (nonatomic) MVUser *user;

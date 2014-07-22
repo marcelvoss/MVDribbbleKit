@@ -45,7 +45,6 @@
         _updatedDate = [dictionary objectForKey:@"updated_at"];
         _user = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
         _shotDescription = [dictionary objectForKey:@"description"];
-        _images = [dictionary objectForKey:@"images"];
         
         if ([dictionary objectForKey:@"team"] == [NSNull null]) {
             _team = nil;
@@ -58,6 +57,11 @@
             [tagsArray addObject:tag];
         }
         _tags = tagsArray;
+        
+        _highImage = [[dictionary objectForKey:@"images"] objectForKey:@"hidpi"];
+        _teaserImage = [[dictionary objectForKey:@"images"] objectForKey:@"teaser"];
+        _normalImage = [[dictionary objectForKey:@"images"] objectForKey:@"normal"];
+        
     }
     return self;
 }

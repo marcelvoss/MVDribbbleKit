@@ -298,6 +298,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     
     [self PUTOperationWithURL:urlString parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
+        NSLog(@"%@ %@", results, response);
         success(response);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
@@ -396,6 +397,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
+// FIXME: Can't test this
 - (void)updateShotWithID:(NSNumber *)shotID title:(NSString *)title description:(NSString *)description tags:(NSArray *)tags teamID:(NSNumber *)teamID
                  success:(void (^)(MVShot *, NSHTTPURLResponse *))success
                  failure:(FailureHandler)failure
@@ -407,10 +409,11 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     
     [self PUTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"team_id": teamID} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
-        
+        MVShot *shot = [[MVShot alloc] initWithDictionary:results];
+        success(shot, response);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
-        
+        failure(error, response);
     }];
 }
 
@@ -422,20 +425,97 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     
 }
 
-// TODO: Missing
 - (void)getShotsByUser:(NSString *)userID page:(NSNumber *)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
 {
+    // List shots for a user
     
+    if (userID == nil) {
+        // GET /user/shots
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/users/shots", kAPIBaseURL];
+        
+        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+            
+            NSMutableArray *parsedResultsArray = [NSMutableArray array];
+            for (NSDictionary *dictionary in results) {
+                MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+                [parsedResultsArray addObject:shot];
+            }
+            
+            success(parsedResultsArray, response);
+            
+        } failure:^(NSError *error, NSHTTPURLResponse *response) {
+            failure(error, response);
+        }];
+    } else {
+        // GET /users/:user/shots
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/shots", kAPIBaseURL, userID];
+        
+        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+            
+            NSMutableArray *parsedResultsArray = [NSMutableArray array];
+            for (NSDictionary *dictionary in results) {
+                MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+                [parsedResultsArray addObject:shot];
+            }
+            
+            success(parsedResultsArray, response);
+            
+        } failure:^(NSError *error, NSHTTPURLResponse *response) {
+            failure(error, response);
+        }];
+    }
 }
 
-// TODO: Missing
 - (void)getLikedShotsByUser:(NSString *)userID page:(NSNumber *)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
 {
+    // List shot likes for a user
     
+    if (userID == nil) {
+        // GET /user/likes
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/user/likes", kAPIBaseURL];
+        
+        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+            
+            NSLog(@"%@", results);
+            
+            NSMutableArray *parsedResultsArray = [NSMutableArray array];
+            for (NSDictionary *dictionary in results) {
+                MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+                [parsedResultsArray addObject:shot];
+            }
+            
+            success(parsedResultsArray, response);
+            
+        } failure:^(NSError *error, NSHTTPURLResponse *response) {
+            failure(error, response);
+        }];
+        
+    } else {
+        // GET /users/:user/likes
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/likes", kAPIBaseURL, userID];
+        
+        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+            
+            NSMutableArray *parsedResultsArray = [NSMutableArray array];
+            for (NSDictionary *dictionary in results) {
+                MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+                [parsedResultsArray addObject:shot];
+            }
+            
+            success(parsedResultsArray, response);
+            
+        } failure:^(NSError *error, NSHTTPURLResponse *response) {
+            failure(error, response);
+        }];
+    }
 }
 
 // TODO: Missing
@@ -811,6 +891,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }] resume];
 }
 
+// FIXME: Make it work with nil parameters
 - (void)PUTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
                     success:(void (^)(NSDictionary *, NSHTTPURLResponse *))success
                     failure:(void (^)(NSError *, NSHTTPURLResponse *))failure
