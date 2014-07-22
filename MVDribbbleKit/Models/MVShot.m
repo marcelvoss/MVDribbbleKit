@@ -30,7 +30,7 @@
     if (self) {
         _shotID = [dictionary objectForKey:@"id"];
         _title = [dictionary objectForKey:@"title"];
-        _description = [dictionary objectForKey:@"description"];
+        _shotDescription = [dictionary objectForKey:@"description"];
         
         _url = [NSURL URLWithString:[dictionary objectForKey:@"url"]];
         _shortURL = [NSURL URLWithString:[dictionary objectForKey:@"short_url"]];

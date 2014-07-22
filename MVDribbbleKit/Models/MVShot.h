@@ -28,7 +28,7 @@
 
 @property (nonatomic) NSNumber *shotID;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *shotDescription;
 
 @property (nonatomic) NSURL *url;
 @property (nonatomic) NSURL *shortURL;
