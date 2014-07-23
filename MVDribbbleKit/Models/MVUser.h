@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, AccountType) {
 
 @property (nonatomic) NSURL *htmlURL;
 @property (nonatomic) NSURL *followersURL;
+@property (nonatomic) NSURL *followingURL;
 @property (nonatomic) NSURL *likesURL;
 @property (nonatomic) NSNumber *userID;
 @property (nonatomic) NSNumber *likesCount;

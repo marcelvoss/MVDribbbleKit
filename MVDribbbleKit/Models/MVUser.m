@@ -36,6 +36,7 @@
         
         _htmlURL = [NSURL URLWithString:[dictionary objectForKey:@"html_url"]];
         _followersURL = [NSURL URLWithString:[dictionary objectForKey:@"followers_url"]];
+        _followingURL = [NSURL URLWithString:[dictionary objectForKey:@"following_url"]];
         _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
         
         _userID = [dictionary objectForKey:@"id"];
