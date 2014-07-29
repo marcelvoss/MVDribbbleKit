@@ -110,6 +110,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                  success:(void (^) (MVShot *shot, NSHTTPURLResponse *respose))success
                  failure:(FailureHandler)failure;
 
+// TODO: Still missing
 - (void)getShotsOnList:(List)list page:(NSNumber *)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure;

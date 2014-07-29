@@ -76,6 +76,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 
 #pragma mark - Authorization
 
+// TODO: Needs more error handling
 - (void)authorizeWithCompletion:(void (^)(NSError *, NSString *))completion
 {
     // GET /oauth/authorize
@@ -83,8 +84,10 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     
     NSMutableString *urlString;
     
+    // Create a scopes string
     if (_scopes == nil) {
         
+        // If the _scopes array is empty, it'll automatically use all four scopes
         urlString = [NSMutableString stringWithFormat:@"%@/oauth/authorize?client_id=%@&scope=write+upload+public+comment", kBaseURL, _clientID];
         
     } else {
@@ -891,7 +894,6 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }] resume];
 }
 
-// FIXME: Make it work with nil parameters
 - (void)PUTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
                     success:(void (^)(NSDictionary *, NSHTTPURLResponse *))success
                     failure:(void (^)(NSError *, NSHTTPURLResponse *))failure
@@ -907,8 +909,19 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         configuration.allowsCellularAccess = NO;
     }
     
+    NSDictionary *tempParameters = [NSDictionary dictionary];
+    
+    // I have to this this
+    // If I pass a nil value to fromData, the simulator stays black
+    // Already filed a radar
+    if (parameters == nil) {
+        tempParameters = @{@"": @""};
+    } else {
+        tempParameters = parameters;
+    }
+    
     NSError *error = nil;
-    NSData *parameterData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:&error];
+    NSData *parameterData = [NSJSONSerialization dataWithJSONObject:tempParameters options:0 error:&error];
     
     if (error == nil) {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -940,6 +953,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }
 }
 
+// TODO: Clean this up
 - (void)POSTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
                      success:(void (^)(NSDictionary *, NSHTTPURLResponse *))success
                      failure:(void (^)(NSError *, NSHTTPURLResponse *))failure
@@ -962,8 +976,19 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     
+    NSDictionary *tempParameters = [NSDictionary dictionary];
+    
+    // I have to this this
+    // If I pass a nil value to fromData, the simulator stays black
+    // Already filed a radar
+    if (parameters == nil) {
+        tempParameters = @{@"": @""};
+    } else {
+        tempParameters = parameters;
+    }
+    
     NSError *error = nil;
-    NSData *parameterData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:&error];
+    NSData *parameterData = [NSJSONSerialization dataWithJSONObject:tempParameters options:0 error:&error];
     
     if (error == nil) {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
