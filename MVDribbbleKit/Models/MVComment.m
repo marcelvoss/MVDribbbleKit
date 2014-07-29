@@ -34,9 +34,9 @@
         _likesCount = [dictionary objectForKey:@"likes_count"];
         
         // Parse the date
-        // Example: 2014-07-02T15:46:06Z
+        // Example: 2014/07/17 14:24:35 -0400
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+        formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss ZZZZ";
         _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
         
         NSDictionary *playerDictionary = [dictionary objectForKey:@"player"];
