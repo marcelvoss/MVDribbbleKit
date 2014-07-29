@@ -28,9 +28,16 @@
 {
     self = [super init];
     if (self) {
-        _createdDate = [dictionary objectForKey:@"created_at"];
+        
         _likeID = [dictionary objectForKey:@"id"];
         _user = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
+        
+        // Parse the date
+        // Example: 2014-07-02T15:46:06Z
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+        _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
+        
     }
     return self;
 }

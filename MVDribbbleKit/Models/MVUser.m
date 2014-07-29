@@ -28,9 +28,9 @@
 {
     self = [super init];
     if (self) {
+        
         _avatarURL = [NSURL URLWithString:[dictionary objectForKey:@"avatar_url"]];
         _bio = [dictionary objectForKey:@"bio"];
-        _createdDate = [dictionary objectForKey:@"created_at"];
         _followersCount = [dictionary objectForKey:@"followers_count"];
         _followingsCount = [dictionary objectForKey:@"following_count"];
         
@@ -47,7 +47,6 @@
         _shotsCount  = [dictionary objectForKey:@"shots_count"];
         _shotsURL = [NSURL URLWithString:[dictionary objectForKey:@"shots_url"]];
         _teamsURL = [NSURL URLWithString:[dictionary objectForKey:@"teams_url"]];
-        _updatedDate = [dictionary objectForKey:@"updated_at"];
         _username = [dictionary objectForKey:@"username"];
         
         _links = [dictionary objectForKey:@"links"];
@@ -63,6 +62,14 @@
         } else {
             _pro = YES;
         }
+        
+        // Parse the date
+        // Example: 2014-07-02T15:46:06Z
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+        _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
+        _updatedDate = [formatter dateFromString:[dictionary objectForKey:@"updated_at"]];
+        
     }
     return self;
 }

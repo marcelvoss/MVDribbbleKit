@@ -1,5 +1,5 @@
 # MVDribbbleKit
-MVDribbbleKit is a modern, full-featured and well-documented Objective-C wrapper for the official [Dribbble API](https://dribbble.com/api).
+MVDribbbleKit is a modern and full-featured Objective-C wrapper for the official [Dribbble API](https://dribbble.com/api).
 
 No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required because this wrapper makes use of NSURLSession.
 
@@ -52,7 +52,7 @@ Yup, that's it. Everything else is similar to this. Let's take another example. 
 }];
 ```
 
-Easy, huh?
+Easy, huh? There are also five model classes available (MVLike, MVAttachment, MVComment, MVShot, MVUser). These will be used to wrap everything into native foundation objects.
 
 ## License
 MVDribbbleKit is available under the MIT license. See the [LICENSE](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md) file for more information.

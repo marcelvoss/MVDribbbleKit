@@ -28,12 +28,12 @@
 {
     self = [super init];
     if (self) {
+        
         _attachmentsCount = [dictionary objectForKey:@"attachments_count"];
         _attachmentsURL = [NSURL URLWithString:[dictionary objectForKey:@"attachments_url"]];
         _bucketsCount = [dictionary objectForKey:@"buckets_count"];
         _commentsCount = [dictionary objectForKey:@"comments_count"];
         _commentsURL = [NSURL URLWithString:[dictionary objectForKey:@"comments_url"]];
-        _createdDate = [dictionary objectForKey:@"created_at"];
         _htmlURL = [NSURL URLWithString:[dictionary objectForKey:@"html_url"]];
         _shotID = [dictionary objectForKey:@"id"];
         _viewsCount = [dictionary objectForKey:@"views_count"];
@@ -42,7 +42,6 @@
         _reboundsCount = [dictionary objectForKey:@"rebounds_count"];
         _reboundsURL = [NSURL URLWithString:[dictionary objectForKey:@"rebounds_url"]];
         _title = [dictionary objectForKey:@"title"];
-        _updatedDate = [dictionary objectForKey:@"updated_at"];
         _user = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
         _shotDescription = [dictionary objectForKey:@"description"];
         
@@ -61,6 +60,13 @@
         _highImage = [[dictionary objectForKey:@"images"] objectForKey:@"hidpi"];
         _teaserImage = [[dictionary objectForKey:@"images"] objectForKey:@"teaser"];
         _normalImage = [[dictionary objectForKey:@"images"] objectForKey:@"normal"];
+        
+        // Parse the date
+        // Example: 2014-07-02T15:46:06Z
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+        _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
+        _updatedDate = [formatter dateFromString:[dictionary objectForKey:@"updated_at"]];
         
     }
     return self;

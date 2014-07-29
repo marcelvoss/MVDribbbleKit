@@ -47,8 +47,13 @@
 @property (nonatomic) NSDate *updatedDate;
 @property (nonatomic) NSNumber *viewsCount;
 
+// Normally 800x600
 @property (nonatomic) NSURL *highImage;
+
+// 400x300
 @property (nonatomic) NSURL *normalImage;
+
+// Normally 200x150
 @property (nonatomic) NSURL *teaserImage;
 
 @property (nonatomic) MVUser *team;
