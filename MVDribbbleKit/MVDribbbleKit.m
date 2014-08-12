@@ -192,7 +192,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }
 }
 
-- (void)getFollowersForUser:(NSString *)userID page:(NSNumber *)page
+- (void)getFollowersForUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
 {
@@ -202,7 +202,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/user/followers", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -223,7 +223,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/followers", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -240,7 +240,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }
 }
 
-- (void)getFollowingsForUser:(NSString *)userID page:(NSNumber *)page
+- (void)getFollowingsForUser:(NSString *)userID page:(NSInteger)page
                        success:(SuccessHandler)success
                        failure:(FailureHandler)failure
 {
@@ -250,7 +250,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/following", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -272,7 +272,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/following", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -330,7 +330,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 
 #pragma mark - Teams
 
-- (void)getTeamsForUserWithID:(NSString *)userID page:(NSNumber *)page
+- (void)getTeamsForUserWithID:(NSString *)userID page:(NSInteger)page
                         success:(SuccessHandler)success
                         failure:(FailureHandler)failure
 {
@@ -340,7 +340,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/user/teams", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -361,7 +361,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/teams", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -381,14 +381,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 
 #pragma mark - Shots
 
-- (void)getShotWithID:(NSNumber *)shotID
+- (void)getShotWithID:(NSInteger)shotID
               success:(void (^)(MVShot *, NSHTTPURLResponse *))success
               failure:(FailureHandler)failure
 {
     // Get a shot
     // GET /shots/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, shotID];
     
     [self GETOperationWithURL:urlString parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -400,17 +400,35 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
+- (void)createShotWithTitle:(NSString *)title image:(NSData *)imageData description:(NSString *)description
+                       tags:(NSArray *)tags team:(NSInteger)teamID reboundTo:(NSInteger)reboundShot
+                    success:(void (^)(MVShot *, NSHTTPURLResponse *))success
+                    failure:(FailureHandler)failure
+{
+    // Create a shot
+    // POST /shots
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots", kAPIBaseURL];
+    
+    [self POSTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"image": imageData} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
 // FIXME: Can't test this
-- (void)updateShotWithID:(NSNumber *)shotID title:(NSString *)title description:(NSString *)description tags:(NSArray *)tags teamID:(NSNumber *)teamID
+- (void)updateShotWithID:(NSInteger)shotID title:(NSString *)title description:(NSString *)description
+                    tags:(NSArray *)tags teamID:(NSInteger)teamID
                  success:(void (^)(MVShot *, NSHTTPURLResponse *))success
                  failure:(FailureHandler)failure
 {
     // Update a shot
     // PUT /shots/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, (long)shotID];
     
-    [self PUTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"team_id": teamID} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self PUTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"team_id": [NSNumber numberWithInteger:teamID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         MVShot *shot = [[MVShot alloc] initWithDictionary:results];
         success(shot, response);
@@ -421,14 +439,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 }
 
 // TODO: Missing
-- (void)getShotsOnList:(List)list page:(NSNumber *)page
+- (void)getShotsOnList:(List)list page:(NSInteger)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure
 {
     
 }
 
-- (void)getShotsByUser:(NSString *)userID page:(NSNumber *)page
+- (void)getShotsByUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
 {
@@ -439,7 +457,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/shots", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             for (NSDictionary *dictionary in results) {
@@ -457,7 +475,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/shots", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             for (NSDictionary *dictionary in results) {
@@ -473,7 +491,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }
 }
 
-- (void)getLikedShotsByUser:(NSString *)userID page:(NSNumber *)page
+- (void)getLikedShotsByUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
 {
@@ -484,7 +502,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/user/likes", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSLog(@"%@", results);
             
@@ -505,7 +523,7 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
         
         NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/likes", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             for (NSDictionary *dictionary in results) {
@@ -522,23 +540,23 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 }
 
 // TODO: Missing
-- (void)getTimelineOfUser:(NSString *)userID page:(NSNumber *)page
+- (void)getTimelineOfUser:(NSString *)userID page:(NSInteger)page
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure
 {
     
 }
 
-- (void)getLikesForShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getLikesForShot:(NSInteger)shotID page:(NSInteger)page
                 success:(SuccessHandler)success
                 failure:(FailureHandler)failure
 {
     // List the likes for a shot
     // GET /shots/:id/likes
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/likes", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/likes", kAPIBaseURL, shotID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *likesArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -553,16 +571,16 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)likeShotWithID:(NSNumber *)shotID
+- (void)likeShotWithID:(NSInteger)shotID
                success:(void (^)(MVLike *, NSHTTPURLResponse *))success
                failure:(FailureHandler)failure
 {
     // Like a shot
     // POST /shots/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/like", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/like", kAPIBaseURL, shotID];
     
-    [self POSTOperationWithURL:urlString parameters:@{@"id": shotID} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self POSTOperationWithURL:urlString parameters:@{@"id": [NSNumber numberWithInteger:shotID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         MVLike *like = [[MVLike alloc] initWithDictionary:results];
         success(like, response);
@@ -572,14 +590,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)unlikeShotWithID:(NSNumber *)shotID
+- (void)unlikeShotWithID:(NSInteger)shotID
                  success:(void (^)(NSHTTPURLResponse *))success
                  failure:(FailureHandler)failure
 {
     // Unlike a shot
     // DELETE /shots/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/like", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/like", kAPIBaseURL, shotID];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
@@ -590,14 +608,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)deleteShotWithID:(NSNumber *)shotID
+- (void)deleteShotWithID:(NSInteger)shotID
                  success:(void (^)(NSHTTPURLResponse *))success
                  failure:(FailureHandler)failure
 {
     // Delete a shot
     // DELETE /shots/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, shotID];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
@@ -610,16 +628,16 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 
 #pragma mark - Attachments
 
-- (void)getAttachmentsForShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getAttachmentsForShot:(NSInteger)shotID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
 {
     // List attachments for a shot
     // GET /shots/:id/attachments
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/attachments", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/attachments", kAPIBaseURL, shotID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *attachmentsArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -634,14 +652,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)getAttachmentWithID:(NSNumber *)attachmentID onShot:(NSNumber *)shotID
+- (void)getAttachmentWithID:(NSInteger)attachmentID onShot:(NSInteger)shotID
                     success:(void (^)(MVAttachment *, NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
 {
     // Get a single attachme
     // GET /shots/:shot/attachments/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/attachments/%@", kAPIBaseURL, shotID, attachmentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/attachments/%ld", kAPIBaseURL, shotID, attachmentID];
     
     [self GETOperationWithURL:urlString parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -654,14 +672,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 }
 
 // TODO: Needs a file size update live
-- (void)createAttachmentForShot:(NSNumber *)shotID fromData:(NSData *)attachmentData
+- (void)createAttachmentForShot:(NSInteger)shotID fromData:(NSData *)attachmentData
                         success:(void (^)(MVAttachment *, NSHTTPURLResponse *))success
                         failure:(FailureHandler)failure
 {
     // Create an attachment
     // POST /shots/:shot/attachments
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@/attachment", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%ld/attachment", kAPIBaseURL, shotID];
     
     [self POSTOperationWithURL:urlString parameters:@{@"file": attachmentData} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -673,14 +691,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)deleteAttachmetWithID:(NSNumber *)attachmentID onShot:(NSNumber *)shotID
+- (void)deleteAttachmetWithID:(NSInteger)attachmentID onShot:(NSInteger)shotID
                       success:(void (^)(NSHTTPURLResponse *))success
                       failure:(FailureHandler)failure
 {
     // Delete an attachment
     // DELETE /shots/:shot/attachments/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/attachments/%@", kAPIBaseURL, shotID, attachmentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/attachments/%ld", kAPIBaseURL, shotID, attachmentID];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
     
@@ -693,16 +711,16 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 
 #pragma mark - Comments
 
-- (void)getCommentsForShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getCommentsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure
 {
     // List comments for a shot
     // GET /shots/:shot/comments
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments", kAPIBaseURL, shotID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *commentArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -717,16 +735,16 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)getLikesForCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getLikesForCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID page:(NSInteger)page
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure
 {
     // List likes for a comment
     // GET /shots/:shot/comments/:id/likes
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@/likes", kAPIBaseURL, shotID,commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/likes", kAPIBaseURL, shotID, commentID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *parsedResultsArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -741,14 +759,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)createCommentForShot:(NSNumber *)shotID body:(NSString *)body
+- (void)createCommentForShot:(NSInteger)shotID body:(NSString *)body
                      success:(void (^) (MVComment *, NSHTTPURLResponse *))success
                      failure:(FailureHandler)failure
 {
     // Create a comment
     // POST /shots/:shot/comments
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments", kAPIBaseURL, shotID];
     
     [self POSTOperationWithURL:urlString parameters:@{@"body": body} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -760,14 +778,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)updateCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID body:(NSString *)body
+- (void)updateCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID body:(NSString *)body
                     success:(void (^)(MVComment *, NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
 {
     // Update a comment
     // PUT /shots/:shot/comments/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@", kAPIBaseURL, shotID, commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld", kAPIBaseURL, shotID, commentID];
     
     [self PUTOperationWithURL:urlString parameters:@{@"body": body} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -780,16 +798,16 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     
 }
 
-- (void)likeCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID
+- (void)likeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                   success:(void (^)(MVLike *, NSHTTPURLResponse *))success
                   failure:(FailureHandler)failure
 {
     // Like a comment
     // POST /shots/:shot/comments/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@/like", kAPIBaseURL, shotID,commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/like", kAPIBaseURL, shotID,commentID];
     
-    [self POSTOperationWithURL:urlString parameters:@{@"shot_id": shotID, @"comment_id": commentID} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self POSTOperationWithURL:urlString parameters:@{@"shot_id": [NSNumber numberWithInteger:shotID], @"comment_id": [NSNumber numberWithInteger:commentID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         MVLike *like = [[MVLike alloc] initWithDictionary:results];
         success(like, response);
@@ -799,14 +817,14 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
     }];
 }
 
-- (void)unlikeCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID
+- (void)unlikeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                     success:(void (^)(NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
 {
     // Unlike a comment
     // DELETE /shots/:shot/comments/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@/like", kAPIBaseURL, shotID, commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/like", kAPIBaseURL, shotID, commentID];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
@@ -819,16 +837,16 @@ static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 
 #pragma mark - Rebounds
 
-- (void)getReboundsForShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getReboundsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure
 {
     // List rebounds for a shot
     // GET /shots/:id/rebounds
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/rebounds", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/rebounds", kAPIBaseURL, shotID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": page, @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *reboundsArray = [NSMutableArray array];
         

@@ -77,11 +77,11 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                     success:(void (^) (MVUser *user, NSHTTPURLResponse *response))success
                     failure:(FailureHandler)failure;
 
-- (void)getFollowersForUser:(NSString *)userID page:(NSNumber *)page
+- (void)getFollowersForUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure;
 
-- (void)getFollowingsForUser:(NSString *)userID page:(NSNumber *)page
+- (void)getFollowingsForUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure;
 
@@ -96,102 +96,109 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 #pragma mark - Teams
 
 // If playerID is nil, use the authenticated player
-- (void)getTeamsForUserWithID:(NSString *)userID page:(NSNumber *)page
+- (void)getTeamsForUserWithID:(NSString *)userID page:(NSInteger)page
                         success:(SuccessHandler)success
                         failure:(FailureHandler)failure;
 
 #pragma mark - Shots
 
-- (void)getShotWithID:(NSNumber *)shotID
+- (void)getShotWithID:(NSInteger)shotID
               success:(void (^) (MVShot *shot, NSHTTPURLResponse *response))success
               failure:(FailureHandler)failure;
 
-- (void)updateShotWithID:(NSNumber *)shotID title:(NSString *)title description:(NSString *)description tags:(NSArray *)tags teamID:(NSNumber *)teamID
+// TODO: Needs optimization
+- (void)createShotWithTitle:(NSString *)title image:(NSData *)imageData
+                description:(NSString *)description tags:(NSArray *)tags team:(NSInteger)teamID reboundTo:(NSInteger)reboundShot
+                    success:(void (^) (MVShot *shot, NSHTTPURLResponse *response))success
+                    failure:(FailureHandler)failure;
+
+- (void)updateShotWithID:(NSInteger)shotID title:(NSString *)title
+             description:(NSString *)description tags:(NSArray *)tags teamID:(NSInteger)teamID
                  success:(void (^) (MVShot *shot, NSHTTPURLResponse *respose))success
                  failure:(FailureHandler)failure;
 
 // TODO: Still missing
-- (void)getShotsOnList:(List)list page:(NSNumber *)page
+- (void)getShotsOnList:(List)list page:(NSInteger)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure;
 
-- (void)getShotsByUser:(NSString *)userID page:(NSNumber *)page
+- (void)getShotsByUser:(NSString *)userID page:(NSInteger)page
                  success:(SuccessHandler)success
                  failure:(FailureHandler)failure;
 
-- (void)getLikedShotsByUser:(NSString *)userID page:(NSNumber *)page
+- (void)getLikedShotsByUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure;
 
 // TODO: Needs a new name
-- (void)getTimelineOfUser:(NSString *)userID page:(NSNumber *)page
+- (void)getTimelineOfUser:(NSString *)userID page:(NSInteger)page
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure;
 
-- (void)getLikesForShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getLikesForShot:(NSInteger)shotID page:(NSInteger)page
                 success:(SuccessHandler)success
                 failure:(FailureHandler)failure;
 
-- (void)likeShotWithID:(NSNumber *)shotID
+- (void)likeShotWithID:(NSInteger)shotID
                success:(void (^) (MVLike *like, NSHTTPURLResponse *response))success
                failure:(FailureHandler)failure;
 
-- (void)unlikeShotWithID:(NSNumber *)shotID
+- (void)unlikeShotWithID:(NSInteger)shotID
                  success:(void (^) (NSHTTPURLResponse *response))success
                  failure:(FailureHandler)failure;
 
-- (void)deleteShotWithID:(NSNumber *)shotID
+- (void)deleteShotWithID:(NSInteger)shotID
                  success:(void (^) (NSHTTPURLResponse *response))success
                  failure:(FailureHandler)failure;
 
 #pragma mark - Attachments
 
-- (void)getAttachmentsForShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getAttachmentsForShot:(NSInteger)shotID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure;
 
-- (void)getAttachmentWithID:(NSNumber *)attachmentID onShot:(NSNumber *)shotID
+- (void)getAttachmentWithID:(NSInteger)attachmentID onShot:(NSInteger)shotID
                     success:(void (^) (MVAttachment *attachment, NSHTTPURLResponse *response))success
                     failure:(FailureHandler)failure;
 
-- (void)createAttachmentForShot:(NSNumber *)shotID fromData:(NSData *)attachmentData
+- (void)createAttachmentForShot:(NSInteger)shotID fromData:(NSData *)attachmentData
                         success:(void (^) (MVAttachment *attachment, NSHTTPURLResponse *response))success
                         failure:(FailureHandler)failure;
 
-- (void)deleteAttachmetWithID:(NSNumber *)attachmentID onShot:(NSNumber *)shotID
+- (void)deleteAttachmetWithID:(NSInteger)attachmentID onShot:(NSInteger)shotID
                       success:(void (^) (NSHTTPURLResponse *response))success
                       failure:(FailureHandler)failure;
 
 #pragma mark - Comments
 
-- (void)getCommentsForShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getCommentsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure;
 
-- (void)getLikesForCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getLikesForCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID page:(NSInteger)page
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure;
 
-- (void)createCommentForShot:(NSNumber *)shotID body:(NSString *)body
+- (void)createCommentForShot:(NSInteger)shotID body:(NSString *)body
                      success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
                      failure:(FailureHandler)failure;
 
 // FIXME: Doesn't work
-- (void)updateCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID body:(NSString *)body
+- (void)updateCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID body:(NSString *)body
                     success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
                     failure:(FailureHandler)failure;
 
-- (void)likeCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID
+- (void)likeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                   success:(void (^) (MVLike *like, NSHTTPURLResponse *response))success
                   failure:(FailureHandler)failure;
 
-- (void)unlikeCommentWithID:(NSNumber *)commentID onShot:(NSNumber *)shotID
+- (void)unlikeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                   success:(void (^) (NSHTTPURLResponse *response))success
                   failure:(FailureHandler)failure;
 
 #pragma mark - Rebounds
 
-- (void)getReboundsForShot:(NSNumber *)shotID page:(NSNumber *)page
+- (void)getReboundsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure;
 
