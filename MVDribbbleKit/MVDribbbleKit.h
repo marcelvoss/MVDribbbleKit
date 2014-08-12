@@ -28,6 +28,7 @@
 #import "MVComment.h"
 #import "MVAttachment.h"
 
+#import "MVConstants.h"
 #import "MVAuthBrowser.h"
 
 typedef NS_ENUM(NSInteger, List) {

@@ -22,8 +22,8 @@
 
 #import "MVDribbbleKit.h"
 
-static const NSString *kBaseURL = @"https://dribbble.com";
-static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
+//static const NSString *kBaseURL = @"https://dribbble.com";
+//static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
 
 @interface MVDribbbleKit (Private)
 
