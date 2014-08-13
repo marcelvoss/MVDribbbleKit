@@ -36,7 +36,15 @@ typedef NS_ENUM(NSInteger, List) {
     ListDebuts,
     ListPlayoffs,
     ListRebounds,
-    ListTeams
+    ListTeams,
+    ListAll
+};
+
+typedef NS_ENUM(NSInteger, SortType) {
+    SortTypePopularity,
+    SortTypeComments,
+    SortTypeViews,
+    SortTypeRecent
 };
 
 typedef NS_ENUM(NSInteger, UserType) {
@@ -119,7 +127,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                  failure:(FailureHandler)failure;
 
 // TODO: Still missing
-- (void)getShotsOnList:(List)list page:(NSInteger)page
+- (void)getShotsOnList:(List)list date:(NSDate *)date sort:(SortType)sorting  page:(NSInteger)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure;
 

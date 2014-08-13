@@ -204,7 +204,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/user/followers", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -225,7 +225,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/followers", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -253,7 +253,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/following", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -275,7 +275,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/following", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -344,7 +344,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/user/teams", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -365,7 +365,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/teams", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             
@@ -539,7 +539,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/shots", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             for (NSDictionary *dictionary in results) {
@@ -557,7 +557,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/shots", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             for (NSDictionary *dictionary in results) {
@@ -584,7 +584,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/user/likes", kAPIBaseURL];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSLog(@"%@", results);
             
@@ -605,7 +605,7 @@
         
         NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/likes", kAPIBaseURL, userID];
         
-        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             for (NSDictionary *dictionary in results) {
@@ -638,7 +638,7 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/likes", kAPIBaseURL, shotID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *likesArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -719,7 +719,7 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/attachments", kAPIBaseURL, shotID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *attachmentsArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -804,7 +804,7 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments", kAPIBaseURL, shotID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *commentArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -829,7 +829,7 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/likes", kAPIBaseURL, shotID, commentID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *parsedResultsArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -936,7 +936,7 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/rebounds", kAPIBaseURL, shotID];
     
-    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page], @"per_page": _itemsPerPage} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *reboundsArray = [NSMutableArray array];
         
