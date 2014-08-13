@@ -22,9 +22,6 @@
 
 #import "MVDribbbleKit.h"
 
-//static const NSString *kBaseURL = @"https://dribbble.com";
-//static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
-
 @interface MVDribbbleKit (Private)
 
 // Used for retrieving resources.
@@ -53,6 +50,7 @@
 
 #pragma mark - Miscellaneous
 
+// Done
 - (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID callbackURL:(NSString *)callbackURL
 {
     self = [super init];
@@ -64,6 +62,7 @@
     return self;
 }
 
+// Done
 + (MVDribbbleKit *)sharedInstance
 {
     static MVDribbbleKit *instance;
@@ -135,7 +134,7 @@
             [self POSTOperationWithURL:urlString parameters:@{@"client_id": _clientID, @"client_secret": _clientSecret, @"code": codeString} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
                 
                 NSString *accessToken = [results objectForKey:@"access_token"];
-                NSLog(@"%@", accessToken);
+                NSLog(@"Your access token: %@", accessToken);
                 
                 _accessToken = accessToken;
                 
@@ -150,6 +149,7 @@
     };
 }
 
+// Done
 - (void)setClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret callbackURL:(NSString *)callbackURL
 {
     _clientID = clientID;
@@ -160,6 +160,7 @@
 
 #pragma mark - Users
 
+// Done
 - (void)getDetailsForUser:(NSString *)userID
                     success:(void (^)(MVUser *, NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
@@ -192,6 +193,7 @@
     }
 }
 
+// Done
 - (void)getFollowersForUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
@@ -240,6 +242,7 @@
     }
 }
 
+// Done
 - (void)getFollowingsForUser:(NSString *)userID page:(NSInteger)page
                        success:(SuccessHandler)success
                        failure:(FailureHandler)failure
@@ -289,6 +292,7 @@
         
     }
 }
+
 
 - (void)followUserWithID:(NSString *)userID
                    success:(void (^)(NSHTTPURLResponse *))success
@@ -381,6 +385,7 @@
 
 #pragma mark - Shots
 
+// Done
 - (void)getShotWithID:(NSInteger)shotID
               success:(void (^)(MVShot *, NSHTTPURLResponse *))success
               failure:(FailureHandler)failure
@@ -400,6 +405,8 @@
     }];
 }
 
+// Should be done
+// Can't really test it
 - (void)createShotWithTitle:(NSString *)title image:(NSData *)imageData description:(NSString *)description
                        tags:(NSArray *)tags team:(NSInteger)teamID reboundTo:(NSInteger)reboundShot
                     success:(void (^)(MVShot *, NSHTTPURLResponse *))success
@@ -410,14 +417,18 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@/shots", kAPIBaseURL];
     
-    [self POSTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"image": imageData} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self POSTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"image": imageData, @"team_id": [NSNumber numberWithInteger:teamID], @"rebound_source_id": [NSNumber numberWithInteger:reboundShot]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVShot *shot = [[MVShot alloc] initWithDictionary:results];
+        success(shot, response);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
     }];
 }
 
-// FIXME: Can't test this
+// Should be done
+// Can't really test it
 - (void)updateShotWithID:(NSInteger)shotID title:(NSString *)title description:(NSString *)description
                     tags:(NSArray *)tags teamID:(NSInteger)teamID
                  success:(void (^)(MVShot *, NSHTTPURLResponse *))success
@@ -438,14 +449,85 @@
     }];
 }
 
-// TODO: Missing
-- (void)getShotsOnList:(List)list page:(NSInteger)page
+// FIXME: Timeframe is missing
+- (void)getShotsOnList:(List)list date:(NSDate *)date sort:(SortType)sorting page:(NSInteger)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure
 {
+    // List shots
+    // GET /shots
     
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots", kAPIBaseURL];
+    
+    NSString *listString;
+    switch (list) {
+        case ListAnimated:
+            listString = @"animated";
+            break;
+        case ListDebuts:
+            listString = @"debuts";
+            break;
+        case ListPlayoffs:
+            listString = @"playoffs";
+            break;
+        case ListRebounds:
+            listString = @"rebounds";
+            break;
+        case ListTeams:
+            listString = @"teams";
+            break;
+        case ListAll:
+            listString = @"all";
+            break;
+            
+        default:
+            listString = @"all";
+            break;
+    }
+    
+    NSString *sortingString;
+    switch (sorting) {
+        case SortTypePopularity:
+            sortingString = @"popularity";
+            break;
+        case SortTypeComments:
+            sortingString = @"comments";
+            break;
+        case SortTypeViews:
+            sortingString = @"views";
+            break;
+        case SortTypeRecent:
+            sortingString = @"recent";
+            break;
+            
+        default:
+            sortingString = @"popularity";
+            break;
+    }
+    
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    
+    [self GETOperationWithURL:urlString parameters:@{@"list": listString, @"sort": sortingString, @"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        NSMutableArray *parsedResultsArray = [NSMutableArray array];
+        for (NSDictionary *dictionary in results) {
+            
+            MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+            [parsedResultsArray addObject:shot];
+            
+        }
+        success(parsedResultsArray, response);
+        
+        NSLog(@"%@", results);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
 }
 
+// Done
 - (void)getShotsByUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
@@ -671,7 +753,7 @@
     }];
 }
 
-// TODO: Needs a file size update live
+
 - (void)createAttachmentForShot:(NSInteger)shotID fromData:(NSData *)attachmentData
                         success:(void (^)(MVAttachment *, NSHTTPURLResponse *))success
                         failure:(FailureHandler)failure
@@ -691,6 +773,7 @@
     }];
 }
 
+// Done
 - (void)deleteAttachmetWithID:(NSInteger)attachmentID onShot:(NSInteger)shotID
                       success:(void (^)(NSHTTPURLResponse *))success
                       failure:(FailureHandler)failure
@@ -711,6 +794,7 @@
 
 #pragma mark - Comments
 
+// Done
 - (void)getCommentsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure
@@ -735,6 +819,7 @@
     }];
 }
 
+// Done
 - (void)getLikesForCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID page:(NSInteger)page
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure
@@ -759,6 +844,7 @@
     }];
 }
 
+// Done
 - (void)createCommentForShot:(NSInteger)shotID body:(NSString *)body
                      success:(void (^) (MVComment *, NSHTTPURLResponse *))success
                      failure:(FailureHandler)failure
@@ -778,6 +864,7 @@
     }];
 }
 
+// Done
 - (void)updateCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID body:(NSString *)body
                     success:(void (^)(MVComment *, NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
@@ -798,6 +885,7 @@
     
 }
 
+// Done
 - (void)likeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                   success:(void (^)(MVLike *, NSHTTPURLResponse *))success
                   failure:(FailureHandler)failure
@@ -817,6 +905,7 @@
     }];
 }
 
+// Done
 - (void)unlikeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                     success:(void (^)(NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
@@ -837,6 +926,7 @@
 
 #pragma mark - Rebounds
 
+// Done
 - (void)getReboundsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure
@@ -868,6 +958,8 @@
 
 #pragma mark - Private Methods
 
+// FIXME: Needs fixed networking methods
+// FIXME: Make it easier to use parameters because appending them to the urlString isn't nice enough
 - (void)GETOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
                         success:(void (^) (NSDictionary *, NSHTTPURLResponse *))success
                         failure:(void (^) (NSError *, NSHTTPURLResponse *))failure
@@ -885,15 +977,27 @@
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     
-    NSString *finalString;
+    NSMutableString *finalMutableString = [NSMutableString stringWithFormat:@"%@?", url];
     
     if (parameters) {
-        finalString = [NSString stringWithFormat:@"%@?page=%@&per_page=%@", url, [parameters objectForKey:@"page"], [parameters objectForKey:@"per_page"]];
+        
+        // Itterate over the parameters dictionary
+        for (id key in parameters) {
+            id value = parameters[key];
+            
+            [finalMutableString appendString:[NSString stringWithFormat:@"%@=%@&", key, value]];
+        }
+        
     } else {
-        finalString = url;
+        finalMutableString = [url copy];
     }
     
-    [[session dataTaskWithURL:[NSURL URLWithString:finalString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    // Append itemsPerPage
+    [finalMutableString appendString:[NSString stringWithFormat:@"per_page=%@", [_itemsPerPage stringValue]]];
+    
+    NSLog(@"%@", finalMutableString);
+    
+    [[session dataTaskWithURL:[NSURL URLWithString:finalMutableString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
         
@@ -905,7 +1009,6 @@
             } else {
                 failure(jsonError, nil);
             }
-            
         } else {
             failure(error, convertedResponse);
         }
