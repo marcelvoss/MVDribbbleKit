@@ -27,6 +27,7 @@
 #import "MVUser.h"
 #import "MVComment.h"
 #import "MVAttachment.h"
+#import "MVBucket.h"
 
 #import "MVConstants.h"
 #import "MVAuthBrowser.h"
@@ -209,6 +210,25 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 - (void)getReboundsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
+                   failure:(FailureHandler)failure;
+
+#pragma mark - Buckets
+
+- (void)getBucketWithID:(NSInteger)bucketID
+                success:(void (^) (MVBucket *bucket, NSHTTPURLResponse *response))success
+                failure:(FailureHandler)failure;
+
+- (void)createBucketWithName:(NSString *)bucketName description:(NSString *)bucketDescription
+                     success:(void (^) (MVBucket *bucket, NSHTTPURLResponse *response))success
+                     failure:(FailureHandler)failure;
+
+// FIXME: Isn't correctly implemented
+- (void)updateBucketWithID:(NSInteger)bucketID
+                   success:(void (^) (MVBucket *bucket, NSHTTPURLResponse *response))success
+                   failure:(FailureHandler)failure;
+
+- (void)deleteBucketWithID:(NSInteger)bucketID
+                   success:(void (^) (NSHTTPURLResponse *response))success
                    failure:(FailureHandler)failure;
 
 @end

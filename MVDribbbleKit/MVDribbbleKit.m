@@ -950,6 +950,59 @@
     }];
 }
 
+#pragma mark - Buckets
+
+- (void)getBucketWithID:(NSInteger)bucketID
+                success:(void (^)(MVBucket *, NSHTTPURLResponse *))success
+                failure:(FailureHandler)failure
+{
+    // GET /buckets/:id
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld", kAPIBaseURL, bucketID];
+    
+    [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVBucket *bucket = [[MVBucket alloc] initWithDictionary:results];
+        success(bucket, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+- (void)createBucketWithName:(NSString *)bucketName description:(NSString *)bucketDescription
+                     success:(void (^)(MVBucket *, NSHTTPURLResponse *))success
+                     failure:(FailureHandler)failure
+{
+    // POST /buckets
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets", kAPIBaseURL];
+    
+    [self POSTOperationWithURL:urlString parameters:@{@"name": bucketName, @"description": bucketDescription} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVBucket *bucket = [[MVBucket alloc] initWithDictionary:results];
+        success(bucket, response);
+        
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+- (void)updateBucketWithID:(NSInteger)bucketID
+                   success:(void (^)(MVBucket *, NSHTTPURLResponse *))success
+                   failure:(FailureHandler)failure
+{
+    
+}
+
+- (void)deleteBucketWithID:(NSInteger)bucketID
+                   success:(void (^)(NSHTTPURLResponse *))success
+                   failure:(FailureHandler)failure
+{
+    
+}
+
 @end
 
 @implementation MVDribbbleKit (Private)

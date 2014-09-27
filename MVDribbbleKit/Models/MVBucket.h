@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MVUser.h"
+
 @interface MVBucket : NSObject
+
+@property (nonatomic) NSNumber *bucketID;
+@property (nonatomic) NSString *bucketName;
+@property (nonatomic) NSString *bucketDescription;
+@property (nonatomic) NSNumber *shotsCount;
+@property (nonatomic) NSDate *createdDate;
+@property (nonatomic) NSDate *updatedDate;
+
+@property (nonatomic) MVUser *user;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end
