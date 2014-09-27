@@ -1,4 +1,4 @@
-// MVShot.h
+// MVPlayer.h
 //
 // Copyright (c) 2014 Marcel Voss
 //
@@ -22,42 +22,39 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MVUser.h"
+typedef NS_ENUM(NSInteger, AccountType) {
+    AccountTypeTeam,
+    AccountTypeUser,
+    AccountTypePlayer,
+    AccountTypeProspect
+};
 
-@interface MVShot : NSObject
+@interface MVUser : NSObject
 
-@property (nonatomic) NSNumber *attachmentsCount;
-@property (nonatomic) NSURL *attachmentsURL;
-@property (nonatomic) NSNumber *bucketsCount;
-@property (nonatomic) NSNumber *commentsCount;
-
-@property (nonatomic) NSURL *commentsURL;
+@property (nonatomic) NSURL *avatarURL;
+@property (nonatomic, copy) NSString *bio;
 @property (nonatomic) NSDate *createdDate;
-@property (nonatomic, copy) NSString *shotDescription;
+@property (nonatomic) NSNumber *followersCount;
+@property (nonatomic) NSNumber *followingsCount;
+
 @property (nonatomic) NSURL *htmlURL;
-@property (nonatomic) NSNumber *shotID;
-
-@property (nonatomic) NSNumber *likesCount;
+@property (nonatomic) NSURL *followersURL;
+@property (nonatomic) NSURL *followingURL;
 @property (nonatomic) NSURL *likesURL;
-@property (nonatomic) NSNumber *reboundsCount;
-@property (nonatomic) NSURL *reboundsURL;
-@property (nonatomic) NSArray *tags;
+@property (nonatomic) NSNumber *userID;
+@property (nonatomic) NSNumber *likesCount;
 
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic) NSDictionary *links;
+@property (nonatomic, copy) NSString *location;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, getter = isPro) BOOL pro;
+@property (nonatomic) NSNumber *shotsCount;
+
+@property (nonatomic) NSURL *shotsURL;
+@property (nonatomic) NSURL *teamsURL;
+@property (nonatomic) AccountType accountType;
 @property (nonatomic) NSDate *updatedDate;
-@property (nonatomic) NSNumber *viewsCount;
-
-// Normally 800x600
-@property (nonatomic) NSURL *highImage;
-
-// 400x300
-@property (nonatomic) NSURL *normalImage;
-
-// Normally 200x150
-@property (nonatomic) NSURL *teaserImage;
-
-@property (nonatomic) MVUser *team;
-@property (nonatomic) MVUser *user;
+@property (nonatomic, copy) NSString *username;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

@@ -29,32 +29,44 @@
     self = [super init];
     if (self) {
         
+        _attachmentsCount = [dictionary objectForKey:@"attachments_count"];
+        _attachmentsURL = [NSURL URLWithString:[dictionary objectForKey:@"attachments_url"]];
+        _bucketsCount = [dictionary objectForKey:@"buckets_count"];
+        _commentsCount = [dictionary objectForKey:@"comments_count"];
+        _commentsURL = [NSURL URLWithString:[dictionary objectForKey:@"comments_url"]];
+        _htmlURL = [NSURL URLWithString:[dictionary objectForKey:@"html_url"]];
         _shotID = [dictionary objectForKey:@"id"];
-        _title = [dictionary objectForKey:@"title"];
-        _shotDescription = [dictionary objectForKey:@"description"];
-        
-        _url = [NSURL URLWithString:[dictionary objectForKey:@"url"]];
-        _shortURL = [NSURL URLWithString:[dictionary objectForKey:@"short_url"]];
-        _imageURL = [NSURL URLWithString:[dictionary objectForKey:@"image_url"]];
-        _imageTeaserURL = [NSURL URLWithString:[dictionary objectForKey:@"image_teaser_url"]];
-        
-        _imageSize = CGSizeMake([[dictionary objectForKey:@"width"] doubleValue],
-                                [[dictionary objectForKey:@"height"] doubleValue]);
-        
         _viewsCount = [dictionary objectForKey:@"views_count"];
         _likesCount = [dictionary objectForKey:@"likes_count"];
-        _commentsCount = [dictionary objectForKey:@"comments_count"];
+        _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
         _reboundsCount = [dictionary objectForKey:@"rebounds_count"];
-        _reboundSourceID = [dictionary objectForKey:@"rebound_source_id"];
+        _reboundsURL = [NSURL URLWithString:[dictionary objectForKey:@"rebounds_url"]];
+        _title = [dictionary objectForKey:@"title"];
+        _user = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
+        _shotDescription = [dictionary objectForKey:@"description"];
+        
+        if ([dictionary objectForKey:@"team"] == [NSNull null]) {
+            _team = nil;
+        } else {
+            _team = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"team"]];
+        }
+        
+        NSMutableArray *tagsArray = [NSMutableArray array];
+        for (NSString *tag in [dictionary objectForKey:@"tags"]) {
+            [tagsArray addObject:tag];
+        }
+        _tags = tagsArray;
+        
+        _highImage = [[dictionary objectForKey:@"images"] objectForKey:@"hidpi"];
+        _teaserImage = [[dictionary objectForKey:@"images"] objectForKey:@"teaser"];
+        _normalImage = [[dictionary objectForKey:@"images"] objectForKey:@"normal"];
         
         // Parse the date
-        // Example: 2014/07/17 14:24:35 -0400
+        // Example: 2014-07-02T15:46:06Z
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss ZZZZ";
+        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
         _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
-        
-        NSDictionary *playerDictionary = [dictionary objectForKey:@"player"];
-        _player = [[MVPlayer alloc] initWithDictionary:playerDictionary];
+        _updatedDate = [formatter dateFromString:[dictionary objectForKey:@"updated_at"]];
         
     }
     return self;

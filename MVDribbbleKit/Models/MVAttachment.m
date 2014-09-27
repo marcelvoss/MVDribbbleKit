@@ -1,4 +1,4 @@
-// MVComment.m
+// MVAttachment.m
 //
 // Copyright (c) 2014 Marcel Voss
 //
@@ -20,28 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MVComment.h"
+#import "MVAttachment.h"
 
-@implementation MVComment
+@implementation MVAttachment
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
     if (self) {
         
-        _commentID = [dictionary objectForKey:@"id"];
-        _body = [dictionary objectForKey:@"body"];
-        _likesCount = [dictionary objectForKey:@"likes_count"];
-        _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
+        _attachmentID = [dictionary objectForKey:@"id"];
+        _attachmentURL = [NSURL URLWithString:[dictionary objectForKey:@"url"]];
+        _viewsCount = [dictionary objectForKey:@"views_count"];
+        _size = [dictionary objectForKey:@"size"];
         
         // Parse the date
         // Example: 2014-07-02T15:46:06Z
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
         _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
-        
-        NSDictionary *userDictionary = [dictionary objectForKey:@"user"];
-        _user = [[MVUser alloc] initWithDictionary:userDictionary];
         
     }
     return self;
