@@ -54,7 +54,7 @@ Yup, that's it. Everything else is similar to this. Let's take another example. 
 }];
 ```
 
-Easy, huh? There are also five model classes available (MVLike, MVAttachment, MVComment, MVShot, MVUser). These will be used to wrap everything into native foundation objects.
+Easy, huh? There are also six model classes available (MVLike, MVAttachment, MVComment, MVShot, MVUser, MVBucket). These will be used to wrap everything into native foundation objects.
 
 ## License
 MVDribbbleKit is available under the MIT license. See the [LICENSE](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md) file for more information.
