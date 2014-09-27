@@ -1047,6 +1047,23 @@
     }];
 }
 
+- (void)addShotToBucket:(NSInteger)shotID bucket:(NSInteger)bucketID
+                success:(void (^)())success
+                failure:(FailureHandler)failure
+{
+    // PUT /buckets/:id/shots
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld/shots", kAPIBaseURL, bucketID];
+    
+    [self PUTOperationWithURL:urlString parameters:@{@"shot_id": [NSNumber numberWithInteger:shotID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        success();
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
 @end
 
 @implementation MVDribbbleKit (Private)

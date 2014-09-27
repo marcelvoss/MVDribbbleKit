@@ -234,4 +234,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                  success:(SuccessHandler)success
                  failure:(FailureHandler)failure;
 
+- (void)addShotToBucket:(NSInteger)shotID bucket:(NSInteger)bucketID
+                success:(void (^) ())success
+                failure:(FailureHandler)failure;
+
 @end
