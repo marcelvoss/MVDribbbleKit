@@ -71,7 +71,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 #pragma mark - Miscellaneous
 
-+ (MVDribbbleKit *)sharedInstance;
++ (MVDribbbleKit *)sharedManager;
 - (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID callbackURL:(NSString *)callbackURL;
 
 #pragma mark - Authorization
