@@ -988,7 +988,6 @@
     }];
 }
 
-// FIXME: Doesn't work
 - (void)updateBucketWithID:(NSInteger)bucketID name:(NSString *)bucketName description:(NSString *)bucketDescription
                    success:(void (^)(MVBucket *, NSHTTPURLResponse *))success
                    failure:(FailureHandler)failure
@@ -1018,6 +1017,30 @@
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
         success(response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+- (void)getShotsInBucket:(NSInteger)bucketID page:(NSInteger)page
+                 success:(SuccessHandler)success
+                 failure:(FailureHandler)failure
+{
+    // GET /bucket/:id/shots
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld/shots", kAPIBaseURL, bucketID];
+    
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        NSMutableArray *shotsArray = [NSMutableArray array];
+        
+        for (NSDictionary *dictionary in results) {
+            MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+            [shotsArray addObject:shot];
+        }
+        
+        success(shotsArray, response);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
