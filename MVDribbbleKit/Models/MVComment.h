@@ -22,15 +22,16 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MVPlayer.h"
+#import "MVUser.h"
 
 @interface MVComment : NSObject
 
 @property (nonatomic) NSNumber *commentID;
-@property (nonatomic) NSString *body;
+@property (nonatomic, copy) NSString *body;
 @property (nonatomic) NSNumber *likesCount;
+@property (nonatomic) NSURL *likesURL;
 @property (nonatomic) NSDate *createdDate;
-@property (nonatomic) MVPlayer *player;
+@property (nonatomic) MVUser *user;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

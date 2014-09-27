@@ -1,4 +1,4 @@
-// MVComment.m
+// MVAuthBrowser.h
 //
 // Copyright (c) 2014 Marcel Voss
 //
@@ -20,31 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MVComment.h"
+#import <UIKit/UIKit.h>
 
-@implementation MVComment
+@interface MVAuthBrowser : UIViewController
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary
-{
-    self = [super init];
-    if (self) {
-        
-        _commentID = [dictionary objectForKey:@"id"];
-        _body = [dictionary objectForKey:@"body"];
-        _likesCount = [dictionary objectForKey:@"likes_count"];
-        _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
-        
-        // Parse the date
-        // Example: 2014-07-02T15:46:06Z
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-        _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
-        
-        NSDictionary *userDictionary = [dictionary objectForKey:@"user"];
-        _user = [[MVUser alloc] initWithDictionary:userDictionary];
-        
-    }
-    return self;
-}
+@property (nonatomic) NSURL *callbackURL;
+@property (nonatomic, strong) void (^completionHandler)(NSURL *url, NSError *error);
+
+- (instancetype)initWithURL:(NSURL *)url;
 
 @end

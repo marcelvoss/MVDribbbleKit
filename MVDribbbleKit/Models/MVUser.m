@@ -20,41 +20,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MVPlayer.h"
+#import "MVUser.h"
 
-@implementation MVPlayer
+@implementation MVUser
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
     if (self) {
         
-        _playerID = [dictionary objectForKey:@"id"];
-        _name  = [dictionary objectForKey:@"name"];
-        _username = [dictionary objectForKey:@"username"];
-        
-        _url  = [NSURL URLWithString:[dictionary objectForKey:@"url"]];
         _avatarURL = [NSURL URLWithString:[dictionary objectForKey:@"avatar_url"]];
+        _bio = [dictionary objectForKey:@"bio"];
+        _followersCount = [dictionary objectForKey:@"followers_count"];
+        _followingsCount = [dictionary objectForKey:@"following_count"];
+        
+        _htmlURL = [NSURL URLWithString:[dictionary objectForKey:@"html_url"]];
+        _followersURL = [NSURL URLWithString:[dictionary objectForKey:@"followers_url"]];
+        _followingURL = [NSURL URLWithString:[dictionary objectForKey:@"following_url"]];
+        _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
+        
+        _userID = [dictionary objectForKey:@"id"];
+        _likesCount = [dictionary objectForKey:@"likes_count"];
         
         _location = [dictionary objectForKey:@"location"];
-        _twitterScreenName = [dictionary objectForKey:@"twitter_screen_name"];
-        _draftedByPlayerID = [dictionary objectForKey:@"drafted_by_player_id"];
+        _name  = [dictionary objectForKey:@"name"];
         _shotsCount  = [dictionary objectForKey:@"shots_count"];
-        _drafteesCount = [dictionary objectForKey:@"draftees_count"];
-        _followersCount = [dictionary objectForKey:@"followers_count"];
-        _followingCount = [dictionary objectForKey:@"following_count"];
-        _commentsCount = [dictionary objectForKey:@"comments_count"];
-        _commentsReceivedCount = [dictionary objectForKey:@"comments_received_count"];
-        _likesCount = [dictionary objectForKey:@"likes_count"];
-        _likesReceivedCount = [dictionary objectForKey:@"likes_received_count"];
-        _reboundsCount = [dictionary objectForKey:@"rebounds_count"];
-        _reboundsReceivedCount = [dictionary objectForKey:@"rebounds_received_count"];
+        _shotsURL = [NSURL URLWithString:[dictionary objectForKey:@"shots_url"]];
+        _teamsURL = [NSURL URLWithString:[dictionary objectForKey:@"teams_url"]];
+        _username = [dictionary objectForKey:@"username"];
+        
+        _links = [dictionary objectForKey:@"links"];
+        
+        if ([[dictionary objectForKey:@"type"] isEqualToString:@"Player"]) {
+            _accountType = AccountTypePlayer;
+        } else if ([[dictionary objectForKey:@"type"] isEqualToString:@"Team"]) {
+            _accountType = AccountTypeTeam;
+        }
+        
+        if ([[dictionary objectForKey:@"pro"] isEqualToNumber:[NSNumber numberWithBool:0]]) {
+            _pro = NO;
+        } else {
+            _pro = YES;
+        }
         
         // Parse the date
-        // Example: 2014/07/17 14:24:35 -0400
+        // Example: 2014-07-02T15:46:06Z
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss ZZZZ";
+        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
         _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
+        _updatedDate = [formatter dateFromString:[dictionary objectForKey:@"updated_at"]];
         
     }
     return self;
