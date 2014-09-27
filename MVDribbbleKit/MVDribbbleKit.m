@@ -983,24 +983,46 @@
         MVBucket *bucket = [[MVBucket alloc] initWithDictionary:results];
         success(bucket, response);
         
-        
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
     }];
 }
 
+// FIXME: Doesn't work
 - (void)updateBucketWithID:(NSInteger)bucketID
                    success:(void (^)(MVBucket *, NSHTTPURLResponse *))success
                    failure:(FailureHandler)failure
 {
+    // PUT /buckets/:id
     
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets", kAPIBaseURL];
+    
+    [self PUTOperationWithURL:urlString parameters:@{@"name": @"Yo!", @"description": @"Science, b****!"} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        NSLog(@"%@", results);
+        NSLog(@"%@", response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+        NSLog(@"%@", response);
+    }];
 }
 
 - (void)deleteBucketWithID:(NSInteger)bucketID
                    success:(void (^)(NSHTTPURLResponse *))success
                    failure:(FailureHandler)failure
 {
+    // DELETE /buckets/:id
     
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld", kAPIBaseURL, bucketID];
+    
+    [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
+        
+        success(response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
 }
 
 @end
