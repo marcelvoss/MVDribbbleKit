@@ -50,7 +50,6 @@
 
 #pragma mark - Miscellaneous
 
-// Done
 - (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID callbackURL:(NSString *)callbackURL
 {
     self = [super init];
@@ -62,8 +61,7 @@
     return self;
 }
 
-// Done
-+ (MVDribbbleKit *)sharedInstance
++ (MVDribbbleKit *)sharedManager
 {
     static MVDribbbleKit *instance;
     static dispatch_once_t onceToken;

@@ -1,5 +1,5 @@
 # MVDribbbleKit
-MVDribbbleKit is a modern and full-featured Objective-C wrapper for the official [Dribbble API](https://dribbble.com/api).
+MVDribbbleKit is a modern and full-featured Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
 No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required because this wrapper makes use of NSURLSession.
 
