@@ -3,6 +3,8 @@ MVDribbbleKit is a modern and full-featured Objective-C wrapper for the official
 
 No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required because this wrapper makes use of NSURLSession.
 
+**Important: it is not recommended to use the current version in production.**
+
 ## Installation
 ### CocoaPods
 MVDribbbleKit is available via CocoaPods. Simply add this to your Podfile: `pod 'MVDribbbleKit', '~> 1.0'` and install it with `pod install`. Boom!
