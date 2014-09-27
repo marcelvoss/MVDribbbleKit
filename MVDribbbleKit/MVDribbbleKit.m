@@ -989,22 +989,21 @@
 }
 
 // FIXME: Doesn't work
-- (void)updateBucketWithID:(NSInteger)bucketID
+- (void)updateBucketWithID:(NSInteger)bucketID name:(NSString *)bucketName description:(NSString *)bucketDescription
                    success:(void (^)(MVBucket *, NSHTTPURLResponse *))success
                    failure:(FailureHandler)failure
 {
     // PUT /buckets/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/buckets", kAPIBaseURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld", kAPIBaseURL, bucketID];
     
-    [self PUTOperationWithURL:urlString parameters:@{@"name": @"Yo!", @"description": @"Test…"} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self PUTOperationWithURL:urlString parameters:@{@"name": bucketName, @"description": bucketDescription} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
-        NSLog(@"%@", results);
-        NSLog(@"%@", response);
+        MVBucket *bucket = [[MVBucket alloc] initWithDictionary:results];
+        success(bucket, response);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
-        NSLog(@"%@", response);
     }];
 }
 

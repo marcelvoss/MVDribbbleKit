@@ -222,8 +222,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                      success:(void (^) (MVBucket *bucket, NSHTTPURLResponse *response))success
                      failure:(FailureHandler)failure;
 
-// FIXME: Isn't correctly implemented
-- (void)updateBucketWithID:(NSInteger)bucketID
+- (void)updateBucketWithID:(NSInteger)bucketID name:(NSString *)bucketName description:(NSString *)bucketDescription
                    success:(void (^) (MVBucket *bucket, NSHTTPURLResponse *response))success
                    failure:(FailureHandler)failure;
 
