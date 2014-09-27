@@ -997,7 +997,7 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@/buckets", kAPIBaseURL];
     
-    [self PUTOperationWithURL:urlString parameters:@{@"name": @"Yo!", @"description": @"Science, b****!"} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self PUTOperationWithURL:urlString parameters:@{@"name": @"Yo!", @"description": @"Test…"} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSLog(@"%@", results);
         NSLog(@"%@", response);
