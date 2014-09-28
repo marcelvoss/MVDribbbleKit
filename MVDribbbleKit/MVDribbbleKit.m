@@ -1071,10 +1071,8 @@
     
     [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
-        MVProject *project = [[MVProject alloc] init];
+        MVProject *project = [[MVProject alloc] initWithDictionary:results];
         success(project, response);
-        NSLog(@"%@", results);
-        NSLog(@"SUCCESS");
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
