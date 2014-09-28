@@ -1058,6 +1058,23 @@
     [self PUTOperationWithURL:urlString parameters:@{@"shot_id": [NSNumber numberWithInteger:shotID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         success();
+
+#pragma mark - Projects
+
+- (void)getProjectWithID:(NSInteger)projectID
+                 success:(void (^)(MVProject *, NSHTTPURLResponse *))success
+                 failure:(FailureHandler)failure
+{
+    // GET /projects/:id
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/projects/%ld", kAPIBaseURL, projectID];
+    
+    [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVProject *project = [[MVProject alloc] init];
+        success(project, response);
+        NSLog(@"%@", results);
+        NSLog(@"SUCCESS");
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);

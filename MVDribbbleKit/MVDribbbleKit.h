@@ -238,4 +238,11 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                 success:(void (^) ())success
                 failure:(FailureHandler)failure;
 
+
+#pragma mark - Projects
+
+- (void)getProjectWithID:(NSInteger)projectID
+                 success:(void (^) (MVProject *project, NSHTTPURLResponse *response))success
+                 failure:(FailureHandler)failure;
+
 @end
