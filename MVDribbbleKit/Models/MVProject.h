@@ -8,6 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MVUser.h"
+
 @interface MVProject : NSObject
+
+
+@property (nonatomic) NSNumber *projectID;
+@property (nonatomic) NSString *projectName;
+@property (nonatomic) NSString *projectDescription;
+@property (nonatomic) NSNumber *shotsCount;
+@property (nonatomic) NSDate *createdDate;
+@property (nonatomic) NSDate *updatedDate;
+
+@property (nonatomic) MVUser *user;
+
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end
