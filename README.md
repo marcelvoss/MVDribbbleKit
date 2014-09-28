@@ -12,7 +12,7 @@ Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/t
 MVDribbbleKit is available via CocoaPods. Simply add this to your Podfile: `pod 'MVDribbbleKit', '~> 1.0'` and install it with `pod install`. Boom!
 
 ### Without CocoaPods
-Download the latest version, add the MVDribbbleKit folder to your project and import it.
+Download the latest version, add the MVDribbbleKit folder to your project and #import it.
 
 ## Usage
 ### Authenticating
@@ -56,7 +56,7 @@ Yup, that's it. Everything else is similar to this. Let's take another example. 
 }];
 ```
 
-Easy, huh? There are also six model classes available (MVLike, MVAttachment, MVComment, MVShot, MVUser, MVBucket). These will be used to wrap everything into native foundation objects.
+Easy, huh? There are also seven model classes available (MVLike, MVAttachment, MVComment, MVShot, MVUser, MVBucket, MVProject). These will be used to wrap everything into native foundation objects.
 
 ## Credits
 Thanks to the API team at Dribbble for giving me early access to the new API version, so I was able to update MVDribbbleKit before the public release.
