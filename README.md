@@ -16,7 +16,7 @@ Download the latest version, add the MVDribbbleKit folder to your project and im
 
 ## Usage
 ### Authenticating
-In order to interact with the API, you have to [register your application](https://dribbble.com/account/applications/). After the registration you'll get a client key and a client secret. Store them somewhere inside your source code. Then set the three parameters and call the authorization method:
+In order to interact with the API, you have to [register your application](https://dribbble.com/account/applications/new). After the registration you'll get a client key and a client secret. Store them somewhere inside your source code. Then set the three parameters and call the authorization method:
 
 ``` objc
 [manager setClientID:@"Client ID" clientSecret:@"Client Secret" callbackURL:@"Callback URL"];
