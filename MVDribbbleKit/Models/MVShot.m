@@ -44,6 +44,7 @@
         _title = [dictionary objectForKey:@"title"];
         _user = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
         _shotDescription = [dictionary objectForKey:@"description"];
+        _projectsURL = [NSURL URLWithString:dictionary[@"projects_url"]];
         
         if ([dictionary objectForKey:@"team"] == [NSNull null]) {
             _team = nil;

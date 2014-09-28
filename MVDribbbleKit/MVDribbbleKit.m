@@ -1079,6 +1079,30 @@
     }];
 }
 
+- (void)getShotsInProject:(NSInteger)projectID
+                  success:(SuccessHandler)success
+                  failure:(FailureHandler)failure
+{
+    // GET /project/:id/shots
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/projects/%ld/shots", kAPIBaseURL, projectID];
+    
+    [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        NSMutableArray *shotsArray = [NSMutableArray array];
+        
+        for (NSDictionary *dictionary in results) {
+            MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+            [shotsArray addObject:shot];
+        }
+        
+        success(shotsArray, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
 @end
 
 @implementation MVDribbbleKit (Private)

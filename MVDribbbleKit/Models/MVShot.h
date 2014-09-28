@@ -42,6 +42,7 @@
 @property (nonatomic) NSNumber *reboundsCount;
 @property (nonatomic) NSURL *reboundsURL;
 @property (nonatomic) NSArray *tags;
+@property (nonatomic) NSURL *projectsURL;
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic) NSDate *updatedDate;

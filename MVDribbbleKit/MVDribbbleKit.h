@@ -28,6 +28,7 @@
 #import "MVComment.h"
 #import "MVAttachment.h"
 #import "MVBucket.h"
+#import "MVProject.h"
 
 #import "MVConstants.h"
 #import "MVAuthBrowser.h"
@@ -244,5 +245,9 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 - (void)getProjectWithID:(NSInteger)projectID
                  success:(void (^) (MVProject *project, NSHTTPURLResponse *response))success
                  failure:(FailureHandler)failure;
+
+- (void)getShotsInProject:(NSInteger)projectID
+                  success:(SuccessHandler)success
+                  failure:(FailureHandler)failure;
 
 @end
