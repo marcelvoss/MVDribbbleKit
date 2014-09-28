@@ -3,6 +3,8 @@ MVDribbbleKit is a modern and full-featured Objective-C wrapper for the official
 
 No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required because this wrapper makes use of NSURLSession.
 
+Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
+
 **Important: it is not recommended to use the current version in production.**
 
 ## Installation
@@ -34,7 +36,7 @@ manager.scopes = @[@"write", @"public", @"comment", @"upload"];
 **Reminder:** MVDribbbleKit doesn't take care of storing the access token to the keychain. So, you have to do that on your own.
 
 ### Requests
-It is easy to make requests. For example, you can follow a user with the following code:
+It is easy to make requests and if you have ever used AFNetworking you will feel right at home because the methods are very similar to AFNetworking's. For example, you can follow a user with the following code:
 
 ``` objc
 [manager followUserWithID:@"simplebits" success:^(NSHTTPURLResponse *response) {
@@ -55,6 +57,9 @@ Yup, that's it. Everything else is similar to this. Let's take another example. 
 ```
 
 Easy, huh? There are also six model classes available (MVLike, MVAttachment, MVComment, MVShot, MVUser, MVBucket). These will be used to wrap everything into native foundation objects.
+
+## Credits
+Thanks to the API team at Dribbble for giving me early access to the new API version, so I was able to update MVDribbbleKit before the public release.
 
 ## License
 MVDribbbleKit is available under the MIT license. See the [LICENSE](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md) file for more information.
