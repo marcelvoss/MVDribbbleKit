@@ -56,7 +56,18 @@ Yup, that's it. Everything else is similar to this. Let's take another example. 
 }];
 ```
 
-Easy, huh? There are also seven model classes available (MVLike, MVAttachment, MVComment, MVShot, MVUser, MVBucket, MVProject). These will be used to wrap everything into native foundation objects.
+Easy, huh? 
+
+### Models
+There are also seven model classes available to make your life a bit easier. These will be used to wrap everything into native foundation objects.
+
+* MVLike
+* MVAttachment
+* MVComment
+* MVShot
+* MVUser
+* MVBucket
+* MVProject
 
 ## Credits
 Thanks to the API team at Dribbble for giving me early access to the new API version, so I was able to update MVDribbbleKit before the public release.
