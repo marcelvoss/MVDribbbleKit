@@ -5,7 +5,7 @@ No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is 
 
 Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
 
-**Important: it is not recommended to use the current version in production.**
+**Important: it is not recommended to use the current version in production. Use the [last stable version](https://github.com/marcelvoss/MVDribbbleKit/releases/tag/0.1.3) (version 0.1.3) instead,**
 
 ## Installation
 ### CocoaPods
