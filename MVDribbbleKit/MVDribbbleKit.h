@@ -113,6 +113,10 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 #pragma mark - Shots
 
+- (void)getShotsOnList:(List)list date:(NSDate *)date sort:(SortType)sorting  page:(NSInteger)page
+               success:(SuccessHandler)success
+               failure:(FailureHandler)failure;
+
 - (void)getShotWithID:(NSInteger)shotID
               success:(void (^) (MVShot *shot, NSHTTPURLResponse *response))success
               failure:(FailureHandler)failure;
@@ -128,10 +132,13 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                  success:(void (^) (MVShot *shot, NSHTTPURLResponse *respose))success
                  failure:(FailureHandler)failure;
 
+// TODO: Debug this
+- (void)deleteShotWithID:(NSInteger)shotID
+                 success:(void (^) (NSHTTPURLResponse *response))success
+                 failure:(FailureHandler)failure;
+
 // TODO: Still missing
-- (void)getShotsOnList:(List)list date:(NSDate *)date sort:(SortType)sorting  page:(NSInteger)page
-               success:(SuccessHandler)success
-               failure:(FailureHandler)failure;
+
 
 - (void)getShotsByUser:(NSString *)userID page:(NSInteger)page
                  success:(SuccessHandler)success
@@ -158,9 +165,6 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                  success:(void (^) (NSHTTPURLResponse *response))success
                  failure:(FailureHandler)failure;
 
-- (void)deleteShotWithID:(NSInteger)shotID
-                 success:(void (^) (NSHTTPURLResponse *response))success
-                 failure:(FailureHandler)failure;
 
 #pragma mark - Attachments
 
@@ -194,6 +198,10 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                      success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
                      failure:(FailureHandler)failure;
 
+- (void)getCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
+                 success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
+                 failure:(FailureHandler)failure;
+
 // FIXME: Doesn't work
 - (void)updateCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID body:(NSString *)body
                     success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
@@ -206,6 +214,10 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 - (void)unlikeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                   success:(void (^) (NSHTTPURLResponse *response))success
                   failure:(FailureHandler)failure;
+
+- (void)checkIfCommentIsLiked:(NSInteger)commentID onShot:(NSInteger)shotID
+                      success:(void (^) (MVLike *like, NSHTTPURLResponse *response))success
+                      failure:(FailureHandler)failure;
 
 #pragma mark - Rebounds
 
@@ -236,9 +248,12 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                  failure:(FailureHandler)failure;
 
 - (void)addShotToBucket:(NSInteger)shotID bucket:(NSInteger)bucketID
-                success:(void (^) ())success
+                success:(void (^) (NSHTTPURLResponse *response))success
                 failure:(FailureHandler)failure;
 
+- (void)removeShotFromBucket:(NSInteger)shotID bucket:(NSInteger)bucketID
+                     success:(void (^) (NSHTTPURLResponse *response))success
+                     failure:(FailureHandler)failure;
 
 #pragma mark - Projects
 

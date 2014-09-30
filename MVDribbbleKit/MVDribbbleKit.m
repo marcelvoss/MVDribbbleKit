@@ -383,70 +383,6 @@
 
 #pragma mark - Shots
 
-// Done
-- (void)getShotWithID:(NSInteger)shotID
-              success:(void (^)(MVShot *, NSHTTPURLResponse *))success
-              failure:(FailureHandler)failure
-{
-    // Get a shot
-    // GET /shots/:id
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, shotID];
-    
-    [self GETOperationWithURL:urlString parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
-        
-        MVShot *shot = [[MVShot alloc] initWithDictionary:results];
-        success(shot, response);
-        
-    } failure:^(NSError *error, NSHTTPURLResponse *response) {
-        failure(error, response);
-    }];
-}
-
-// Should be done
-// Can't really test it
-- (void)createShotWithTitle:(NSString *)title image:(NSData *)imageData description:(NSString *)description
-                       tags:(NSArray *)tags team:(NSInteger)teamID reboundTo:(NSInteger)reboundShot
-                    success:(void (^)(MVShot *, NSHTTPURLResponse *))success
-                    failure:(FailureHandler)failure
-{
-    // Create a shot
-    // POST /shots
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots", kAPIBaseURL];
-    
-    [self POSTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"image": imageData, @"team_id": [NSNumber numberWithInteger:teamID], @"rebound_source_id": [NSNumber numberWithInteger:reboundShot]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
-        
-        MVShot *shot = [[MVShot alloc] initWithDictionary:results];
-        success(shot, response);
-        
-    } failure:^(NSError *error, NSHTTPURLResponse *response) {
-        failure(error, response);
-    }];
-}
-
-// Should be done
-// Can't really test it
-- (void)updateShotWithID:(NSInteger)shotID title:(NSString *)title description:(NSString *)description
-                    tags:(NSArray *)tags teamID:(NSInteger)teamID
-                 success:(void (^)(MVShot *, NSHTTPURLResponse *))success
-                 failure:(FailureHandler)failure
-{
-    // Update a shot
-    // PUT /shots/:id
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, (long)shotID];
-    
-    [self PUTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"team_id": [NSNumber numberWithInteger:teamID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
-        
-        MVShot *shot = [[MVShot alloc] initWithDictionary:results];
-        success(shot, response);
-        
-    } failure:^(NSError *error, NSHTTPURLResponse *response) {
-        failure(error, response);
-    }];
-}
-
 // FIXME: Timeframe is missing
 - (void)getShotsOnList:(List)list date:(NSDate *)date sort:(SortType)sorting page:(NSInteger)page
                success:(SuccessHandler)success
@@ -519,6 +455,88 @@
         success(parsedResultsArray, response);
         
         NSLog(@"%@", results);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+// Done
+- (void)getShotWithID:(NSInteger)shotID
+              success:(void (^)(MVShot *, NSHTTPURLResponse *))success
+              failure:(FailureHandler)failure
+{
+    // Get a shot
+    // GET /shots/:id
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, shotID];
+    
+    [self GETOperationWithURL:urlString parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVShot *shot = [[MVShot alloc] initWithDictionary:results];
+        success(shot, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+// Should be done
+// Can't really test it
+- (void)createShotWithTitle:(NSString *)title image:(NSData *)imageData description:(NSString *)description
+                       tags:(NSArray *)tags team:(NSInteger)teamID reboundTo:(NSInteger)reboundShot
+                    success:(void (^)(MVShot *, NSHTTPURLResponse *))success
+                    failure:(FailureHandler)failure
+{
+    // Create a shot
+    // POST /shots
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots", kAPIBaseURL];
+    
+    [self POSTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"image": imageData, @"team_id": [NSNumber numberWithInteger:teamID], @"rebound_source_id": [NSNumber numberWithInteger:reboundShot]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVShot *shot = [[MVShot alloc] initWithDictionary:results];
+        success(shot, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+// Should be done
+// Can't really test it
+- (void)updateShotWithID:(NSInteger)shotID title:(NSString *)title description:(NSString *)description
+                    tags:(NSArray *)tags teamID:(NSInteger)teamID
+                 success:(void (^)(MVShot *, NSHTTPURLResponse *))success
+                 failure:(FailureHandler)failure
+{
+    // Update a shot
+    // PUT /shots/:id
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, (long)shotID];
+    
+    [self PUTOperationWithURL:urlString parameters:@{@"title": title, @"description": description, @"tags": tags, @"team_id": [NSNumber numberWithInteger:teamID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVShot *shot = [[MVShot alloc] initWithDictionary:results];
+        success(shot, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+- (void)deleteShotWithID:(NSInteger)shotID
+                 success:(void (^)(NSHTTPURLResponse *))success
+                 failure:(FailureHandler)failure
+{
+    // Delete a shot
+    // DELETE /shots/:id
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, shotID];
+    
+    [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
+        
+        success(response);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
@@ -688,24 +706,6 @@
     }];
 }
 
-- (void)deleteShotWithID:(NSInteger)shotID
-                 success:(void (^)(NSHTTPURLResponse *))success
-                 failure:(FailureHandler)failure
-{
-    // Delete a shot
-    // DELETE /shots/:id
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, shotID];
-    
-    [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
-        
-        success(response);
-        
-    } failure:^(NSError *error, NSHTTPURLResponse *response) {
-        failure(error, response);
-    }];
-}
-
 #pragma mark - Attachments
 
 - (void)getAttachmentsForShot:(NSInteger)shotID page:(NSInteger)page
@@ -862,6 +862,24 @@
     }];
 }
 
+- (void)getCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
+                 success:(void (^)(MVComment *, NSHTTPURLResponse *))success
+                 failure:(FailureHandler)failure
+{
+    // GET /shots/:shot/comments/:id
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld", kAPIBaseURL, shotID, commentID];
+    
+    [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVComment *comment = [[MVComment alloc] initWithDictionary:results];
+        success(comment, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
 // Done
 - (void)updateCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID body:(NSString *)body
                     success:(void (^)(MVComment *, NSHTTPURLResponse *))success
@@ -916,6 +934,21 @@
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
         success(response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+- (void)checkIfCommentIsLiked:(NSInteger)commentID onShot:(NSInteger)shotID
+                      success:(void (^)(MVLike *, NSHTTPURLResponse *))success
+                      failure:(FailureHandler)failure
+{
+    // GET /shots/:shot/comments/:id/like
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/like", kAPIBaseURL, shotID, commentID];
+    
+    [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
@@ -1048,7 +1081,7 @@
 }
 
 - (void)addShotToBucket:(NSInteger)shotID bucket:(NSInteger)bucketID
-                success:(void (^)())success
+                success:(void (^) (NSHTTPURLResponse *response))success
                 failure:(FailureHandler)failure
 {
     // PUT /buckets/:id/shots
@@ -1057,7 +1090,35 @@
     
     [self PUTOperationWithURL:urlString parameters:@{@"shot_id": [NSNumber numberWithInteger:shotID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
-        success();
+        success(response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
+// FIXME: Doesn't work
+- (void)removeShotFromBucket:(NSInteger)shotID bucket:(NSInteger)bucketID
+                     success:(void (^) (NSHTTPURLResponse *response))success
+                     failure:(FailureHandler)failure
+{
+    // DELETE /buckets/:id/shots
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld/shots", kAPIBaseURL, bucketID];
+    
+    [self DELETEOperationWithURL:urlString parameters:@{@"shot_id": [NSNumber numberWithInteger:shotID]} success:^(NSHTTPURLResponse *response) {
+        
+        
+        NSLog(@"%@", response);
+        NSLog(@"success");
+        success(response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+        NSLog(@"%@", response);
+        NSLog(@"error");
+    }];
+}
 
 #pragma mark - Projects
 
@@ -1290,6 +1351,7 @@
     }
 }
 
+// FIXME: Doesn't work correctly
 - (void)DELETEOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
                        success:(void (^)(NSHTTPURLResponse *))success
                        failure:(void (^)(NSError *, NSHTTPURLResponse *))failure
