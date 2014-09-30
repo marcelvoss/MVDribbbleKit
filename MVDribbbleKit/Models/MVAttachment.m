@@ -33,6 +33,7 @@
         _attachmentURL = [NSURL URLWithString:[dictionary objectForKey:@"url"]];
         _viewsCount = [dictionary objectForKey:@"views_count"];
         _size = [dictionary objectForKey:@"size"];
+        _contentType = dictionary[@"content_type"];
         
         // Parse the date
         // Example: 2014-07-02T15:46:06Z

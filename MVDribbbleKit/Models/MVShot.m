@@ -58,9 +58,9 @@
         }
         _tags = tagsArray;
         
-        _highImage = [[dictionary objectForKey:@"images"] objectForKey:@"hidpi"];
-        _teaserImage = [[dictionary objectForKey:@"images"] objectForKey:@"teaser"];
-        _normalImage = [[dictionary objectForKey:@"images"] objectForKey:@"normal"];
+        _highDPIImageURL = [[dictionary objectForKey:@"images"] objectForKey:@"hidpi"];
+        _teaserImageURL = [[dictionary objectForKey:@"images"] objectForKey:@"teaser"];
+        _normalImageURL = [[dictionary objectForKey:@"images"] objectForKey:@"normal"];
         
         // Parse the date
         // Example: 2014-07-02T15:46:06Z

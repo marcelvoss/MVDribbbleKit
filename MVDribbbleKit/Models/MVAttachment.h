@@ -29,6 +29,7 @@
 @property (nonatomic) NSURL *attachmentURL;
 @property (nonatomic) NSNumber *viewsCount;
 @property (nonatomic) NSNumber *size;
+@property (nonatomic) NSString *contentType;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
