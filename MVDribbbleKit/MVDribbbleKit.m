@@ -167,7 +167,7 @@
         // Get details for the authorized player
         // GET /user
         
-        [self GETOperationWithURL:[NSString stringWithFormat:@"%@/user", kAPIBaseURL] parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:[NSString stringWithFormat:@"%@/user", kAPIBaseURL] parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             MVUser *user = [[MVUser alloc] initWithDictionary:results];
             success(user, response);
@@ -180,7 +180,7 @@
         // Get details for the specified player
         // GET /users/:user
         
-        [self GETOperationWithURL:[NSString stringWithFormat:@"%@/users/%@", kAPIBaseURL, userID] parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        [self GETOperationWithURL:[NSString stringWithFormat:@"%@/users/%@", kAPIBaseURL, userID] parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
             
             MVUser *user = [[MVUser alloc] initWithDictionary:results];
             success(user, response);

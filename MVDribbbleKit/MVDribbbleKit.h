@@ -56,6 +56,14 @@ typedef NS_ENUM(NSInteger, UserType) {
 };
 
 typedef void (^SuccessHandler) (NSArray *resultsArray, NSHTTPURLResponse *response);
+typedef void (^ShotHandler) (MVShot *shot, NSHTTPURLResponse *response);
+typedef void (^LikeHandler) (MVLike *like, NSHTTPURLResponse *response);
+typedef void (^ProjectHandler) (MVProject *project, NSHTTPURLResponse *response);
+typedef void (^UserHandler) (MVUser *user, NSHTTPURLResponse *response);
+typedef void (^BucketHandler) (MVBucket *bucket, NSHTTPURLResponse *response);
+typedef void (^AttachmentHandler) (MVAttachment *attachment, NSHTTPURLResponse *response);
+typedef void (^CommentHandler) (MVComment *comment, NSHTTPURLResponse *response);
+
 typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 @interface MVDribbbleKit : NSObject
@@ -85,7 +93,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 // If playerID is nil, return the authenticated player
 - (void)getDetailsForUser:(NSString *)userID
-                    success:(void (^) (MVUser *user, NSHTTPURLResponse *response))success
+                    success:(UserHandler)success
                     failure:(FailureHandler)failure;
 
 - (void)getFollowersForUser:(NSString *)userID page:(NSInteger)page
@@ -118,18 +126,18 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                failure:(FailureHandler)failure;
 
 - (void)getShotWithID:(NSInteger)shotID
-              success:(void (^) (MVShot *shot, NSHTTPURLResponse *response))success
+              success:(ShotHandler)success
               failure:(FailureHandler)failure;
 
 // TODO: Needs optimization
 - (void)createShotWithTitle:(NSString *)title image:(NSData *)imageData
                 description:(NSString *)description tags:(NSArray *)tags team:(NSInteger)teamID reboundTo:(NSInteger)reboundShot
-                    success:(void (^) (MVShot *shot, NSHTTPURLResponse *response))success
+                    success:(ShotHandler)success
                     failure:(FailureHandler)failure;
 
 - (void)updateShotWithID:(NSInteger)shotID title:(NSString *)title
              description:(NSString *)description tags:(NSArray *)tags teamID:(NSInteger)teamID
-                 success:(void (^) (MVShot *shot, NSHTTPURLResponse *respose))success
+                 success:(ShotHandler)success
                  failure:(FailureHandler)failure;
 
 // TODO: Debug this
@@ -153,17 +161,23 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure;
 
+#pragma mark - Likes
+
 - (void)getLikesForShot:(NSInteger)shotID page:(NSInteger)page
                 success:(SuccessHandler)success
                 failure:(FailureHandler)failure;
 
 - (void)likeShotWithID:(NSInteger)shotID
-               success:(void (^) (MVLike *like, NSHTTPURLResponse *response))success
+               success:(LikeHandler)success
                failure:(FailureHandler)failure;
 
 - (void)unlikeShotWithID:(NSInteger)shotID
                  success:(void (^) (NSHTTPURLResponse *response))success
                  failure:(FailureHandler)failure;
+
+- (void)checkIfShotIsLiked:(NSInteger)shotID
+                   success:(LikeHandler)success
+                   failure:(FailureHandler)failure;
 
 
 #pragma mark - Attachments
@@ -173,11 +187,11 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                       failure:(FailureHandler)failure;
 
 - (void)getAttachmentWithID:(NSInteger)attachmentID onShot:(NSInteger)shotID
-                    success:(void (^) (MVAttachment *attachment, NSHTTPURLResponse *response))success
+                    success:(AttachmentHandler)success
                     failure:(FailureHandler)failure;
 
 - (void)createAttachmentForShot:(NSInteger)shotID fromData:(NSData *)attachmentData
-                        success:(void (^) (MVAttachment *attachment, NSHTTPURLResponse *response))success
+                        success:(AttachmentHandler)success
                         failure:(FailureHandler)failure;
 
 - (void)deleteAttachmetWithID:(NSInteger)attachmentID onShot:(NSInteger)shotID
@@ -195,20 +209,20 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                          failure:(FailureHandler)failure;
 
 - (void)createCommentForShot:(NSInteger)shotID body:(NSString *)body
-                     success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
+                     success:(CommentHandler)success
                      failure:(FailureHandler)failure;
 
 - (void)getCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
-                 success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
+                 success:(CommentHandler)success
                  failure:(FailureHandler)failure;
 
 // FIXME: Doesn't work
 - (void)updateCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID body:(NSString *)body
-                    success:(void (^) (MVComment *comment, NSHTTPURLResponse *response))success
+                    success:(CommentHandler)success
                     failure:(FailureHandler)failure;
 
 - (void)likeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
-                  success:(void (^) (MVLike *like, NSHTTPURLResponse *response))success
+                  success:(LikeHandler)success
                   failure:(FailureHandler)failure;
 
 - (void)unlikeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
@@ -216,7 +230,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                   failure:(FailureHandler)failure;
 
 - (void)checkIfCommentIsLiked:(NSInteger)commentID onShot:(NSInteger)shotID
-                      success:(void (^) (MVLike *like, NSHTTPURLResponse *response))success
+                      success:(LikeHandler)success
                       failure:(FailureHandler)failure;
 
 #pragma mark - Rebounds
@@ -228,15 +242,15 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 #pragma mark - Buckets
 
 - (void)getBucketWithID:(NSInteger)bucketID
-                success:(void (^) (MVBucket *bucket, NSHTTPURLResponse *response))success
+                success:(BucketHandler)success
                 failure:(FailureHandler)failure;
 
 - (void)createBucketWithName:(NSString *)bucketName description:(NSString *)bucketDescription
-                     success:(void (^) (MVBucket *bucket, NSHTTPURLResponse *response))success
+                     success:(BucketHandler)success
                      failure:(FailureHandler)failure;
 
 - (void)updateBucketWithID:(NSInteger)bucketID name:(NSString *)bucketName description:(NSString *)bucketDescription
-                   success:(void (^) (MVBucket *bucket, NSHTTPURLResponse *response))success
+                   success:(BucketHandler)success
                    failure:(FailureHandler)failure;
 
 - (void)deleteBucketWithID:(NSInteger)bucketID
@@ -258,7 +272,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 #pragma mark - Projects
 
 - (void)getProjectWithID:(NSInteger)projectID
-                 success:(void (^) (MVProject *project, NSHTTPURLResponse *response))success
+                 success:(ProjectHandler)success
                  failure:(FailureHandler)failure;
 
 - (void)getShotsInProject:(NSInteger)projectID
