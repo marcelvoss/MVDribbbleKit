@@ -1,4 +1,5 @@
-# MVDribbbleKit
+<img src="Logo.png" alt="Logo">
+
 MVDribbbleKit is a modern and full-featured Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
 No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required because this wrapper makes use of NSURLSession.
@@ -33,7 +34,7 @@ By default all four scopes (write, public, comment, upload) are selected. If you
 manager.scopes = @[@"write", @"public", @"comment", @"upload"];
 ```
 
-**Reminder:** MVDribbbleKit doesn't take care of storing the access token to the keychain. So, you have to do that on your own.
+**Reminder:** MVDribbbleKit stores the access token automatically to the keychain, so you don’t have to take care of that.
 
 ### Requests
 It is easy to make requests and if you have ever used AFNetworking you will feel right at home because the methods are very similar to AFNetworking's. For example, you can follow a user with the following code:
