@@ -1,4 +1,7 @@
-<img  align="center" src="Logo.png" alt="Logo">
+<p align="center" >
+	<img src="Logo.png" alt="Logo" title="MVDribbbleKit">
+</p>
+
 
 MVDribbbleKit is a modern and full-featured Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
