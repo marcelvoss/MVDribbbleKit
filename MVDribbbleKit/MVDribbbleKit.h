@@ -107,12 +107,12 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 #pragma mark - Miscellaneous
 
 /**
- Shared manager.
+ Returns a initialized MVDribbbleKit instance (singleton method).
  */
 + (MVDribbbleKit *)sharedManager;
 
 /**
- Initialize MVDribbbleKit.
+ Initialize MVDribbbleKit with required parameters.
  @param clientID Client ID.
  @param secretID Client Secret.
  @param callbackURL Callback URL.
@@ -122,13 +122,13 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 #pragma mark - Authorization
 
 /**
- Authorize the user.
+ Starts the authorization process for a user.
  @param completion Block that returns error, access token.
  */
 - (void)authorizeWithCompletion:(void (^) (NSError *error, NSString *accessToken))completion;
 
 /**
- Set MVDribbbleKit parameters.
+ Set required MVDribbbleKit parameters.
  @param clientID Client ID.
  @param secretID Client Secret.
  @param callbackURL Callback URL.
