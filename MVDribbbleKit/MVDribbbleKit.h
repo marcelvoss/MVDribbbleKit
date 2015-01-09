@@ -468,7 +468,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                   failure:(FailureHandler)failure;
 
 /**
- Unike a comment.
+ Unlike a comment.
  @param commentID ID of the comment.
  @param shotID ID of the shot.
  @param success Block to be executed when the request finishes successfully. This block takes one argument: the request response.
