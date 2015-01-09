@@ -147,7 +147,6 @@
     };
 }
 
-// Done
 - (void)setClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret callbackURL:(NSString *)callbackURL
 {
     _clientID = clientID;
@@ -158,7 +157,6 @@
 
 #pragma mark - Users
 
-// Done
 - (void)getDetailsForUser:(NSString *)userID
                     success:(void (^)(MVUser *, NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
@@ -191,7 +189,6 @@
     }
 }
 
-// Done
 - (void)getFollowersForUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
@@ -240,7 +237,6 @@
     }
 }
 
-// Done
 - (void)getFollowingsForUser:(NSString *)userID page:(NSInteger)page
                        success:(SuccessHandler)success
                        failure:(FailureHandler)failure
@@ -461,7 +457,6 @@
     }];
 }
 
-// Done
 - (void)getShotWithID:(NSInteger)shotID
               success:(void (^)(MVShot *, NSHTTPURLResponse *))success
               failure:(FailureHandler)failure
@@ -543,7 +538,6 @@
     }];
 }
 
-// Done
 - (void)getShotsByUser:(NSString *)userID page:(NSInteger)page
                       success:(SuccessHandler)success
                       failure:(FailureHandler)failure
@@ -771,7 +765,6 @@
     }];
 }
 
-// Done
 - (void)deleteAttachmetWithID:(NSInteger)attachmentID onShot:(NSInteger)shotID
                       success:(void (^)(NSHTTPURLResponse *))success
                       failure:(FailureHandler)failure
@@ -792,7 +785,6 @@
 
 #pragma mark - Comments
 
-// Done
 - (void)getCommentsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure
@@ -817,7 +809,6 @@
     }];
 }
 
-// Done
 - (void)getLikesForCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID page:(NSInteger)page
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure
@@ -842,7 +833,6 @@
     }];
 }
 
-// Done
 - (void)createCommentForShot:(NSInteger)shotID body:(NSString *)body
                      success:(void (^) (MVComment *, NSHTTPURLResponse *))success
                      failure:(FailureHandler)failure
@@ -880,7 +870,6 @@
     }];
 }
 
-// Done
 - (void)updateCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID body:(NSString *)body
                     success:(void (^)(MVComment *, NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
@@ -901,7 +890,6 @@
     
 }
 
-// Done
 - (void)likeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                   success:(void (^)(MVLike *, NSHTTPURLResponse *))success
                   failure:(FailureHandler)failure
@@ -921,7 +909,6 @@
     }];
 }
 
-// Done
 - (void)unlikeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
                     success:(void (^)(NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
@@ -957,7 +944,6 @@
 
 #pragma mark - Rebounds
 
-// Done
 - (void)getReboundsForShot:(NSInteger)shotID page:(NSInteger)page
                    success:(SuccessHandler)success
                    failure:(FailureHandler)failure
