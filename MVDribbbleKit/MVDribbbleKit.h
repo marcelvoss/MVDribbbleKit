@@ -570,7 +570,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                 failure:(FailureHandler)failure;
 
 /**
- Remove shut from bucket.
+ Remove shot from bucket.
  @param shotID ID of the shot.
  @param bucketID ID of the bucket.
  @param success Block to be executed when the request finishes successfully. This block takes one argument: the request response.
