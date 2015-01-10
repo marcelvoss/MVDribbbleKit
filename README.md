@@ -3,13 +3,13 @@
 </p>
 
 
-MVDribbbleKit is a modern and full-featured Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api). 
+MVDribbbleKit is a modern, full-featured and well-documented Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
 No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required because this wrapper makes use of NSURLSession.
 
 Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
 
-**Important: it is not recommended to use the current version in production. Use the [last stable version](https://github.com/marcelvoss/MVDribbbleKit/releases/tag/0.1.3) (version 0.1.3) instead,**
+**Important: it is not recommended to use the current version in production. Use the [last stable version](https://github.com/marcelvoss/MVDribbbleKit/releases/tag/0.1.3) (version 0.1.3) instead.**
 
 ## Installation
 ### CocoaPods
@@ -73,8 +73,9 @@ There are also seven model classes available to make your life a bit easier. The
 * MVBucket
 * MVProject
 
-## Credits
-Thanks to the API team at Dribbble for giving me early access to the new API version, so I was able to update MVDribbbleKit before the public release.
+## Contact
+*   
+* 
 
 ## License
 MVDribbbleKit is available under the MIT license. See the [LICENSE](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md) file for more information.
