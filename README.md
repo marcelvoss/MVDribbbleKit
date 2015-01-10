@@ -1,5 +1,5 @@
 <p align="center" >
-	<img src="Logo.png" alt="Logo" title="MVDribbbleKit">
+	<a href="https://github.com/marcelvoss/MVDribbbleKit"><img src="Logo.png" alt="Logo" title="MVDribbbleKit"></a>
 </p>
 
 
