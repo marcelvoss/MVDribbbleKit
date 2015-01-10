@@ -5,9 +5,11 @@
 
 MVDribbbleKit is a modern, full-featured and well-documented Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
-No dependencies are needed, but **iOS 7 or later** or **OS X 10.9 or later** is required because this wrapper makes use of NSURLSession.
+
 
 Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
+
+**Important:** this library requires **iOS 7 or later** or **OS X 10.9 or later**.
 
 **Important: it is not recommended to use the current version in production. Use the [last stable version](https://github.com/marcelvoss/MVDribbbleKit/releases/tag/0.1.3) (version 0.1.3) instead.**
 
@@ -24,8 +26,8 @@ In order to interact with the API, you have to [register your application](https
 
 ``` objc
 [manager setClientID:@"Client ID" clientSecret:@"Client Secret" callbackURL:@"Callback URL"];
-[manager authorizeWithCompletion:^(NSError *error, NSString *accessToken) {
-	// Save the access token to the keychain
+[manager authorizeWithCompletion:^(NSError *error, BOOL stored) {
+	// Returns a boolean value with the result of saving the access token to the keychain
 }];
 ```
 
