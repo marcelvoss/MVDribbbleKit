@@ -5,17 +5,21 @@
 
 MVDribbbleKit is a modern, full-featured and well-documented Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
-
+One of the main goales was to create a lightweight wrapper, that requires as few dependencies as possible (it actually requires only one, which is SSKeychain). Another goal was clean code, a good documenation and stability.
 
 Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
 
 **Important:** this library requires **iOS 7 or later** or **OS X 10.9 or later**.
 
-**Important: it is not recommended to use the current version in production. Use the [last stable version](https://github.com/marcelvoss/MVDribbbleKit/releases/tag/0.1.3) (version 0.1.3) instead.**
+**Reminder: it is not recommended to use the current version in production. Use the [last stable version](https://github.com/marcelvoss/MVDribbbleKit/releases/tag/0.1.3) (version 0.1.3) instead.**
 
 ## Installation
 ### CocoaPods
-MVDribbbleKit is available via CocoaPods. Simply add this to your Podfile: `pod 'MVDribbbleKit', '~> 1.0'` and install it with `pod install`. Boom!
+MVDribbbleKit is available via CocoaPods. Add the following to your Podfile, install it and you are ready to go:
+
+`
+pod 'MVDribbbleKit', '~> 1.0'
+`
 
 ### Without CocoaPods
 Download the latest version, add the MVDribbbleKit folder to your project and #import it.
@@ -42,7 +46,7 @@ manager.scopes = @[@"write", @"public", @"comment", @"upload"];
 **Reminder:** MVDribbbleKit stores the access token automatically to the keychain, so you don’t have to take care of that.
 
 ### Requests
-It is easy to make requests and if you have ever used AFNetworking you will feel right at home because the methods are very similar to AFNetworking's. For example, you can follow a user with the following code:
+It is easy to make requests and if you have ever used AFNetworking you will feel right at home because the methods are very similar to AFNetworking's (but this library doesn't use AFNetworking). For example, you can follow a user with the following code:
 
 ``` objc
 [manager followUserWithID:@"simplebits" success:^(NSHTTPURLResponse *response) {
@@ -74,10 +78,6 @@ There are also seven model classes available to make your life a bit easier. The
 * MVUser
 * MVBucket
 * MVProject
-
-## Contact
-*   
-* 
 
 ## License
 MVDribbbleKit is available under the MIT license. See the [LICENSE](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md) file for more information.
