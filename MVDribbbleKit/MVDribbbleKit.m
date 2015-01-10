@@ -21,8 +21,12 @@
 // THE SOFTWARE.
 
 #import "MVDribbbleKit.h"
+#import "SSKeychain/SSKeychain.h"
 
 @interface MVDribbbleKit (Private)
+
+// Retrieve access token from keychain
+- (NSString *)retrieveToken;
 
 // Used for retrieving resources.
 - (void)GETOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
@@ -74,7 +78,7 @@
 #pragma mark - Authorization
 
 // TODO: Needs more error handling
-- (void)authorizeWithCompletion:(void (^)(NSError *, NSString *))completion
+- (void)authorizeWithCompletion:(void (^)(NSError *, BOOL))completion
 {
     // GET /oauth/authorize
     // GET https://dribbble.com/oauth/authorize
@@ -134,15 +138,22 @@
                 NSString *accessToken = [results objectForKey:@"access_token"];
                 NSLog(@"Your access token: %@", accessToken);
                 
-                _accessToken = accessToken;
                 
-                completion(nil, accessToken);
+                NSError *keychainError = nil;
+                [SSKeychain setPassword:accessToken forService:kDribbbbleKeychainService
+                                account:kDribbbleAccountName error:&keychainError];
+                
+                if (keychainError) {
+                    completion(nil, NO);
+                } else {
+                    completion(nil, YES);
+                }
                 
             } failure:^(NSError *error, NSHTTPURLResponse *response) {
-                completion(error, nil);
+                completion(error, NO);
             }];
         } else {
-            completion(error, nil);
+            completion(error, NO);
         }
     };
 }
@@ -154,6 +165,30 @@
     _callbackURL = callbackURL;
 }
 
+- (BOOL)isAuthorized
+{
+    if ([SSKeychain accountsForService:kDribbbbleKeychainService]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)removeAccount
+{
+    if ([SSKeychain accountsForService:kDribbbbleKeychainService]) {
+        NSString *accountUsername = [[SSKeychain accountsForService:kDribbbbleKeychainService][0]
+                                     valueForKey:kSSKeychainAccountKey];
+        
+        NSError *deletionError = nil;
+        [SSKeychain deletePasswordForService:kDribbbbleKeychainService account:accountUsername
+                                       error:&deletionError];
+        
+        if (deletionError) {
+            NSLog(@"Couldn't delete token");
+        }
+    }
+}
 
 #pragma mark - Users
 
@@ -1156,6 +1191,18 @@
 
 #pragma mark - Private Methods
 
+- (NSString *)retrieveToken
+{
+    if ([SSKeychain accountsForService:kDribbbbleKeychainService]) {
+        NSString *accountUsername = [[SSKeychain accountsForService:kDribbbbleKeychainService][0]
+                                     valueForKey:kSSKeychainAccountKey];
+        
+        return [SSKeychain passwordForService:kDribbbbleKeychainService account:accountUsername];
+    } else {
+       return nil;
+    }
+}
+
 // FIXME: Needs fixed networking methods
 // FIXME: Make it easier to use parameters because appending them to the urlString isn't nice enough
 - (void)GETOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
@@ -1164,7 +1211,7 @@
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
-    NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", [self retrieveToken]];
     configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8", @"Authorization": tempTokenString};
     
     if (_allowsCellularAccess) {
@@ -1217,7 +1264,7 @@
                     success:(void (^)(NSDictionary *, NSHTTPURLResponse *))success
                     failure:(void (^)(NSError *, NSHTTPURLResponse *))failure
 {
-    NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", [self retrieveToken]];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8", @"Authorization": tempTokenString};
@@ -1279,9 +1326,9 @@
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
-    NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", [self retrieveToken]];
     
-    if (_accessToken == nil) {
+    if ([self retrieveToken] == nil) {
         configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8"};
     } else {
         configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8", @"Authorization": tempTokenString};
@@ -1342,7 +1389,7 @@
                        success:(void (^)(NSHTTPURLResponse *))success
                        failure:(void (^)(NSError *, NSHTTPURLResponse *))failure
 {
-    NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", _accessToken];
+    NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", [self retrieveToken]];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPAdditionalHeaders = @{@"Authorization": tempTokenString};

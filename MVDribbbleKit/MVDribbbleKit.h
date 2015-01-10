@@ -99,20 +99,15 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  */
 @property (nonatomic, copy) NSString *callbackURL;
 
-/**
- API access token.
- */
-@property (nonatomic, copy) NSString *accessToken;
-
 #pragma mark - Miscellaneous
 
 /**
- Returns a initialized MVDribbbleKit instance (singleton method).
+ Returns a newly initialized MVDribbbleKit instance (Singleton method).
  */
 + (MVDribbbleKit *)sharedManager;
 
 /**
- Initialize MVDribbbleKit with required parameters.
+ Initializes a new MVDribbbleKit instance with required parameters.
  @param clientID Client ID.
  @param secretID Client Secret.
  @param callbackURL Callback URL.
@@ -123,17 +118,30 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 /**
  Starts the authorization process for a user.
+ @attention The client ID, client secret and callback URL properties must be set to a valid value before starting the authorization process.
  @param completion Block that returns error, access token.
  */
-- (void)authorizeWithCompletion:(void (^) (NSError *error, NSString *accessToken))completion;
+- (void)authorizeWithCompletion:(void (^) (NSError *error, BOOL stored))completion;
 
 /**
- Set required MVDribbbleKit parameters.
+ Sets required MVDribbbleKit properties.
  @param clientID Client ID.
  @param secretID Client Secret.
  @param callbackURL Callback URL.
  */
 - (void)setClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret callbackURL:(NSString *)callbackURL;
+
+/**
+ *  Searches the keychain for an access token and returns a boolean value whether a token was found or not.
+ *
+ *  @return A boolean value if an access token is stored in the keychain.
+ */
+- (BOOL)isAuthorized;
+
+/**
+ *  Removes the stored access token from the keychain.
+ */
+- (void)removeAccount;
 
 #pragma mark - Users
 

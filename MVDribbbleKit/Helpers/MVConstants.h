@@ -24,6 +24,8 @@
 
 static const NSString *kBaseURL = @"https://dribbble.com";
 static const NSString *kAPIBaseURL = @"https://api.dribbble.com/v1";
+static NSString *kDribbbbleKeychainService = @"DribbbbleKeychainService";
+static NSString *kDribbbleAccountName = @"DribbbleAccountName";
 
 @interface MVConstants : NSObject
 
