@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = "MVDribbbleKit"
-  s.version      = "1.0"
+  s.version      = "1.1.0"
   s.summary      = "A modern Objective-C wrapper for the Dribbble API."
 
   s.description  = <<-DESC
-                   MVDribbbleKit is a modern and simple Objective-C wrapper 
-                   for the official [Dribbble API](https://dribbble.com/api).
+                   MVDribbbleKit is a modern, full-featured and well-documented 
+                   Objective-C wrapper for the official [Dribbble API](https://dribbble.com/api).
                    DESC
 
   s.homepage     = "https://github.com/marcelvoss/MVDribbbleKit"

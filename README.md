@@ -22,7 +22,7 @@ pod 'MVDribbbleKit', '~> 1.0'
 `
 
 ### Without CocoaPods
-Download the latest version, add the MVDribbbleKit folder to your project and #import it.
+Download the latest version, drop the MVDribbbleKit folder to your project and #import it.
 
 ## Usage
 ### Authenticating
