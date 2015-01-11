@@ -5,7 +5,7 @@
 
 MVDribbbleKit is a modern, full-featured and well-documented Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
-One of the main goals was to create a lightweight wrapper, that requires as few dependencies as possible (it actually requires only one, which is SSKeychain). Another goal was clean code, a good documentation and stability.
+One of the main goals was to create a lightweight wrapper, that requires as few dependencies as possible (it actually requires only one, which is [SSKeychain](https://github.com/soffes/sskeychaincoc)). Another goal was clean code, a good documentation and stability.
 
 Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
 
@@ -15,7 +15,7 @@ Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/t
 
 ## Installation
 ### CocoaPods
-MVDribbbleKit is available via CocoaPods. Add the following to your Podfile, install it and you are ready to go:
+MVDribbbleKit is available via [CocoaPods](http://cocoapods.org/). Add the following to your Podfile, install it and you are ready to go:
 
 `
 pod 'MVDribbbleKit', '~> 1.0'
