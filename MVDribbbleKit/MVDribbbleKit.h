@@ -22,17 +22,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MVShot.h"
-#import "MVLike.h"
-#import "MVUser.h"
-#import "MVComment.h"
-#import "MVAttachment.h"
-#import "MVBucket.h"
-#import "MVProject.h"
-
-#import "MVConstants.h"
-#import "MVAuthBrowser.h"
-
+/** An enumeration of list types. */
 typedef NS_ENUM(NSInteger, List) {
     ListAnimated,
     ListDebuts,
@@ -42,6 +32,7 @@ typedef NS_ENUM(NSInteger, List) {
     ListAll
 };
 
+/** An enumeration of sort types. */
 typedef NS_ENUM(NSInteger, SortType) {
     SortTypePopularity,
     SortTypeComments,
@@ -49,21 +40,74 @@ typedef NS_ENUM(NSInteger, SortType) {
     SortTypeRecent
 };
 
+/** An enumeration of user types. */
 typedef NS_ENUM(NSInteger, UserType) {
     UserTypeFollowers,
     UserTypeFollowing,
     UserTypeDraftees
 };
 
+/**
+ Success handler.
+ @param resultsArray List of results.
+ @param response Request response.
+ */
 typedef void (^SuccessHandler) (NSArray *resultsArray, NSHTTPURLResponse *response);
+
+/**
+ Shot handler.
+ @param shot MVShot model object.
+ @param response Request response.
+ */
 typedef void (^ShotHandler) (MVShot *shot, NSHTTPURLResponse *response);
+
+/**
+ Like handler.
+ @param like MVLike model object.
+ @param response Request response.
+ */
 typedef void (^LikeHandler) (MVLike *like, NSHTTPURLResponse *response);
+
+/**
+ Project handler.
+ @param project MVProject model object.
+ @param response Request response.
+ */
 typedef void (^ProjectHandler) (MVProject *project, NSHTTPURLResponse *response);
+
+/**
+ User handler.
+ @param user MVUser model object.
+ @param response Request response.
+ */
 typedef void (^UserHandler) (MVUser *user, NSHTTPURLResponse *response);
+
+/**
+ Bucket handler.
+ @param bucket MVBucket model object.
+ @param response Request response.
+ */
 typedef void (^BucketHandler) (MVBucket *bucket, NSHTTPURLResponse *response);
+
+/**
+ Attachment handler.
+ @param attachment MVAttachment model object.
+ @param response Request response.
+ */
 typedef void (^AttachmentHandler) (MVAttachment *attachment, NSHTTPURLResponse *response);
+
+/**
+ Comment handler.
+ @param comment MVComment model object.
+ @param response Request response.
+ */
 typedef void (^CommentHandler) (MVComment *comment, NSHTTPURLResponse *response);
 
+/**
+ Failure handler.
+ @param error Error.
+ @param response Request response.
+ */
 typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 /** Objective-C wrapper for the Dribbble API. See http://developer.dribbble.com/v1/ and https://github.com/marcelvoss/MVDribbbleKit for more information. */
@@ -80,7 +124,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 @property (nonatomic) BOOL allowsCellularAccess;
 
 /**
- Dribbble API scope. By default "write", "public", "comment", and "upload are selected.
+ Dribbble API scope. By default "write", "public", "comment", and "upload" are selected.
  */
 @property (nonatomic) NSArray *scopes;
 
@@ -103,6 +147,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 /**
  Returns a newly initialized MVDribbbleKit instance (Singleton method).
+ @return Instance of MVDribbbleKit.
  */
 + (MVDribbbleKit *)sharedManager;
 
@@ -111,6 +156,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param clientID Client ID.
  @param secretID Client Secret.
  @param callbackURL Callback URL.
+ @return Instance of MVDribbbleKit.
  */
 - (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID callbackURL:(NSString *)callbackURL;
 
@@ -118,8 +164,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 
 /**
  Starts the authorization process for a user.
- @attention The client ID, client secret and callback URL properties must be set to a valid value before starting the authorization process.
- @param completion Block that returns error, access token.
+ @warning The client ID, client secret and callback URL properties must be set to a valid value before starting the authorization process.
+ @param completion Block to be executed when the authorization finishes. This block takes two arguments: the error and the access token.
  */
 - (void)authorizeWithCompletion:(void (^) (NSError *error, BOOL stored))completion;
 
