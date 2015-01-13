@@ -50,9 +50,9 @@ It is easy to make requests and if you have ever used AFNetworking you will feel
 
 ``` objc
 [manager followUserWithID:@"simplebits" success:^(NSHTTPURLResponse *response) {
-	NSLog(@"%@", response);
+	NSLog(@"Response: %@", response);
 } failure:^(NSError *error, NSHTTPURLResponse *response) {
-	NSLog(@"Error: %@, Response: %@", error, response);
+	NSLog(@"Error: %@ \nResponse: %@", error, response);
 }];
 ```
 
@@ -60,9 +60,9 @@ Yup, that's it. Everything else is similar to this. Let's take another example. 
 
 ``` objc
 [manager getDetailsForUser:@"simplebits" success:^(MVUser *user, NSHTTPURLResponse *response) {
-	NSLog(@"Username: %@ \n Name: %@", user.username, user.name);
+	NSLog(@"Username: %@ \nName: %@", user.username, user.name);
 } failure:^(NSError *error, NSHTTPURLResponse *response) {
-	NSLog(@"Error: %@, Response: %@", error, response);
+	NSLog(@"Error: %@ \nResponse: %@", error, response);
 }];
 ```
 
