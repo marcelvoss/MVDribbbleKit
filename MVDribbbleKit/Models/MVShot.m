@@ -58,9 +58,10 @@
         }
         _tags = tagsArray;
         
-        _highDPIImageURL = [[dictionary objectForKey:@"images"] objectForKey:@"hidpi"];
-        _teaserImageURL = [[dictionary objectForKey:@"images"] objectForKey:@"teaser"];
-        _normalImageURL = [[dictionary objectForKey:@"images"] objectForKey:@"normal"];
+        NSDictionary *images = dictionary[@"images"];
+        _highDPIImageURL = [NSURL URLWithString: images[@"hidpi"]];
+        _teaserImageURL = [NSURL URLWithString: images[@"teaser"]];
+        _normalImageURL = [NSURL URLWithString: images[@"normal"]];
         
         // Parse the date
         // Example: 2014-07-02T15:46:06Z
