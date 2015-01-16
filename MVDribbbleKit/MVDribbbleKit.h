@@ -178,7 +178,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 /**
  Starts the authorization process for a user.
  @warning The client ID, client secret and callback URL properties must be set to a valid value before starting the authorization process.
- @param completion Block to be executed when the authorization finishes. This block takes two arguments: the error and the access token.
+ @param completion Block to be executed when the authorization finishes. This block takes two arguments: the error and a Boolean that specifies if the access token is stored in the keychain.
  */
 - (void)authorizeWithCompletion:(void (^) (NSError *error, BOOL stored))completion;
 
