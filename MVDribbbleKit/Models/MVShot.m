@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 #import "MVShot.h"
+#import "NSDictionary+MV.h"
 
 @implementation MVShot
 
@@ -29,8 +30,8 @@
     self = [super init];
     if (self) {
         
-        _attachmentsCount = [dictionary objectForKey:@"attachments_count"];
-        _attachmentsURL = [NSURL URLWithString:[dictionary objectForKey:@"attachments_url"]];
+        _attachmentsCount = [dictionary mv_valueForKey:@"attachments_count" ifKindOf:[NSNumber class] defaultValue:nil];
+        _attachmentsURL = [NSURL URLWithString: [dictionary mv_valueForKey:@"attachments_url" ifKindOf:[NSString class] defaultValue:nil]];
         _bucketsCount = [dictionary objectForKey:@"buckets_count"];
         _commentsCount = [dictionary objectForKey:@"comments_count"];
         _commentsURL = [NSURL URLWithString:[dictionary objectForKey:@"comments_url"]];
