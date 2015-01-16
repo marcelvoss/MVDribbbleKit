@@ -28,47 +28,41 @@
 {
     self = [super init];
     if (self) {
-        
-        _attachmentsCount = [dictionary objectForKey:@"attachments_count"];
-        _attachmentsURL = [NSURL URLWithString:[dictionary objectForKey:@"attachments_url"]];
-        _bucketsCount = [dictionary objectForKey:@"buckets_count"];
-        _commentsCount = [dictionary objectForKey:@"comments_count"];
-        _commentsURL = [NSURL URLWithString:[dictionary objectForKey:@"comments_url"]];
-        _htmlURL = [NSURL URLWithString:[dictionary objectForKey:@"html_url"]];
-        _shotID = [dictionary objectForKey:@"id"];
-        _viewsCount = [dictionary objectForKey:@"views_count"];
-        _likesCount = [dictionary objectForKey:@"likes_count"];
-        _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
-        _reboundsCount = [dictionary objectForKey:@"rebounds_count"];
-        _reboundsURL = [NSURL URLWithString:[dictionary objectForKey:@"rebounds_url"]];
-        _title = [dictionary objectForKey:@"title"];
-        _user = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"user"]];
-        _shotDescription = [dictionary objectForKey:@"description"];
-        _projectsURL = [NSURL URLWithString:dictionary[@"projects_url"]];
-        
-        if ([dictionary objectForKey:@"team"] == [NSNull null]) {
-            _team = nil;
-        } else {
-            _team = [[MVUser alloc] initWithDictionary:[dictionary objectForKey:@"team"]];
-        }
+        _attachmentsCount = [self objectForKeyOrNil:dictionary[@"attachments_count"]];
+        _attachmentsURL = [self objectForKeyOrNil:[NSURL URLWithString:dictionary[@"attachments_url"]]];
+        _bucketsCount = [self objectForKeyOrNil:dictionary[@"buckets_count"]];
+        _commentsCount = [self objectForKeyOrNil:dictionary[@"comments_count"]];
+        _commentsURL = [self objectForKeyOrNil:[NSURL URLWithString:dictionary[@"comments_url"]]];
+        _htmlURL = [self objectForKeyOrNil:[NSURL URLWithString:dictionary[@"html_url"]]];
+        _shotID = [self objectForKeyOrNil:dictionary[@"id"]];
+        _viewsCount = [self objectForKeyOrNil:dictionary[@"views_count"]];
+        _likesCount = [self objectForKeyOrNil:dictionary[@"likes_count"]];
+        _likesURL = [self objectForKeyOrNil:[NSURL URLWithString:dictionary[@"likes_url"]]];
+        _reboundsCount = [self objectForKeyOrNil:dictionary[@"rebounds_count"]];
+        _reboundsURL = [self objectForKeyOrNil:[NSURL URLWithString:dictionary[@"rebounds_url"]]];
+        _title = [self objectForKeyOrNil:dictionary[@"title"]];
+        _user = [[MVUser alloc] initWithDictionary:dictionary[@"user"]];
+        _shotDescription = [self objectForKeyOrNil:dictionary[@"description"]];
+        _projectsURL = [self objectForKeyOrNil:[NSURL URLWithString:dictionary[@"projects_url"]]];
+        _team = [[MVUser alloc] initWithDictionary:[self objectForKeyOrNil:dictionary[@"team"]]];
         
         NSMutableArray *tagsArray = [NSMutableArray array];
-        for (NSString *tag in [dictionary objectForKey:@"tags"]) {
+        for (NSString *tag in dictionary[@"tags"]) {
             [tagsArray addObject:tag];
         }
         _tags = tagsArray;
         
         NSDictionary *images = dictionary[@"images"];
-        _highDPIImageURL = [NSURL URLWithString: images[@"hidpi"]];
-        _teaserImageURL = [NSURL URLWithString: images[@"teaser"]];
-        _normalImageURL = [NSURL URLWithString: images[@"normal"]];
+        _highDPIImageURL = [NSURL URLWithString:images[@"hidpi"]];
+        _teaserImageURL = [NSURL URLWithString:images[@"teaser"]];
+        _normalImageURL = [NSURL URLWithString:images[@"normal"]];
         
         // Parse the date
         // Example: 2014-07-02T15:46:06Z
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-        _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
-        _updatedDate = [formatter dateFromString:[dictionary objectForKey:@"updated_at"]];
+        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
+        _updatedDate = [formatter dateFromString:dictionary[@"updated_at"]];
         
     }
     return self;

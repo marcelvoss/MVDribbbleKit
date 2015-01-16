@@ -23,8 +23,9 @@
 #import <Foundation/Foundation.h>
 
 #import "MVUser.h"
+#import "MVModel.h"
 
-@interface MVComment : NSObject
+@interface MVComment : MVModel
 
 @property (nonatomic) NSNumber *commentID;
 @property (nonatomic, copy) NSString *body;

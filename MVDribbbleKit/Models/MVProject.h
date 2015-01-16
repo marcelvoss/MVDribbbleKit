@@ -23,9 +23,9 @@
 #import <Foundation/Foundation.h>
 
 #import "MVUser.h"
+#import "MVModel.h"
 
-@interface MVProject : NSObject
-
+@interface MVProject : MVModel
 
 @property (nonatomic) NSNumber *projectID;
 @property (nonatomic) NSString *projectName;
@@ -35,7 +35,6 @@
 @property (nonatomic) NSDate *updatedDate;
 
 @property (nonatomic) MVUser *user;
-
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

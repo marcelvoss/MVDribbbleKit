@@ -28,18 +28,18 @@
 {
     self = [super init];
     if (self) {
-        _projectID = dictionary[@"id"];
-        _projectName = dictionary[@"name"];
-        _projectDescription = dictionary[@"description"];
-        _shotsCount = dictionary[@"shots_count"];
+        _projectID = [self objectForKeyOrNil:dictionary[@"id"]];
+        _projectName = [self objectForKeyOrNil:dictionary[@"id"]];
+        _projectDescription = [self objectForKeyOrNil:dictionary[@"description"]];
+        _shotsCount = [self objectForKeyOrNil:dictionary[@"shots_count"]];
         _user = [[MVUser alloc] initWithDictionary:dictionary[@"user"]];
         
         // Parse the date
         // Example: 2014-07-02T15:46:06Z
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-        _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
-        _updatedDate = [formatter dateFromString:[dictionary objectForKey:@"updated_at"]];
+        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
+        _updatedDate = [formatter dateFromString:dictionary[@"updated_at"]];
     }
     return self;
 }

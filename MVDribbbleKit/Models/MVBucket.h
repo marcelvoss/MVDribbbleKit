@@ -23,8 +23,9 @@
 #import <Foundation/Foundation.h>
 
 #import "MVUser.h"
+#import "MVModel.h"
 
-@interface MVBucket : NSObject
+@interface MVBucket : MVModel
 
 @property (nonatomic) NSNumber *bucketID;
 @property (nonatomic) NSString *bucketName;

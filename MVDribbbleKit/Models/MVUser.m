@@ -29,35 +29,35 @@
     self = [super init];
     if (self) {
         
-        _avatarURL = [NSURL URLWithString:[dictionary objectForKey:@"avatar_url"]];
-        _bio = [dictionary objectForKey:@"bio"];
-        _followersCount = [dictionary objectForKey:@"followers_count"];
-        _followingsCount = [dictionary objectForKey:@"following_count"];
+        _avatarURL = [NSURL URLWithString:dictionary[@"avatar_url"]];
+        _bio = dictionary[@"bio"];
+        _followersCount = dictionary[@"followers_count"];
+        _followingsCount = dictionary[@"following_count"];
         
-        _htmlURL = [NSURL URLWithString:[dictionary objectForKey:@"html_url"]];
-        _followersURL = [NSURL URLWithString:[dictionary objectForKey:@"followers_url"]];
-        _followingURL = [NSURL URLWithString:[dictionary objectForKey:@"following_url"]];
-        _likesURL = [NSURL URLWithString:[dictionary objectForKey:@"likes_url"]];
+        _htmlURL = [NSURL URLWithString:dictionary[@"html_url"]];
+        _followersURL = [NSURL URLWithString:dictionary[@"followers_url"]];
+        _followingURL = [NSURL URLWithString:dictionary[@"following_url"]];
+        _likesURL = [NSURL URLWithString:dictionary[@"likes_url"]];
         
-        _userID = [dictionary objectForKey:@"id"];
-        _likesCount = [dictionary objectForKey:@"likes_count"];
+        _userID = dictionary[@"id"];
+        _likesCount = dictionary[@"likes_count"];
         
-        _location = [dictionary objectForKey:@"location"];
-        _name  = [dictionary objectForKey:@"name"];
-        _shotsCount  = [dictionary objectForKey:@"shots_count"];
-        _shotsURL = [NSURL URLWithString:[dictionary objectForKey:@"shots_url"]];
-        _teamsURL = [NSURL URLWithString:[dictionary objectForKey:@"teams_url"]];
-        _username = [dictionary objectForKey:@"username"];
+        _location = dictionary[@"location"];
+        _name  = dictionary[@"name"];
+        _shotsCount  = dictionary[@"shots_count"];
+        _shotsURL = [NSURL URLWithString:dictionary[@"shots_url"]];
+        _teamsURL = [NSURL URLWithString:dictionary[@"teams_url"]];
+        _username = dictionary[@"username"];
         
-        _links = [dictionary objectForKey:@"links"];
+        _links = dictionary[@"links"];
         
-        if ([[dictionary objectForKey:@"type"] isEqualToString:@"Player"]) {
+        if ([dictionary[@"type"] isEqualToString:@"Player"]) {
             _accountType = AccountTypePlayer;
-        } else if ([[dictionary objectForKey:@"type"] isEqualToString:@"Team"]) {
+        } else if ([dictionary[@"type"] isEqualToString:@"Team"]) {
             _accountType = AccountTypeTeam;
         }
         
-        if ([[dictionary objectForKey:@"pro"] isEqualToNumber:[NSNumber numberWithBool:0]]) {
+        if ([dictionary[@"pro"] isEqualToNumber:[NSNumber numberWithBool:0]]) {
             _pro = NO;
         } else {
             _pro = YES;
@@ -67,9 +67,8 @@
         // Example: 2014-07-02T15:46:06Z
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-        _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
-        _updatedDate = [formatter dateFromString:[dictionary objectForKey:@"updated_at"]];
-        
+        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
+        _updatedDate = [formatter dateFromString:dictionary[@"updated_at"]];
     }
     return self;
 }

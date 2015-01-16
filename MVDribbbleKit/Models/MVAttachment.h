@@ -22,7 +22,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MVAttachment : NSObject
+#import "MVModel.h"
+
+@interface MVAttachment : MVModel
 
 @property (nonatomic) NSDate *createdDate;
 @property (nonatomic) NSNumber *attachmentID;

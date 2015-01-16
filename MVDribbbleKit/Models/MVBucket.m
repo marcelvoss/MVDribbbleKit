@@ -28,10 +28,10 @@
 {
     self = [super init];
     if (self) {
-        _bucketID = dictionary[@"id"];
-        _bucketName = dictionary[@"name"];
-        _bucketDescription = dictionary[@"description"];
-        _shotsCount = dictionary[@"shots_count"];
+        _bucketID = [self objectForKeyOrNil:dictionary[@"id"]];
+        _bucketName = [self objectForKeyOrNil:dictionary[@"name"]];
+        _bucketDescription = [self objectForKeyOrNil:dictionary[@"description"]];
+        _shotsCount = [self objectForKeyOrNil:dictionary[@"shots_count"]];
         _user = [[MVUser alloc] initWithDictionary:dictionary[@"user"]];
     
         // Parse the date

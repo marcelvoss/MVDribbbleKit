@@ -23,8 +23,9 @@
 #import <Foundation/Foundation.h>
 
 #import "MVUser.h"
+#import "MVModel.h"
 
-@interface MVShot : NSObject
+@interface MVShot : MVModel
 
 @property (nonatomic) NSNumber *attachmentsCount;
 @property (nonatomic) NSURL *attachmentsURL;

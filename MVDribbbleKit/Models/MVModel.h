@@ -1,4 +1,4 @@
-// MVLike.h
+// MVModel.h
 //
 // Copyright (c) 2014-2015 Marcel Voss
 //
@@ -22,15 +22,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MVUser.h"
-#import "MVModel.h"
+@interface MVModel : NSObject
 
-@interface MVLike : MVModel
-
-@property (nonatomic) NSDate *createdDate;
-@property (nonatomic) NSNumber *likeID;
-@property (nonatomic) MVUser *user;
-
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (id)objectForKeyOrNil:(id)key;
 
 @end

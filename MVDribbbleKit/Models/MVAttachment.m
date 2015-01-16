@@ -29,17 +29,17 @@
     self = [super init];
     if (self) {
         
-        _attachmentID = [dictionary objectForKey:@"id"];
-        _attachmentURL = [NSURL URLWithString:[dictionary objectForKey:@"url"]];
-        _viewsCount = [dictionary objectForKey:@"views_count"];
-        _size = [dictionary objectForKey:@"size"];
-        _contentType = dictionary[@"content_type"];
+        _attachmentID = [self objectForKeyOrNil:dictionary[@"id"]];
+        _attachmentURL = [self objectForKeyOrNil:[NSURL URLWithString:dictionary[@"url"]]];
+        _viewsCount = [self objectForKeyOrNil:dictionary[@"views_count"]];
+        _size = [self objectForKeyOrNil:dictionary[@"size"]];
+        _contentType = [self objectForKeyOrNil:dictionary[@"content_type"]];
         
         // Parse the date
         // Example: 2014-07-02T15:46:06Z
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-        _createdDate = [formatter dateFromString:[dictionary objectForKey:@"created_at"]];
+        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
         
     }
     return self;

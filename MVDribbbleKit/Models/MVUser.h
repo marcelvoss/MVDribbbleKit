@@ -22,6 +22,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MVModel.h"
+
 typedef NS_ENUM(NSInteger, AccountType) {
     AccountTypeTeam,
     AccountTypeUser,
@@ -29,7 +31,7 @@ typedef NS_ENUM(NSInteger, AccountType) {
     AccountTypeProspect
 };
 
-@interface MVUser : NSObject
+@interface MVUser : MVModel
 
 @property (nonatomic) NSURL *avatarURL;
 @property (nonatomic, copy) NSString *bio;
