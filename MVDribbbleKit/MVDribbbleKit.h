@@ -407,12 +407,12 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                  failure:(FailureHandler)failure;
 
 /**
- Check if shot is liked.
+ Checks if the given shot is liked.
  @param shotID ID of the shot.
  @param success Block to be executed when the request finishes successfully. This block takes two arguments: the MVLike and the request response.
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
-- (void)checkIfShotIsLiked:(NSInteger)shotID
+- (void)isShotLiked:(NSInteger)shotID
                    success:(LikeHandler)success
                    failure:(FailureHandler)failure;
 

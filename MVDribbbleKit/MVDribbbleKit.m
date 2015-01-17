@@ -71,6 +71,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [MVDribbbleKit new];
+        instance.itemsPerPage = @30;
     });
     return instance;
 }
@@ -735,6 +736,25 @@
     }];
 }
 
+- (void)isShotLiked:(NSInteger)shotID
+            success:(LikeHandler)success
+            failure:(FailureHandler)failure
+{
+    // Check if you like a shot
+    // GET /shots/:id/like
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/like", kAPIBaseURL, shotID];
+    
+    [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+
+        MVLike *like = [[MVLike alloc] initWithDictionary:results];
+        success(like, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
 #pragma mark - Attachments
 
 - (void)getAttachmentsForShot:(NSInteger)shotID page:(NSInteger)page
@@ -1212,7 +1232,8 @@
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     NSString *tempTokenString = [NSString stringWithFormat:@"Bearer %@", [self retrieveToken]];
-    configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8", @"Authorization": tempTokenString};
+    configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8",
+                                            @"Authorization": tempTokenString};
     
     if (_allowsCellularAccess) {
         configuration.allowsCellularAccess = YES;
@@ -1221,24 +1242,22 @@
     }
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-    
     NSMutableString *finalMutableString = [NSMutableString stringWithFormat:@"%@?", url];
     
     if (parameters) {
-        
         // Itterate over the parameters dictionary
         for (id key in parameters) {
             id value = parameters[key];
-            
             [finalMutableString appendString:[NSString stringWithFormat:@"%@=%@&", key, value]];
         }
-        
     } else {
         finalMutableString = [url copy];
     }
     
-    // Append itemsPerPage
-    [finalMutableString appendString:[NSString stringWithFormat:@"per_page=%@", [_itemsPerPage stringValue]]];
+    if (parameters[@"page"]) {
+        // Append itemsPerPage
+        [finalMutableString appendString:[NSString stringWithFormat:@"per_page=%@", [_itemsPerPage stringValue]]];
+    }
     
     NSLog(@"%@", finalMutableString);
     
@@ -1277,9 +1296,6 @@
     
     NSDictionary *tempParameters = [NSDictionary dictionary];
     
-    // I have to this this
-    // If I pass a nil value to fromData, the simulator stays black
-    // Already filed a radar
     if (parameters == nil) {
         tempParameters = @{@"": @""};
     } else {
@@ -1344,9 +1360,6 @@
     
     NSDictionary *tempParameters = [NSDictionary dictionary];
     
-    // I have to this this
-    // If I pass a nil value to fromData, the simulator stays black
-    // Already filed a radar
     if (parameters == nil) {
         tempParameters = @{@"": @""};
     } else {
@@ -1393,6 +1406,12 @@
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPAdditionalHeaders = @{@"Authorization": tempTokenString};
+    
+    if (_allowsCellularAccess) {
+        configuration.allowsCellularAccess = YES;
+    } else {
+        configuration.allowsCellularAccess = NO;
+    }
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     
