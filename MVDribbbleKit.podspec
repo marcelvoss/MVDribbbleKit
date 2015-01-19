@@ -10,8 +10,8 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/marcelvoss/MVDribbbleKit"
   s.license      = 'MIT'
-  s.author             = { "Marcel Voss" => "hello@marcelvoss.com" }
-  s.social_media_url   = "http://twitter.com/CocoaMarcel"
+  s.author             = { "Marcel Voss" => "marcel.voss@icloud.com" }
+  s.social_media_url   = "http://twitter.com/UIMarcel"
   s.source       = { :git => "https://github.com/marcelvoss/MVDribbbleKit.git", :tag => s.version }
   
   s.source_files  = "MVDribbbleKit", "MVDribbbleKit/**/*.{h,m}"

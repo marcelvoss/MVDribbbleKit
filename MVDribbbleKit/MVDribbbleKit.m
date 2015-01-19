@@ -139,7 +139,6 @@
                 NSString *accessToken = [results objectForKey:@"access_token"];
                 NSLog(@"Your access token: %@", accessToken);
                 
-                
                 NSError *keychainError = nil;
                 [SSKeychain setPassword:accessToken forService:kDribbbbleKeychainService
                                 account:kDribbbleAccountName error:&keychainError];
