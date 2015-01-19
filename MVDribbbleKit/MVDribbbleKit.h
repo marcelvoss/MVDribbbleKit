@@ -53,6 +53,14 @@ typedef NS_ENUM(NSInteger, SortType) {
     SortTypeRecent
 };
 
+/** An enumeration of timeframe values. */
+typedef NS_ENUM(NSInteger, Timeframe) {
+    TimeframeWeek,
+    TimeframeMonth,
+    TimeframeYear,
+    TimeframeEver
+};
+
 /** An enumeration of user types. */
 typedef NS_ENUM(NSInteger, UserType) {
     UserTypeFollowers,
@@ -256,6 +264,10 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
                      success:(void (^) (NSHTTPURLResponse *response))success
                      failure:(FailureHandler)failure;
 
+- (void)isUser:(NSString *)userID followingUser:(NSString *)targetUserID
+       success:(void (^) (NSHTTPURLResponse *response, BOOL following))success
+       failure:(FailureHandler)failure;
+
 #pragma mark - Teams
 
 /**
@@ -275,11 +287,16 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  List shots.
  @param date Limit the timeframe to a specific date.
  @param sorting Limit results to a specific `SortType` (SortTypePopularity, SortTypeComments, SortTypeViews, SortTypeRecent).
+ @param timeframe A period of time to limit the results (use timeframe enum).
  @param page Results page.
  @param success Block to be executed when the request finishes successfully. This block takes two arguments: the list of results and the request response.
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
-- (void)getShotsOnList:(List)list date:(NSDate *)date sort:(SortType)sorting  page:(NSInteger)page
+- (void)getShotsOnList:(List)list
+                  date:(NSDate *)date
+                  sort:(SortType)sorting
+             timeframe:(Timeframe)timeframe
+                  page:(NSInteger)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure;
 

@@ -192,6 +192,45 @@
 
 #pragma mark - Users
 
+- (void)isUser:(NSString *)userID followingUser:(NSString *)targetUserID
+       success:(void (^)(NSHTTPURLResponse *, BOOL))success
+       failure:(FailureHandler)failure
+{
+    if (userID) {
+        // GET /users/:user/following/:target_user
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/following/%@", kBaseURL, userID, targetUserID];
+        
+        [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+            
+            if (response.statusCode == 204) {
+                success(response, YES);
+            } else {
+                success(response, NO);
+            }
+            
+        } failure:^(NSError *error, NSHTTPURLResponse *response) {
+            failure(error, response);
+        }];
+    } else {
+        // GET /user/following/:user
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/user/following/%@", kBaseURL, targetUserID];
+        
+        [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+            
+            if (response.statusCode == 204) {
+                success(response, YES);
+            } else {
+                success(response, NO);
+            }
+            
+        } failure:^(NSError *error, NSHTTPURLResponse *response) {
+            failure(error, response);
+        }];
+    }
+}
+
 - (void)getDetailsForUser:(NSString *)userID
                     success:(void (^)(MVUser *, NSHTTPURLResponse *))success
                     failure:(FailureHandler)failure
@@ -414,8 +453,11 @@
 
 #pragma mark - Shots
 
-// FIXME: Timeframe is missing
-- (void)getShotsOnList:(List)list date:(NSDate *)date sort:(SortType)sorting page:(NSInteger)page
+- (void)getShotsOnList:(List)list
+                  date:(NSDate *)date
+                  sort:(SortType)sorting
+             timeframe:(Timeframe)timeframe
+                  page:(NSInteger)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure
 {
@@ -444,7 +486,6 @@
         case ListAll:
             listString = @"all";
             break;
-            
         default:
             listString = @"all";
             break;
@@ -464,17 +505,34 @@
         case SortTypeRecent:
             sortingString = @"recent";
             break;
-            
         default:
             sortingString = @"popularity";
             break;
     }
     
+    NSString *timeframeString;
+    switch (timeframe) {
+        case TimeframeWeek:
+            timeframeString = @"week";
+            break;
+        case TimeframeMonth:
+            timeframeString = @"month";
+            break;
+        case TimeframeYear:
+            timeframeString = @"year";
+            break;
+        case TimeframeEver:
+            timeframeString = @"ever";
+            break;
+        default:
+            timeframeString = nil;
+            break;
+    }
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
     
-    [self GETOperationWithURL:urlString parameters:@{@"list": listString, @"sort": sortingString, @"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+    [self GETOperationWithURL:urlString parameters:@{@"list": listString, @"sort": sortingString, @"page": [NSNumber numberWithInteger:page], @"timeframe": timeframeString} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
         NSMutableArray *parsedResultsArray = [NSMutableArray array];
         for (NSDictionary *dictionary in results) {
@@ -484,8 +542,6 @@
             
         }
         success(parsedResultsArray, response);
-        
-        NSLog(@"%@", results);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
         failure(error, response);
@@ -671,6 +727,7 @@
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure
 {
+    // GET /user/following/shots
     
 }
 
