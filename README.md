@@ -11,8 +11,6 @@ Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/t
 
 **Important:** this library requires **iOS 7 or later** or **OS X 10.9 or later**.
 
-**Reminder: it is not recommended to use the current version in production. Use the [last stable version](https://github.com/marcelvoss/MVDribbbleKit/releases/tag/0.1.3) (version 0.1.3) instead.**
-
 ## Installation
 ### CocoaPods
 MVDribbbleKit is available via [CocoaPods](http://cocoapods.org/). Add the following to your Podfile, install it and you are ready to go:
