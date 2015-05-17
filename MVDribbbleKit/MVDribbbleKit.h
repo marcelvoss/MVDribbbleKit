@@ -35,37 +35,44 @@
 #import "MVConstants.h"
 #import "MVAuthBrowser.h"
 
+typedef NS_ENUM(NSInteger, MVDribbbleScope) {
+    MVDribbbleScopeWrite,
+    MVDribbbleScopePublic,
+    MVDribbbleScopeUpload,
+    MVDribbbleScopeComment
+};
+
 /** An enumeration of list types. */
-typedef NS_ENUM(NSInteger, List) {
-    ListAnimated,
-    ListDebuts,
-    ListPlayoffs,
-    ListRebounds,
-    ListTeams,
-    ListAll
+typedef NS_ENUM(NSInteger, MVDribbbleList) {
+    MVDribbbleListAnimated,
+    MVDribbbleListDebuts,
+    MVDribbbleListPlayoffs,
+    MVDribbbleListRebounds,
+    MVDribbbleListTeams,
+    MVDribbbleListAll
 };
 
 /** An enumeration of sort types. */
-typedef NS_ENUM(NSInteger, SortType) {
-    SortTypePopularity,
-    SortTypeComments,
-    SortTypeViews,
-    SortTypeRecent
+typedef NS_ENUM(NSInteger, MVDribbbleSort) {
+    MVDribbbleSortPopularity,
+    MVDribbbleSortComments,
+    MVDribbbleSortViews,
+    MVDribbbleSortRecent
 };
 
 /** An enumeration of timeframe values. */
-typedef NS_ENUM(NSInteger, Timeframe) {
-    TimeframeWeek,
-    TimeframeMonth,
-    TimeframeYear,
-    TimeframeEver
+typedef NS_ENUM(NSInteger, MVDribbbleTimeframe) {
+    MVDribbbleTimeframeWeek,
+    MVDribbbleTimeframeMonth,
+    MVDribbbleTimeframeYear,
+    MVDribbbleTimeframeEver
 };
 
 /** An enumeration of user types. */
-typedef NS_ENUM(NSInteger, UserType) {
-    UserTypeFollowers,
-    UserTypeFollowing,
-    UserTypeDraftees
+typedef NS_ENUM(NSInteger, MVDribbbleUser) {
+    MVDribbbleUserFollowers,
+    MVDribbbleUserFollowing,
+    MVDribbbleUserDraftees
 };
 
 /**
@@ -292,10 +299,10 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param success Block to be executed when the request finishes successfully. This block takes two arguments: the list of results and the request response.
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
-- (void)getShotsOnList:(List)list
+- (void)getShotsOnList:(MVDribbbleList)list
                   date:(NSDate *)date
-                  sort:(SortType)sorting
-             timeframe:(Timeframe)timeframe
+                  sort:(MVDribbbleSort)sorting
+             timeframe:(MVDribbbleTimeframe)timeframe
                   page:(NSInteger)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure;

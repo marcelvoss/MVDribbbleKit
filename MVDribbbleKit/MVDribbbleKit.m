@@ -27,6 +27,7 @@
 
 // Retrieve access token from keychain
 - (NSString *)retrieveToken;
+- (NSString *)stringForScope:(MVDribbbleScope)scope;
 
 // Used for retrieving resources.
 - (void)GETOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
@@ -95,12 +96,11 @@
     } else {
         NSMutableString *tempString = [NSMutableString stringWithFormat:@"%@/oauth/authorize?client_id=%@&scope=", kBaseURL, _clientID];
         
-        for (NSString *scope in _scopes) {
-            
+        for (id scope in _scopes) {
             if (_scopes.lastObject == scope) {
-                [tempString appendString:scope];
+                [tempString appendString:[self stringForScope:(MVDribbbleScope)scope]];
             } else {
-                NSString *string = [NSString stringWithFormat:@"%@+", scope];
+                NSString *string = [NSString stringWithFormat:@"%@+", [self stringForScope:(MVDribbbleScope)scope]];
                 [tempString appendString:string];
             }
             
@@ -453,10 +453,10 @@
 
 #pragma mark - Shots
 
-- (void)getShotsOnList:(List)list
+- (void)getShotsOnList:(MVDribbbleList)list
                   date:(NSDate *)date
-                  sort:(SortType)sorting
-             timeframe:(Timeframe)timeframe
+                  sort:(MVDribbbleSort)sorting
+             timeframe:(MVDribbbleTimeframe)timeframe
                   page:(NSInteger)page
                success:(SuccessHandler)success
                failure:(FailureHandler)failure
@@ -468,22 +468,22 @@
     
     NSString *listString;
     switch (list) {
-        case ListAnimated:
+        case MVDribbbleListAnimated:
             listString = @"animated";
             break;
-        case ListDebuts:
+        case MVDribbbleListDebuts:
             listString = @"debuts";
             break;
-        case ListPlayoffs:
+        case MVDribbbleListPlayoffs:
             listString = @"playoffs";
             break;
-        case ListRebounds:
+        case MVDribbbleListRebounds:
             listString = @"rebounds";
             break;
-        case ListTeams:
+        case MVDribbbleListTeams:
             listString = @"teams";
             break;
-        case ListAll:
+        case MVDribbbleListAll:
             listString = @"all";
             break;
         default:
@@ -493,16 +493,16 @@
     
     NSString *sortingString;
     switch (sorting) {
-        case SortTypePopularity:
+        case MVDribbbleSortPopularity:
             sortingString = @"popularity";
             break;
-        case SortTypeComments:
+        case MVDribbbleSortComments:
             sortingString = @"comments";
             break;
-        case SortTypeViews:
+        case MVDribbbleSortViews:
             sortingString = @"views";
             break;
-        case SortTypeRecent:
+        case MVDribbbleSortRecent:
             sortingString = @"recent";
             break;
         default:
@@ -512,16 +512,16 @@
     
     NSString *timeframeString;
     switch (timeframe) {
-        case TimeframeWeek:
+        case MVDribbbleTimeframeWeek:
             timeframeString = @"week";
             break;
-        case TimeframeMonth:
+        case MVDribbbleTimeframeMonth:
             timeframeString = @"month";
             break;
-        case TimeframeYear:
+        case MVDribbbleTimeframeYear:
             timeframeString = @"year";
             break;
-        case TimeframeEver:
+        case MVDribbbleTimeframeEver:
             timeframeString = @"ever";
             break;
         default:
@@ -1277,6 +1277,20 @@
     } else {
        return nil;
     }
+}
+
+- (NSString *)stringForScope:(MVDribbbleScope)scope
+{
+    if (scope == MVDribbbleScopeComment) {
+        return @"comment";
+    } else if (scope == MVDribbbleScopePublic) {
+        return @"public";
+    } else if (scope == MVDribbbleScopeUpload) {
+        return @"upload";
+    } else if (scope == MVDribbbleScopeWrite) {
+        return @"write";
+    }
+    return nil;
 }
 
 // FIXME: Needs fixed networking methods
