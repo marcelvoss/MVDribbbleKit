@@ -24,7 +24,6 @@
 
 @implementation MVModel
 
-// TODO: Check the quality of this code
 - (id)objectForKeyOrNil:(id)key {
     if (key) {
         if ([key isKindOfClass:[NSNull class]]) {
