@@ -557,7 +557,7 @@
     // Get a shot
     // GET /shots/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@", kAPIBaseURL, @(shotID)];
     
     [self GETOperationWithURL:urlString parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -620,7 +620,7 @@
     // Delete a shot
     // DELETE /shots/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@", kAPIBaseURL, @(shotID)];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
@@ -740,7 +740,7 @@
     // List the likes for a shot
     // GET /shots/:id/likes
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/likes", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/likes", kAPIBaseURL, @(shotID)];
     
     [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -764,7 +764,7 @@
     // Like a shot
     // POST /shots/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/like", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/like", kAPIBaseURL, @(shotID)];
     
     [self POSTOperationWithURL:urlString parameters:@{@"id": [NSNumber numberWithInteger:shotID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -783,7 +783,7 @@
     // Unlike a shot
     // DELETE /shots/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/like", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/like", kAPIBaseURL, @(shotID)];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
@@ -822,7 +822,7 @@
     // List attachments for a shot
     // GET /shots/:id/attachments
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/attachments", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/attachments", kAPIBaseURL, @(shotID)];
     
     [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -846,7 +846,7 @@
     // Get a single attachme
     // GET /shots/:shot/attachments/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/attachments/%ld", kAPIBaseURL, shotID, attachmentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/attachments/%@", kAPIBaseURL, @(shotID), @(attachmentID)];
     
     [self GETOperationWithURL:urlString parameters:nil success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -866,7 +866,7 @@
     // Create an attachment
     // POST /shots/:shot/attachments
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/%ld/attachment", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@/attachment", kAPIBaseURL, @(shotID)];
     
     [self POSTOperationWithURL:urlString parameters:@{@"file": attachmentData} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -885,7 +885,7 @@
     // Delete an attachment
     // DELETE /shots/:shot/attachments/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/attachments/%ld", kAPIBaseURL, shotID, attachmentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/attachments/%@", kAPIBaseURL, @(shotID), @(attachmentID)];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
     
@@ -905,7 +905,7 @@
     // List comments for a shot
     // GET /shots/:shot/comments
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments", kAPIBaseURL, @(shotID)];
     
     [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -929,7 +929,7 @@
     // List likes for a comment
     // GET /shots/:shot/comments/:id/likes
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/likes", kAPIBaseURL, shotID, commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@/likes", kAPIBaseURL, @(shotID), @(commentID)];
     
     [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -953,7 +953,7 @@
     // Create a comment
     // POST /shots/:shot/comments
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments", kAPIBaseURL, @(shotID)];
     
     [self POSTOperationWithURL:urlString parameters:@{@"body": body} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -971,7 +971,7 @@
 {
     // GET /shots/:shot/comments/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld", kAPIBaseURL, shotID, commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@", kAPIBaseURL, @(shotID), @(commentID)];
     
     [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -990,7 +990,7 @@
     // Update a comment
     // PUT /shots/:shot/comments/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld", kAPIBaseURL, shotID, commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@", kAPIBaseURL, @(shotID), @(commentID)];
     
     [self PUTOperationWithURL:urlString parameters:@{@"body": body} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1010,7 +1010,7 @@
     // Like a comment
     // POST /shots/:shot/comments/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/like", kAPIBaseURL, shotID,commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@/like", kAPIBaseURL, @(shotID), @(commentID)];
     
     [self POSTOperationWithURL:urlString parameters:@{@"shot_id": [NSNumber numberWithInteger:shotID], @"comment_id": [NSNumber numberWithInteger:commentID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1029,7 +1029,7 @@
     // Unlike a comment
     // DELETE /shots/:shot/comments/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/like", kAPIBaseURL, shotID, commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@/like", kAPIBaseURL, @(shotID), @(commentID)];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
@@ -1046,7 +1046,7 @@
 {
     // GET /shots/:shot/comments/:id/like
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/comments/%ld/like", kAPIBaseURL, shotID, commentID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/comments/%@/like", kAPIBaseURL, @(shotID), @(commentID)];
     
     [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1064,7 +1064,7 @@
     // List rebounds for a shot
     // GET /shots/:id/rebounds
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/rebounds", kAPIBaseURL, shotID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/rebounds", kAPIBaseURL, @(shotID)];
     
     [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1090,7 +1090,7 @@
 {
     // GET /buckets/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld", kAPIBaseURL, bucketID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%@", kAPIBaseURL, @(bucketID)];
     
     [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1126,7 +1126,7 @@
 {
     // PUT /buckets/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld", kAPIBaseURL, bucketID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%@", kAPIBaseURL, @(bucketID)];
     
     [self PUTOperationWithURL:urlString parameters:@{@"name": bucketName, @"description": bucketDescription} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1144,7 +1144,7 @@
 {
     // DELETE /buckets/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld", kAPIBaseURL, bucketID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%@", kAPIBaseURL, @(bucketID)];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
         
@@ -1161,7 +1161,7 @@
 {
     // GET /bucket/:id/shots
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld/shots", kAPIBaseURL, bucketID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%@/shots", kAPIBaseURL, @(bucketID)];
     
     [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1185,7 +1185,7 @@
 {
     // PUT /buckets/:id/shots
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld/shots", kAPIBaseURL, bucketID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%@/shots", kAPIBaseURL, @(bucketID)];
     
     [self PUTOperationWithURL:urlString parameters:@{@"shot_id": [NSNumber numberWithInteger:shotID]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1203,7 +1203,7 @@
 {
     // DELETE /buckets/:id/shots
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%ld/shots", kAPIBaseURL, bucketID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/buckets/%@/shots", kAPIBaseURL, @(bucketID)];
     
     [self DELETEOperationWithURL:urlString parameters:@{@"shot_id": [NSNumber numberWithInteger:shotID]} success:^(NSHTTPURLResponse *response) {
         
@@ -1227,7 +1227,7 @@
 {
     // GET /projects/:id
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/projects/%ld", kAPIBaseURL, projectID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/projects/%@", kAPIBaseURL, @(projectID)];
     
     [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
@@ -1245,7 +1245,7 @@
 {
     // GET /project/:id/shots
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/projects/%ld/shots", kAPIBaseURL, projectID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/projects/%@/shots", kAPIBaseURL, @(projectID)];
     
     [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
