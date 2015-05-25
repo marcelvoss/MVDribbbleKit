@@ -87,13 +87,14 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     _completionHandler(nil, error);
+    NSLog(@"%@", error);
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if ([[[request URL] host] isEqualToString:[_callbackURL host]]) {
+    if ([[request URL].absoluteString isEqualToString:_callbackURL.absoluteString]) {
         [self dismissViewControllerAnimated:YES completion:nil];
-        _completionHandler(request.URL, nil);
+        _completionHandler([request URL], nil);
     }
     return YES;
 }

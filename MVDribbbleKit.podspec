@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MVDribbbleKit"
-  s.version      = "1.1.0"
+  s.version      = "1.0"
   s.summary      = "A modern Objective-C wrapper for the Dribbble API."
 
   s.description  = <<-DESC
@@ -11,13 +11,16 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/marcelvoss/MVDribbbleKit"
   s.license      = 'MIT'
   s.author             = { "Marcel Voss" => "marcel.voss@icloud.com" }
-  s.social_media_url   = "http://twitter.com/UIMarcel"
+  s.social_media_url   = "http://twitter.com/uimarcel"
   s.source       = { :git => "https://github.com/marcelvoss/MVDribbbleKit.git", :tag => s.version }
   
-  s.source_files  = "MVDribbbleKit", "MVDribbbleKit/**/*.{h,m}"
+  s.source_files  = "MVDribbbleKit"
 
   s.ios.deployment_target = '7.0'
   s.osx.deployment_target = '10.9'
+  
+  s.dependency 'SSKeychain', '~> 1.2'
+  s.dependency 'ISO8601DateFormatter', '~> 0.7.0'
 
   s.requires_arc = true
 end
