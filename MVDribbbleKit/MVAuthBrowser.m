@@ -87,7 +87,6 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     _completionHandler(nil, error);
-    NSLog(@"%@", error);
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -95,8 +94,8 @@
     NSString *requestURL = [[request URL] host];
     if ([requestURL isEqualToString:_callbackURL.host]) {
         [webView stopLoading];
-        [self dismissViewControllerAnimated:YES completion:nil];
         _completionHandler([request URL], nil);
+        [self dismissViewControllerAnimated:YES completion:nil];
         return NO;
     }
     return YES;

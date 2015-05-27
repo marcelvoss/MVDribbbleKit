@@ -81,7 +81,6 @@
 
 #pragma mark - Authorization
 
-// TODO: Needs more error handling
 - (void)authorizeWithCompletion:(void (^)(NSError *, BOOL))completion
 {
     // GET /oauth/authorize
@@ -138,8 +137,7 @@
             // Exchange the temporary code for an access token
             [self POSTOperationWithURL:urlString parameters:@{@"client_id": _clientID, @"client_secret": _clientSecret, @"code": codeString} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
                 
-                NSString *accessToken = [results objectForKey:@"access_token"];
-                NSLog(@"Your access token: %@", accessToken);
+                NSString *accessToken = results[@"access_token"];
                 
                 NSError *keychainError = nil;
                 [SSKeychain setPassword:accessToken forService:kDribbbbleKeychainService
@@ -1331,8 +1329,6 @@
         [finalMutableString appendString:[NSString stringWithFormat:@"per_page=%@", [_itemsPerPage stringValue]]];
     }
     
-    NSLog(@"%@", finalMutableString);
-    
     [[session dataTaskWithURL:[NSURL URLWithString:finalMutableString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
@@ -1407,7 +1403,6 @@
     }
 }
 
-// TODO: Clean this up
 - (void)POSTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
                      success:(void (^)(NSDictionary *, NSHTTPURLResponse *))success
                      failure:(void (^)(NSError *, NSHTTPURLResponse *))failure
@@ -1429,44 +1424,45 @@
     }
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-    
     NSDictionary *tempParameters = [NSDictionary dictionary];
     
+    
+    NSData *parameterData;
     if (parameters == nil) {
         tempParameters = @{@"": @""};
     } else {
-        tempParameters = parameters;
+        NSMutableString *paras = [NSMutableString string];
+        for (NSString *key in parameters) {
+            
+            NSString *myString = [NSString stringWithFormat:@"%@=%@&", key, parameters[key]];
+            [paras appendString:myString];
+            
+        }
+        parameterData = [paras dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     }
     
-    NSError *error = nil;
-    NSData *parameterData = [NSJSONSerialization dataWithJSONObject:tempParameters options:0 error:&error];
-    
-    if (error == nil) {
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-        request.HTTPMethod = @"POST";
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    request.HTTPMethod = @"POST";
         
-        [[session uploadTaskWithRequest:request fromData:parameterData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [[session uploadTaskWithRequest:request fromData:parameterData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
-            NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
+        NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
             
-            if (error == nil) {
-                NSError *jsonError = nil;
-                NSDictionary *serializedResults = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        if (error == nil) {
+            NSError *jsonError = nil;
+            NSDictionary *serializedResults = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                 
-                if (jsonError == nil) {
-                    success(serializedResults, convertedResponse);
-                } else {
-                    failure(error, nil);
-                }
-                
+            if (jsonError == nil) {
+                success(serializedResults, convertedResponse);
             } else {
-                failure(error, convertedResponse);
+                failure(error, nil);
             }
+                
+        } else {
+            failure(error, convertedResponse);
+        }
             
        }] resume];
-    } else {
-        failure(error, nil);
-    }
 }
 
 // FIXME: Doesn't work correctly
