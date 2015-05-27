@@ -46,24 +46,23 @@
         _projectsURL = [self objectForKeyOrNil:[NSURL URLWithString:dictionary[@"projects_url"]]];
         _team = [[MVUser alloc] initWithDictionary:[self objectForKeyOrNil:dictionary[@"team"]]];
         
+        
         NSMutableArray *tagsArray = [NSMutableArray array];
         for (NSString *tag in dictionary[@"tags"]) {
             [tagsArray addObject:tag];
         }
         _tags = tagsArray;
         
-        NSDictionary *images = dictionary[@"images"];
-        _highDPIImageURL = [NSURL URLWithString:images[@"hidpi"]];
-        _teaserImageURL = [NSURL URLWithString:images[@"teaser"]];
-        _normalImageURL = [NSURL URLWithString:images[@"normal"]];
         
-        // Parse the date
-        // Example: 2014-07-02T15:46:06Z
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+        NSDictionary *images = [self objectForKeyOrNil:dictionary[@"images"]];
+        _highDPIImageURL = [NSURL URLWithString:[self objectForKeyOrNil:images[@"hidpi"]]];
+        _teaserImageURL = [NSURL URLWithString:[self objectForKeyOrNil:images[@"teaser"]]];
+        _normalImageURL = [NSURL URLWithString:[self objectForKeyOrNil:images[@"normal"]]];
+        
+
+        ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
         _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
         _updatedDate = [formatter dateFromString:dictionary[@"updated_at"]];
-        
     }
     return self;
 }
