@@ -16,11 +16,11 @@ Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/t
 MVDribbbleKit is available via [CocoaPods](http://cocoapods.org/). Add the following to your Podfile, install it and you are ready to go:
 
 `
-pod 'MVDribbbleKit', '~> 1.0'
+pod 'MVDribbbleKit', '~> 0.2'
 `
 
 ### Without CocoaPods
-Download the latest version, drop the MVDribbbleKit folder to your project and #import it.
+Download the latest version, drop the MVDribbbleKit folder to your project and #import it. Then you have to do the same for the two third party libraries: SSKeychain and ISO8601DateFormatter.
 
 ## Usage
 ### Authenticating
