@@ -9,7 +9,7 @@ One of the main goals was to create a wrapper, that requires as few dependencies
 
 Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
 
-**Important:** this library requires **iOS 7 or later** or **OS X 10.9 or later**.
+**Important:** this library requires **iOS 7 or later**.
 
 ## Installation
 ### CocoaPods
