@@ -35,13 +35,6 @@
 #import "MVConstants.h"
 #import "MVAuthBrowser.h"
 
-typedef NS_ENUM(NSInteger, MVDribbbleScope) {
-    MVDribbbleScopeWrite,
-    MVDribbbleScopePublic,
-    MVDribbbleScopeUpload,
-    MVDribbbleScopeComment
-};
-
 /** An enumeration of list types. */
 typedef NS_ENUM(NSInteger, MVDribbbleList) {
     MVDribbbleListAnimated,

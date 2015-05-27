@@ -29,7 +29,6 @@
 
 // Retrieve access token from keychain
 - (NSString *)retrieveToken;
-- (NSString *)stringForScope:(MVDribbbleScope)scope;
 
 // Used for retrieving resources.
 - (void)GETOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
@@ -97,11 +96,11 @@
     } else {
         NSMutableString *tempString = [NSMutableString stringWithFormat:@"%@/oauth/authorize?client_id=%@&scope=", kBaseURL, _clientID];
         
-        for (id scope in _scopes) {
+        for (NSString *scope in _scopes) {
             if (_scopes.lastObject == scope) {
-                [tempString appendString:[self stringForScope:(MVDribbbleScope)scope]];
+                [tempString appendString:scope];
             } else {
-                NSString *string = [NSString stringWithFormat:@"%@+", [self stringForScope:(MVDribbbleScope)scope]];
+                NSString *string = [NSString stringWithFormat:@"%@+", scope];
                 [tempString appendString:string];
             }
             
@@ -121,10 +120,6 @@
     [controller presentViewController:navController animated:YES completion:nil];
     
     authBrowser.completionHandler = ^(NSURL *url, NSError *error) {
-        // TODO: Remove these calls
-        NSLog(@"Error: %@", error);
-        NSLog(@"URL: %@", url);
-        
         if (error == nil) {
             // POST /oauth/token
             // https://dribbble.com/oauth/token
@@ -1277,20 +1272,6 @@
     } else {
        return nil;
     }
-}
-
-- (NSString *)stringForScope:(MVDribbbleScope)scope
-{
-    if (scope == MVDribbbleScopeComment) {
-        return @"comment";
-    } else if (scope == MVDribbbleScopePublic) {
-        return @"public";
-    } else if (scope == MVDribbbleScopeUpload) {
-        return @"upload";
-    } else if (scope == MVDribbbleScopeWrite) {
-        return @"write";
-    }
-    return nil;
 }
 
 // FIXME: Needs fixed networking methods
