@@ -36,8 +36,7 @@
         
         // Parse the date
         // Example: 2014-07-02T15:46:06Z
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+        ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
         _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
         
         NSDictionary *userDictionary = dictionary[@"user"];

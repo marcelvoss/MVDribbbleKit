@@ -24,7 +24,8 @@
 
 @implementation MVModel
 
-- (id)objectForKeyOrNil:(id)key {
+- (id)objectForKeyOrNil:(id)key
+{
     if (key) {
         if ([key isKindOfClass:[NSNull class]]) {
             return nil;
