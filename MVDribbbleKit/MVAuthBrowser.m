@@ -24,7 +24,7 @@
 
 @interface MVAuthBrowser () <UIWebViewDelegate>
 {
-    UIWebView *webView;
+    UIWebView *theWebView;
     UIActivityIndicatorView *activityIndicator;
 }
 
@@ -49,12 +49,12 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeBrowser:)];
     
-    webView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    webView.delegate = self;
-    webView.scalesPageToFit = YES;
-    [webView loadRequest:[NSURLRequest requestWithURL:_url]];
-    [webView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
-    [self.view addSubview:webView];
+    theWebView = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    theWebView.delegate = self;
+    theWebView.scalesPageToFit = YES;
+    [theWebView loadRequest:[NSURLRequest requestWithURL:_url]];
+    [theWebView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
+    [self.view addSubview:theWebView];
     
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.hidesWhenStopped = YES;
@@ -78,7 +78,7 @@
     [activityIndicator startAnimating];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)theWebView
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [activityIndicator stopAnimating];
     self.title = [theWebView stringByEvaluatingJavaScriptFromString:@"document.title"];
@@ -92,9 +92,12 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if ([[request URL].absoluteString isEqualToString:_callbackURL.absoluteString]) {
+    NSString *requestURL = [[request URL] host];
+    if ([requestURL isEqualToString:_callbackURL.host]) {
+        [webView stopLoading];
         [self dismissViewControllerAnimated:YES completion:nil];
         _completionHandler([request URL], nil);
+        return NO;
     }
     return YES;
 }
