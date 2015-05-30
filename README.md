@@ -44,7 +44,7 @@ manager.scopes = @[@"write", @"public", @"comment", @"upload"];
 **Reminder:** MVDribbbleKit stores the access token automatically to the keychain, so you don’t have to take care of that.
 
 ### Requests
-It is easy to make requests and if you have ever used AFNetworking you will feel right at home because the methods are very similar to AFNetworking's (but this library doesn't use AFNetworking). For example, you can follow a user with the following code:
+It is easy to make requests and if you have ever used AFNetworking you will feel right at home because the methods are very similar to AFNetworking's (but this library doesn't use AFNetworking at all). For example, you can follow a user with the following code:
 
 ``` objc
 [manager followUserWithID:@"simplebits" success:^(NSHTTPURLResponse *response) {
