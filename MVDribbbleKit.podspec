@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/uimarcel"
   s.source       = { :git => "https://github.com/marcelvoss/MVDribbbleKit.git", :tag => s.version }
   
-  s.source_files  = "MVDribbbleKit"
+  s.source_files  = "MVDribbbleKit/**/*.{h,m}"
 
   s.ios.deployment_target = '7.0'
   s.osx.deployment_target = '10.9'
