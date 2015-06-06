@@ -717,12 +717,27 @@
     }
 }
 
-// TODO: Missing
 - (void)getTimelineOfUser:(NSString *)userID page:(NSInteger)page
                          success:(SuccessHandler)success
                          failure:(FailureHandler)failure
 {
     // GET /user/following/shots
+    
+    NSString *urlString = [NSString stringWithFormat:@"/user/following/shots", kAPIBaseURL];
+    
+    [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        NSMutableArray *parsedResultsArray = [NSMutableArray array];
+        for (NSDictionary *dictionary in results) {
+            MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+            [parsedResultsArray addObject:shot];
+        }
+        
+        success(parsedResultsArray, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
     
 }
 
