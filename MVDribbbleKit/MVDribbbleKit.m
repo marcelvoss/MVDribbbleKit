@@ -723,7 +723,7 @@
 {
     // GET /user/following/shots
     
-    NSString *urlString = [NSString stringWithFormat:@"/user/following/shots", kAPIBaseURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/user/following/shots", kAPIBaseURL];
     
     [self GETOperationWithURL:urlString parameters:@{@"page": [NSNumber numberWithInteger:page]} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
         
