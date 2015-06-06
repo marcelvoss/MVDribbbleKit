@@ -63,6 +63,7 @@
 
 - (void)closeBrowser:(id)sender
 {
+    _completionHandler(nil, [NSError errorWithDomain:@"MVDribbbleKit" code:1 userInfo:@{NSLocalizedDescriptionKey:@"User canceled authorization"}]);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
