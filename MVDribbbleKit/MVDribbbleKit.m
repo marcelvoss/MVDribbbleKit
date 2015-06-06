@@ -686,7 +686,7 @@
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             for (NSDictionary *dictionary in results) {
-                MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+                MVLikedShot *shot = [[MVLikedShot alloc] initWithDictionary:dictionary];
                 [parsedResultsArray addObject:shot];
             }
             
@@ -705,7 +705,7 @@
             
             NSMutableArray *parsedResultsArray = [NSMutableArray array];
             for (NSDictionary *dictionary in results) {
-                MVShot *shot = [[MVShot alloc] initWithDictionary:dictionary];
+                MVLikedShot *shot = [[MVLikedShot alloc] initWithDictionary:dictionary];
                 [parsedResultsArray addObject:shot];
             }
             

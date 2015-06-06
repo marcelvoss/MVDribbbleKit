@@ -30,6 +30,7 @@
 #import "MVAttachment.h"
 #import "MVBucket.h"
 #import "MVProject.h"
+#import "MVLikedShot.h"
 
 // Helpers
 #import "MVConstants.h"
