@@ -78,4 +78,4 @@ There are also seven model classes available to make your life a bit easier. The
 * MVProject
 
 ## License
-MVDribbbleKit is available under the MIT license. See the [LICENSE](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md) file for more information.
+MVPopupController is released under the [MIT License](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md).
