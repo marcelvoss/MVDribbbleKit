@@ -1,6 +1,6 @@
 // MVDribbbleKit.m
 //
-// Copyright (c) 2014-2015 Marcel Voss
+// Copyright (c) 2014-2016 Marcel Voss
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,13 +32,13 @@
 
 // Used for retrieving resources.
 - (void)GETOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
-                        success:(void (^) (NSDictionary *results, NSHTTPURLResponse *response))success
-                        failure:(void (^) (NSError *error, NSHTTPURLResponse *response))failure;
+                    success:(void (^) (NSDictionary *results, NSHTTPURLResponse *response))success
+                    failure:(void (^) (NSError *error, NSHTTPURLResponse *response))failure;
 
 // Used for updating resources, or performing custom actions.
 - (void)PUTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
-                     success:(void (^) (NSDictionary *results, NSHTTPURLResponse *response))success
-                     failure:(void (^) (NSError *error, NSHTTPURLResponse *response))failure;
+                    success:(void (^) (NSDictionary *results, NSHTTPURLResponse *response))success
+                    failure:(void (^) (NSError *error, NSHTTPURLResponse *response))failure;
 
 // Used for creating resources.
 - (void)POSTOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
@@ -109,7 +109,7 @@
     }
     
     NSURL *url = [NSURL URLWithString:urlString];
-
+    
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     UIViewController *controller = window.rootViewController;
     
@@ -227,8 +227,8 @@
 }
 
 - (void)getDetailsForUser:(NSString *)userID
-                    success:(void (^)(MVUser *, NSHTTPURLResponse *))success
-                    failure:(FailureHandler)failure
+                  success:(void (^)(MVUser *, NSHTTPURLResponse *))success
+                  failure:(FailureHandler)failure
 {
     if (userID == nil) {
         // Get details for the authorized player
@@ -259,8 +259,8 @@
 }
 
 - (void)getFollowersForUser:(NSString *)userID page:(NSInteger)page
-                      success:(SuccessHandler)success
-                      failure:(FailureHandler)failure
+                    success:(SuccessHandler)success
+                    failure:(FailureHandler)failure
 {
     if (userID == nil) {
         // List the authenticated user's followers:
@@ -307,8 +307,8 @@
 }
 
 - (void)getFollowingsForUser:(NSString *)userID page:(NSInteger)page
-                       success:(SuccessHandler)success
-                       failure:(FailureHandler)failure
+                     success:(SuccessHandler)success
+                     failure:(FailureHandler)failure
 {
     if (userID == nil) {
         // List who the authenticated user is following:
@@ -358,8 +358,8 @@
 
 
 - (void)followUserWithID:(NSString *)userID
-                   success:(void (^)(NSHTTPURLResponse *))success
-                   failure:(FailureHandler)failure
+                 success:(void (^)(NSHTTPURLResponse *))success
+                 failure:(FailureHandler)failure
 {
     // Follow a user
     // PUT /users/:user/follow
@@ -377,8 +377,8 @@
 }
 
 - (void)unfollowUserWithID:(NSString *)userID
-                     success:(void (^)(NSHTTPURLResponse *))success
-                     failure:(FailureHandler)failure
+                   success:(void (^)(NSHTTPURLResponse *))success
+                   failure:(FailureHandler)failure
 {
     // Unfollow a user
     // DELETE /users/:user/follow
@@ -398,8 +398,8 @@
 #pragma mark - Teams
 
 - (void)getTeamsForUserWithID:(NSString *)userID page:(NSInteger)page
-                        success:(SuccessHandler)success
-                        failure:(FailureHandler)failure
+                      success:(SuccessHandler)success
+                      failure:(FailureHandler)failure
 {
     if (userID == nil) {
         // List the authenticated user's teams:
@@ -625,8 +625,8 @@
 }
 
 - (void)getShotsByUser:(NSString *)userID page:(NSInteger)page
-                      success:(SuccessHandler)success
-                      failure:(FailureHandler)failure
+               success:(SuccessHandler)success
+               failure:(FailureHandler)failure
 {
     // List shots for a user
     
@@ -670,8 +670,8 @@
 }
 
 - (void)getLikedShotsByUser:(NSString *)userID page:(NSInteger)page
-                      success:(SuccessHandler)success
-                      failure:(FailureHandler)failure
+                    success:(SuccessHandler)success
+                    failure:(FailureHandler)failure
 {
     // List shot likes for a user
     
@@ -718,8 +718,8 @@
 }
 
 - (void)getTimelineOfUser:(NSString *)userID page:(NSInteger)page
-                         success:(SuccessHandler)success
-                         failure:(FailureHandler)failure
+                  success:(SuccessHandler)success
+                  failure:(FailureHandler)failure
 {
     // GET /user/following/shots
     
@@ -812,7 +812,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/shots/%ld/like", kAPIBaseURL, shotID];
     
     [self GETOperationWithURL:urlString parameters:@{} success:^(NSDictionary *results, NSHTTPURLResponse *response) {
-
+        
         MVLike *like = [[MVLike alloc] initWithDictionary:results];
         success(like, response);
         
@@ -896,7 +896,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/shots/%@/attachments/%@", kAPIBaseURL, @(shotID), @(attachmentID)];
     
     [self DELETEOperationWithURL:urlString parameters:nil success:^(NSHTTPURLResponse *response) {
-    
+        
         success(response);
         
     } failure:^(NSError *error, NSHTTPURLResponse *response) {
@@ -1271,6 +1271,34 @@
     }];
 }
 
+- (void)createJobInOrganization:(NSString *)organizationName
+                    jobPosition:(NSString *)jobTitle
+                       location:(NSString *)jobLocation
+                      detailURL:(NSString *)jobDetails
+                         active:(BOOL)jobActive
+                        success:(JobHandler)success
+                        failure:(FailureHandler)failure
+{
+    // POST /jobs
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/jobs", kAPIBaseURL];
+    
+    NSDictionary *parameters = @{@"organization_name": organizationName,
+                                 @"title": jobTitle,
+                                 @"location": jobLocation,
+                                 @"url": jobDetails,
+                                 @"active": [NSNumber numberWithBool:jobActive]};
+    
+    [self POSTOperationWithURL:urlString parameters:parameters success:^(NSDictionary *results, NSHTTPURLResponse *response) {
+        
+        MVJob *job = [[MVJob alloc] initWithDictionary:results];
+        success(job, response);
+        
+    } failure:^(NSError *error, NSHTTPURLResponse *response) {
+        failure(error, response);
+    }];
+}
+
 @end
 
 @implementation MVDribbbleKit (Private)
@@ -1285,15 +1313,15 @@
         
         return [SSKeychain passwordForService:kDribbbbleKeychainService account:accountUsername];
     } else {
-       return nil;
+        return nil;
     }
 }
 
 // FIXME: Needs fixed networking methods
 // FIXME: Make it easier to use parameters because appending them to the urlString isn't nice enough
 - (void)GETOperationWithURL:(NSString *)url parameters:(NSDictionary *)parameters
-                        success:(void (^) (NSDictionary *, NSHTTPURLResponse *))success
-                        failure:(void (^) (NSError *, NSHTTPURLResponse *))failure
+                    success:(void (^) (NSDictionary *, NSHTTPURLResponse *))success
+                    failure:(void (^) (NSError *, NSHTTPURLResponse *))failure
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
@@ -1372,11 +1400,11 @@
     if (error == nil) {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
         request.HTTPMethod = @"PUT";
-    
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-    
-        [[session uploadTaskWithRequest:request fromData:parameterData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+        
+        [[session uploadTaskWithRequest:request fromData:parameterData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
             NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
             
             if (error == nil) {
@@ -1439,26 +1467,26 @@
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     request.HTTPMethod = @"POST";
-        
+    
     [[session uploadTaskWithRequest:request fromData:parameterData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            
+        
         NSHTTPURLResponse *convertedResponse = (NSHTTPURLResponse *)response;
-            
+        
         if (error == nil) {
             NSError *jsonError = nil;
             NSDictionary *serializedResults = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-                
+            
             if (jsonError == nil) {
                 success(serializedResults, convertedResponse);
             } else {
                 failure(error, nil);
             }
-                
+            
         } else {
             failure(error, convertedResponse);
         }
-            
-       }] resume];
+        
+    }] resume];
 }
 
 // FIXME: Doesn't work correctly
@@ -1491,7 +1519,7 @@
         } else {
             failure(error, convertedResponse);
         }
-  
+        
     }] resume];
 }
 

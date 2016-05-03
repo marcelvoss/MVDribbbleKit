@@ -1,4 +1,4 @@
-// MVAuthBrowser.h
+// MVJob.m
 //
 // Copyright (c) 2014-2016 Marcel Voss
 //
@@ -20,13 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "MVJob.h"
 
-@interface MVAuthBrowser : UIViewController
+@implementation MVJob
 
-@property (nonatomic) NSURL *callbackURL;
-@property (nonatomic, strong) void (^completionHandler)(NSURL *url, NSError *error);
-
-- (instancetype)initWithURL:(NSURL *)url;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    if (self) {
+        _jobID = [self objectForKeyOrNil:dictionary[@"id"]];
+        _organizationName = [self objectForKeyOrNil:dictionary[@"organization_name"]];
+        _jobTitle = [self objectForKeyOrNil:dictionary[@"title"]];
+        _jobLocation = [self objectForKeyOrNil:dictionary[@"location"]];
+        _jobURL = [NSURL URLWithString:[self objectForKeyOrNil:dictionary[@"url"]]];
+        
+        
+        ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
+        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
+        _updatedDate = [formatter dateFromString:dictionary[@"updated_at"]];
+    }
+    return self;
+}
 
 @end

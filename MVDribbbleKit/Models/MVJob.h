@@ -1,4 +1,4 @@
-// MVAuthBrowser.h
+// MVJob.h
 //
 // Copyright (c) 2014-2016 Marcel Voss
 //
@@ -20,13 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "MVModel.h"
 
-@interface MVAuthBrowser : UIViewController
+@interface MVJob : MVModel
 
-@property (nonatomic) NSURL *callbackURL;
-@property (nonatomic, strong) void (^completionHandler)(NSURL *url, NSError *error);
+@property (nonatomic) NSNumber *jobID;
+@property (nonatomic) NSString *organizationName;
+@property (nonatomic) NSString *jobTitle;
+@property (nonatomic) NSString *jobLocation;
+@property (nonatomic) NSURL *jobURL;
+@property (nonatomic) NSDate *createdDate;
+@property (nonatomic) NSDate *updatedDate;
 
-- (instancetype)initWithURL:(NSURL *)url;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

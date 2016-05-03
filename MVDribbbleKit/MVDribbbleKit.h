@@ -1,6 +1,6 @@
 // MVDribbbleKit.h
 //
-// Copyright (c) 2014-2015 Marcel Voss
+// Copyright (c) 2014-2016 Marcel Voss
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@
 #import "MVAttachment.h"
 #import "MVBucket.h"
 #import "MVProject.h"
+#import "MVJob.h"
 #import "MVLikedShot.h"
 
 // Helpers
@@ -103,6 +104,15 @@ typedef void (^ProjectHandler) (MVProject *project, NSHTTPURLResponse *response)
  @param response Request response.
  */
 typedef void (^UserHandler) (MVUser *user, NSHTTPURLResponse *response);
+
+
+/**
+ *  Job handler.
+ *
+ *  @param job      MVJob model with the returned information.
+ *  @param response Request response
+ */
+typedef void (^JobHandler) (MVJob *job, NSHTTPURLResponse *response);
 
 /**
  Bucket handler.
@@ -220,8 +230,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)getDetailsForUser:(NSString *)userID
-                    success:(UserHandler)success
-                    failure:(FailureHandler)failure;
+                  success:(UserHandler)success
+                  failure:(FailureHandler)failure;
 
 /**
  Get followers for user.
@@ -231,8 +241,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)getFollowersForUser:(NSString *)userID page:(NSInteger)page
-                      success:(SuccessHandler)success
-                      failure:(FailureHandler)failure;
+                    success:(SuccessHandler)success
+                    failure:(FailureHandler)failure;
 
 /**
  Get users followed by a user.
@@ -242,8 +252,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)getFollowingsForUser:(NSString *)userID page:(NSInteger)page
-                      success:(SuccessHandler)success
-                      failure:(FailureHandler)failure;
+                     success:(SuccessHandler)success
+                     failure:(FailureHandler)failure;
 
 /**
  Follow a user.
@@ -252,8 +262,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)followUserWithID:(NSString *)userID
-                   success:(void (^) (NSHTTPURLResponse *response))success
-                   failure:(FailureHandler)failure;
+                 success:(void (^) (NSHTTPURLResponse *response))success
+                 failure:(FailureHandler)failure;
 
 /**
  Unfollow a user.
@@ -262,8 +272,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)unfollowUserWithID:(NSString *)userID
-                     success:(void (^) (NSHTTPURLResponse *response))success
-                     failure:(FailureHandler)failure;
+                   success:(void (^) (NSHTTPURLResponse *response))success
+                   failure:(FailureHandler)failure;
 
 - (void)isUser:(NSString *)userID followingUser:(NSString *)targetUserID
        success:(void (^) (NSHTTPURLResponse *response, BOOL following))success
@@ -279,8 +289,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)getTeamsForUserWithID:(NSString *)userID page:(NSInteger)page
-                        success:(SuccessHandler)success
-                        failure:(FailureHandler)failure;
+                      success:(SuccessHandler)success
+                      failure:(FailureHandler)failure;
 
 #pragma mark - Shots
 
@@ -365,8 +375,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)getShotsByUser:(NSString *)userID page:(NSInteger)page
-                 success:(SuccessHandler)success
-                 failure:(FailureHandler)failure;
+               success:(SuccessHandler)success
+               failure:(FailureHandler)failure;
 
 /*
  Get shots liked by user.
@@ -376,8 +386,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)getLikedShotsByUser:(NSString *)userID page:(NSInteger)page
-                      success:(SuccessHandler)success
-                      failure:(FailureHandler)failure;
+                    success:(SuccessHandler)success
+                    failure:(FailureHandler)failure;
 
 /**
  Get timeline for user.
@@ -388,8 +398,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  */
 // TODO: Needs a new name
 - (void)getTimelineOfUser:(NSString *)userID page:(NSInteger)page
-                         success:(SuccessHandler)success
-                         failure:(FailureHandler)failure;
+                  success:(SuccessHandler)success
+                  failure:(FailureHandler)failure;
 
 #pragma mark - Likes
 
@@ -417,7 +427,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 /**
  Unlike a shot. Liking a shot requires the user to be authenticated with the "write" scope.
  @param shotID ID of the shot.
- @param success Block to be executed when the request finishes successfully. This block takes one argument: the request response. 
+ @param success Block to be executed when the request finishes successfully. This block takes one argument: the request response.
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)unlikeShotWithID:(NSInteger)shotID
@@ -431,8 +441,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)isShotLiked:(NSInteger)shotID
-                   success:(LikeHandler)success
-                   failure:(FailureHandler)failure;
+            success:(LikeHandler)success
+            failure:(FailureHandler)failure;
 
 
 #pragma mark - Attachments
@@ -560,8 +570,8 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
 - (void)unlikeCommentWithID:(NSInteger)commentID onShot:(NSInteger)shotID
-                  success:(void (^) (NSHTTPURLResponse *response))success
-                  failure:(FailureHandler)failure;
+                    success:(void (^) (NSHTTPURLResponse *response))success
+                    failure:(FailureHandler)failure;
 
 /**
  Check if comment is liked.
@@ -686,5 +696,27 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 - (void)getShotsInProject:(NSInteger)projectID
                   success:(SuccessHandler)success
                   failure:(FailureHandler)failure;
+
+
+/**
+ *  Post a new job to Dribbble's jobs dashboard.
+ *
+ *  @param organizationName The name of the company, offering this job
+ *  @param jobTitle         Title of the job position
+ *  @param jobLocation      Location of the job
+ *  @param jobDetails       A URL leading to the full job lisiting
+ *  @param jobActive        If YES, the job listing will be immediately published
+ *  @param success          Block to be executed when the request finishes successfully. This block takes two arguments: the job result and the request response.
+ *  @param failure          Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
+ *
+ *  @note In order to access this endpoint, you require a special access key. Contact Dribbble for more information.
+ */
+- (void)createJobInOrganization:(NSString *)organizationName
+                    jobPosition:(NSString *)jobTitle
+                       location:(NSString *)jobLocation
+                      detailURL:(NSString *)jobDetails
+                         active:(BOOL)jobActive
+                        success:(JobHandler)success
+                        failure:(FailureHandler)failure;
 
 @end
