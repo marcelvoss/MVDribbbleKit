@@ -5,7 +5,7 @@
 
 MVDribbbleKit is a modern, full-featured and well-documented Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
-One of the main goals was to create a wrapper, that requires as few dependencies as possible. Obiviously I also wanted to write clean code, provide a good documentation and stability.
+One of the main goals was to create a wrapper, that requires as few dependencies as possible. Apart from that, I also wanted to write clean code, provide a good documentation and guarantee stability.
 
 Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
 
@@ -81,6 +81,9 @@ There are also seven model classes available to make your life a bit easier. The
 * Replace the AuthBrowser class with an implementation of SFSafariViewController
 * Simplify the API
 * Add option for access keys
+* Add better CocoaPods support
+* Add demo project
+* Add unit tests
 
 ## License
 MVPopupController is released under the [MIT License](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md).
