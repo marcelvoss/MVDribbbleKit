@@ -151,11 +151,6 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 @property (nonatomic) NSNumber *itemsPerPage;
 
 /**
- Boolean that specifies whether to allow cellular access.
- */
-@property (nonatomic) BOOL allowsCellularAccess;
-
-/**
  Dribbble API scope. By default "write", "public", "comment", and "upload" are selected.
  */
 @property (nonatomic) NSArray *scopes;

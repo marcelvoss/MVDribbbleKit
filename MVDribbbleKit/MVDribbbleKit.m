@@ -1329,11 +1329,6 @@
     configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8",
                                             @"Authorization": tempTokenString};
     
-    if (_allowsCellularAccess) {
-        configuration.allowsCellularAccess = YES;
-    } else {
-        configuration.allowsCellularAccess = NO;
-    }
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     NSMutableString *finalMutableString = [NSMutableString stringWithFormat:@"%@?", url];
@@ -1379,12 +1374,6 @@
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8", @"Authorization": tempTokenString};
-    
-    if (_allowsCellularAccess) {
-        configuration.allowsCellularAccess = YES;
-    } else {
-        configuration.allowsCellularAccess = NO;
-    }
     
     NSDictionary *tempParameters = [NSDictionary dictionary];
     
@@ -1441,12 +1430,6 @@
         configuration.HTTPAdditionalHeaders = @{@"Content-Type": @"application/json; charset=utf-8", @"Authorization": tempTokenString};
     }
     
-    if (_allowsCellularAccess) {
-        configuration.allowsCellularAccess = YES;
-    } else {
-        configuration.allowsCellularAccess = NO;
-    }
-    
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     NSDictionary *tempParameters = [NSDictionary dictionary];
     
@@ -1498,12 +1481,6 @@
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPAdditionalHeaders = @{@"Authorization": tempTokenString};
-    
-    if (_allowsCellularAccess) {
-        configuration.allowsCellularAccess = YES;
-    } else {
-        configuration.allowsCellularAccess = NO;
-    }
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
     
