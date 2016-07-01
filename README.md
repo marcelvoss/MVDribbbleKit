@@ -80,13 +80,5 @@ There are also seven model classes available to make your life a bit easier. The
 * MVBucket
 * MVProject
 
-## TODO
-* Replace the AuthBrowser class with an implementation of SFSafariViewController
-* Simplify the API
-* Add option for access keys
-* Add better CocoaPods support
-* Add demo project
-* Add unit tests
-
 ## License
 MVDribbbleKit is released under the [MIT License](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md).
