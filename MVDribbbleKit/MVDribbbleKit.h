@@ -170,6 +170,11 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  */
 @property (nonatomic, copy) NSString *callbackURL;
 
+/**
+ Client access token for read-only access to Dribbble's API.
+ */
+@property (nonatomic, copy) NSString *clientToken;
+
 #pragma mark - Miscellaneous
 
 /**
@@ -185,7 +190,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  @param callbackURL Callback URL.
  @return Instance of MVDribbbleKit.
  */
-- (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID callbackURL:(NSString *)callbackURL;
+- (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID clientToken:(NSString *)clientToken callbackURL:(NSString *)callbackURL;
 
 #pragma mark - Authorization
 
@@ -199,10 +204,10 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 /**
  Sets required MVDribbbleKit properties.
  @param clientID Client ID.
- @param secretID Client Secret.
+ @param clientSecret Client Secret.
  @param callbackURL Callback URL.
  */
-- (void)setClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret callbackURL:(NSString *)callbackURL;
+- (void)setClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret clientToken:(NSString *)clientToken callbackURL:(NSString *)callbackURL;
 
 /**
  *  Searches the keychain for an access token and returns a boolean value whether a token was found or not.
@@ -210,6 +215,10 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  *  @return A boolean value if an access token is stored in the keychain.
  */
 - (BOOL)isAuthorized;
+
+
+- (void)retrieveAccessToken:(void (^)(NSString *token,
+                                      NSError *error))completionHandler;
 
 /**
  *  Removes the stored access token from the keychain.
@@ -607,7 +616,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
 /**
  Create bucket.
  @param bucketName Name of the bucket.
- @param description Description of the bucket.
+ @param bucketDescription Description of the bucket.
  @param success Block to be executed when the request finishes successfully. This block takes two arguments: the MVBucket and the request response.
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */
@@ -619,7 +628,7 @@ typedef void (^FailureHandler) (NSError *error, NSHTTPURLResponse *response);
  Update bucket
  @param bucketID ID of the bucket.
  @param bucketName Name of the bucket.
- @param description Description of the bucket.
+ @param bucketDescription Description of the bucket.
  @param success Block to be executed when the request finishes successfully. This block takes two arguments: the MVBucket and the request response.
  @param failure Block to be executed when the request finishes unsuccessfully. This block takes two arguments: the error and the request response.
  */

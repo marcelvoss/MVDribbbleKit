@@ -56,13 +56,14 @@
 
 #pragma mark - Miscellaneous
 
-- (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID callbackURL:(NSString *)callbackURL
+- (instancetype)initWithClientID:(NSString *)clientID secretID:(NSString *)secretID clientToken:(NSString *)clientToken callbackURL:(NSString *)callbackURL
 {
     self = [super init];
     if (self) {
         _clientID = clientID;
         _clientSecret = secretID;
         _callbackURL = callbackURL;
+        _clientToken = clientToken;
     }
     return self;
 }
@@ -153,11 +154,12 @@
     };
 }
 
-- (void)setClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret callbackURL:(NSString *)callbackURL
+- (void)setClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret clientToken:(NSString *)clientToken callbackURL:(NSString *)callbackURL
 {
     _clientID = clientID;
     _clientSecret = clientSecret;
     _callbackURL = callbackURL;
+    _clientToken = clientToken;
 }
 
 - (BOOL)isAuthorized
@@ -182,6 +184,24 @@
         if (deletionError) {
             NSLog(@"Couldn't delete token");
         }
+    }
+}
+
+- (void)retrieveAccessToken:(void (^)(NSString *, NSError *))completionHandler
+{
+    if ([SSKeychain accountsForService:kDribbbbleKeychainService]) {
+        NSString *accountUsername = [[SSKeychain accountsForService:kDribbbbleKeychainService][0]
+                                     valueForKey:kSSKeychainAccountKey];
+        
+        NSError *keychainError = nil;
+        NSString *accessToken = [SSKeychain passwordForService:kDribbbbleKeychainService account:accountUsername error:&keychainError];
+        
+        completionHandler([SSKeychain passwordForService:kDribbbbleKeychainService
+                                                 account:accessToken], keychainError);
+    } else if (_clientToken != nil) {
+        completionHandler(_clientToken, nil);
+    } else {
+        completionHandler(nil, [NSError errorWithDomain:@"com.marcelvoss.MVDribbbleKit" code:1 userInfo:@{NSLocalizedDescriptionKey: @"Couldn't find a stored Dribbble account in keychain."}]);
     }
 }
 
