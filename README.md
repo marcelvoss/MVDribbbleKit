@@ -12,7 +12,7 @@ One of the main goals was to create a wrapper, that requires as few dependencies
 
 Make sure to read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using Dribbble's API.
 
-**Important:** this library requires **iOS 7 or later**.
+**Important:** this library requires **iOS 10 or later**.
 
 ## Installation
 ### CocoaPods
@@ -23,7 +23,7 @@ pod 'MVDribbbleKit', '~> 0.2'
 `
 
 ### Without CocoaPods
-Download the latest version, drop the MVDribbbleKit folder to your project and #import it. Then you have to do the same for the two third party libraries: SSKeychain and ISO8601DateFormatter.
+Download the latest version, drop the MVDribbbleKit folder to your project and #import it. Then you have to do the same for the only thirdy party dependency: [SSKeychain](https://github.com/soffes/SSKeychain).
 
 ## Usage
 ### Authenticating
@@ -89,4 +89,4 @@ There are also seven model classes available to make your life a bit easier. The
 * Add unit tests
 
 ## License
-MVPopupController is released under the [MIT License](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md).
+MVDribbbleKit is released under the [MIT License](https://github.com/marcelvoss/MVDribbbleKit/blob/master/LICENSE.md).
