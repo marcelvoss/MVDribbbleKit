@@ -21,9 +21,10 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import <ISO8601DateFormatter/ISO8601DateFormatter.h>
 
 @interface MVModel : NSObject
+
+@property (nonatomic) NSISO8601DateFormatter *formatter;
 
 - (id)objectForKeyOrNil:(id)key;
 

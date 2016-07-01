@@ -31,8 +31,7 @@
         _likeID = [self objectForKeyOrNil:dictionary[@"id"]];
         _user = [[MVUser alloc] initWithDictionary:dictionary[@"user"]];
         
-        ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
-        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
+        _createdDate = [self.formatter dateFromString:dictionary[@"created_at"]];
     }
     return self;
 }

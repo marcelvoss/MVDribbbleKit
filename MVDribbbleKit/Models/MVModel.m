@@ -24,6 +24,15 @@
 
 @implementation MVModel
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _formatter = [[NSISO8601DateFormatter alloc] init];
+    }
+    return self;
+}
+
 - (id)objectForKeyOrNil:(id)key
 {
     if (key) {

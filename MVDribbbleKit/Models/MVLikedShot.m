@@ -7,8 +7,10 @@
 //
 
 #import "MVLikedShot.h"
+#import "MVShot.h"
 
 @implementation MVLikedShot
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
@@ -16,9 +18,9 @@
         _likeID = [self objectForKeyOrNil:dictionary[@"id"]];
         _shot = [[MVShot alloc] initWithDictionary:dictionary[@"shot"]];
         
-        ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
-        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
+        _createdDate = [self.formatter dateFromString:dictionary[@"created_at"]];
     }
     return self;
 }
+
 @end

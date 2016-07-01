@@ -34,10 +34,8 @@
         _jobLocation = [self objectForKeyOrNil:dictionary[@"location"]];
         _jobURL = [NSURL URLWithString:[self objectForKeyOrNil:dictionary[@"url"]]];
         
-        
-        ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
-        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
-        _updatedDate = [formatter dateFromString:dictionary[@"updated_at"]];
+        _createdDate = [self.formatter dateFromString:dictionary[@"created_at"]];
+        _updatedDate = [self.formatter dateFromString:dictionary[@"updated_at"]];
     }
     return self;
 }

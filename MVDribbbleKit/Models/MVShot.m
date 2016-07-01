@@ -58,11 +58,9 @@
         _highDPIImageURL = [NSURL URLWithString:[self objectForKeyOrNil:images[@"hidpi"]]];
         _teaserImageURL = [NSURL URLWithString:[self objectForKeyOrNil:images[@"teaser"]]];
         _normalImageURL = [NSURL URLWithString:[self objectForKeyOrNil:images[@"normal"]]];
-        
-
-        ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
-        _createdDate = [formatter dateFromString:dictionary[@"created_at"]];
-        _updatedDate = [formatter dateFromString:dictionary[@"updated_at"]];
+    
+        _createdDate = [self.formatter dateFromString:dictionary[@"created_at"]];
+        _updatedDate = [self.formatter dateFromString:dictionary[@"updated_at"]];
     }
     return self;
 }

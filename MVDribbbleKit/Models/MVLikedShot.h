@@ -6,7 +6,9 @@
 //
 //
 
-#import <MVDribbbleKit/MVDribbbleKit.h>
+#import "MVModel.h"
+
+@class MVShot;
 
 @interface MVLikedShot : MVModel
 @property (nonatomic) NSDate *createdDate;
