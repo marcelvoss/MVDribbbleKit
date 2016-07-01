@@ -23,7 +23,6 @@
 #import "MVDribbbleKit.h"
 
 #import <SSKeychain/SSKeychain.h>
-#import <ISO8601DateFormatter/ISO8601DateFormatter.h>
 
 @interface MVDribbbleKit (Private)
 
