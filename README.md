@@ -7,7 +7,7 @@ MVDribbbleKit is a modern, full-featured and well-documented Objective-C wrapper
 
 One of the main goals was to create a wrapper, that requires as few dependencies as possible. Apart from that, I also wanted to write clean code, provide a good documentation and guarantee stability.
 
-Make sure that you read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using it.
+Make sure to read the [Terms & Guidelines](http://developer.dribbble.com/terms/) before using Dribbble's API.
 
 **Important:** this library requires **iOS 7 or later**.
 
