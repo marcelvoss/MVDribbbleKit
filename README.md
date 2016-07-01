@@ -2,6 +2,9 @@
 	<a href="https://github.com/marcelvoss/MVDribbbleKit"><img src="Logo.png" alt="Logo" title="MVDribbbleKit"></a>
 </p>
 
+![](https://img.shields.io/cocoapods/v/MVDribbbleKit.svg)
+![](https://img.shields.io/cocoapods/l/MVDribbbleKit.svg)
+![](https://img.shields.io/cocoapods/p/MVDribbbleKit.svg)
 
 MVDribbbleKit is a modern, full-featured and well-documented Objective-C wrapper for the official [Dribbble API v1](https://dribbble.com/api).
 
